@@ -22,4 +22,13 @@
     <string name="fighter_skillpts">Insert</string>
     <string name="difficulty">Insert</string>
     <string name="char_config_hint">Configure your character!</string>
+    <string name="promt_enter_char_name">Enter character name</string>
+    <string name="total_skillpoints">16</string>
+    <string name="pilot_label">Pilot:</string>
+    <string name="fighter_label">Fighter:</string>
+    <string name="engineer_label">Engineer:</string>
+    <string name="continue_label">Continue</string>
+    <string name="default_zero">0</string>
+    <string name="allocate_label">Skill points to allocate:</string>
+    <string name="trader_label">Trader:</string>
 </resources>
