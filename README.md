@@ -1,2 +1,2 @@
-# M5
-Milestone 5 for the project
+# Interstellar Merchant
+Android app in development
