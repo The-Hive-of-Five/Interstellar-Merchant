@@ -41,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
                 int fighterP = Integer.parseInt(fighterSkillPts.getText().toString());
                 int traderP = Integer.parseInt(traderSkillPts.getText().toString());
                 int engineerP = Integer.parseInt(engineerSkillPts.getText().toString());
+                int totalP = pilotP + fighterP + traderP + engineerP;
+
+                if (totalP != 16) {
+                    result.setText("Total allocated skillpoints must be 16!");
+                } else {
+                    //implement code for going to next screen here!
+                }
+
             }
         });
     }
