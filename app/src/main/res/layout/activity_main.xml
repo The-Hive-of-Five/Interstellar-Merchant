@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/engineer_skillpts"
         android:layout_width="53dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -23,11 +23,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.553"
         app:layout_constraintStart_toEndOf="@+id/engineer_name"
-        app:layout_constraintTop_toBottomOf="@+id/editText3"
+        app:layout_constraintTop_toBottomOf="@+id/trader_skillpts"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/trader_skillpts"
         android:layout_width="53dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -41,10 +41,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.582"
         app:layout_constraintStart_toEndOf="@+id/trader_name"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/fighter_skillpts" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/fighter_skillpts"
         android:layout_width="53dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.575"
         app:layout_constraintStart_toEndOf="@+id/fighter_name"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/pilot_skillpts" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -231,7 +231,7 @@
         app:layout_constraintVertical_bias="0.24" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/pilot_skillpts"
         android:layout_width="53dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
