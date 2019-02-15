@@ -1,4 +1,4 @@
-package com.example.interstellarmerchant;
+package com.cs2340.interstellarmerchant;
 
 import org.junit.Test;
 
