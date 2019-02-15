@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/summary_bg"
     android:layout_height="match_parent">
 
     <TextView
@@ -17,6 +18,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/engineerpts"
+        android:textColor="#00BFFF"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintBottom_toTopOf="@+id/difficultyDisplay"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +38,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/credits"
+        android:textColor="#FFDF00"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +64,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#808080"
         app:layout_constraintVertical_bias="0.033" />
 
     <TextView
@@ -71,6 +75,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:textColor="#808080"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/welcome_summary_txt"
@@ -83,6 +88,7 @@
 
     <TextView
         android:id="@+id/Name_Display"
+        android:textColor="#DC143C"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -102,6 +108,7 @@
 
     <TextView
         android:id="@+id/skillPointHeader"
+        android:textColor="#808080"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -121,6 +128,7 @@
 
     <TextView
         android:id="@+id/pilotDisplay"
+        android:textColor="#00BFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -140,6 +148,7 @@
 
     <TextView
         android:id="@+id/traderDisplay"
+        android:textColor="#00BFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -159,6 +168,7 @@
 
     <TextView
         android:id="@+id/fighterDisplay"
+        android:textColor="#00BFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -178,6 +188,7 @@
 
     <TextView
         android:id="@+id/engineerDisplay"
+        android:textColor="#00BFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -197,6 +208,7 @@
 
     <TextView
         android:id="@+id/difficultyDisplay"
+        android:textColor="#808080"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -216,6 +228,7 @@
 
     <TextView
         android:id="@+id/creditDisplay"
+        android:textColor="#FFDF00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -235,6 +248,7 @@
 
     <TextView
         android:id="@+id/textView11"
+        android:textColor="#00FF00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -254,6 +268,7 @@
 
     <Button
         android:id="@+id/Continue"
+        android:textColor="#808080"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -269,6 +284,7 @@
 
     <TextView
         android:id="@+id/spaceship"
+        android:textColor="#00FF00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -285,6 +301,7 @@
 
     <TextView
         android:id="@+id/remskillpts"
+        android:textColor="#808080"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -304,6 +321,7 @@
 
     <TextView
         android:id="@+id/textView16"
+        android:textColor="#DC143C"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -323,6 +341,7 @@
 
     <TextView
         android:id="@+id/pilotpts"
+        android:textColor="#00BFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -342,6 +361,7 @@
 
     <TextView
         android:id="@+id/traderpts"
+        android:textColor="#00BFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -362,6 +382,7 @@
     <TextView
         android:id="@+id/fighterpts"
         android:layout_width="wrap_content"
+        android:textColor="#00BFFF"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginLeft="7dp"
@@ -380,6 +401,7 @@
 
     <TextView
         android:id="@+id/difficulty"
+        android:textColor="#808080"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
