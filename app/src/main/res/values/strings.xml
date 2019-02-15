@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Interstellar Merchant</string>
+    <string name="engineerpts">Insert</string>
+    <string name="credits">1000</string>
+    <string name="welcome_summary_txt">Your Character Starts Off With The Following Stats:</string>
+    <string name="welcome_message">Welcome! Your account has been created.</string>
+    <string name="total_skillpts_rem_txt">Skill Points Remaining:</string>
+    <string name="charname_txt">Name:</string>
+    <string name="pilot_txt">Pilot:</string>
+    <string name="trader_txt">Trader:</string>
+    <string name="fighter_txt">Fighter:</string>
+    <string name="engineer_txt">Engineer:</string>
+    <string name="difficulty_txt">Difficulty:</string>
+    <string name="credits_txt">Credits:</string>
+    <string name="spaceship_txt">SpaceShip:</string>
+    <string name="continue_button_txt">Continue</string>
+    <string name="spaceship_name">Gnat</string>
+    <string name="skillpts_remaining">0</string>
+    <string name="char_name">[Insert Name]</string>
+    <string name="pilot_skillpts">Insert</string>
+    <string name="trader_skillpts">Insert</string>
+    <string name="fighter_skillpts">Insert</string>
+    <string name="difficulty">Insert</string>
 </resources>
