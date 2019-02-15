@@ -1,4 +1,4 @@
-package com.example.interstellarmerchant;
+package com.cs2340.interstellarmerchant;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
+import com.example.interstellarmerchant.R;
 
 public class MainActivity extends AppCompatActivity {
 
