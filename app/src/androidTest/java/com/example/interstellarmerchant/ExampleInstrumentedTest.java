@@ -1,4 +1,4 @@
-package com.example.interstellarmerchant;
+package com.cs2340.interstellarmerchant;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.interstellarmerchant", appContext.getPackageName());
+        assertEquals("com.cs2340.interstellarmerchant", appContext.getPackageName());
     }
 }

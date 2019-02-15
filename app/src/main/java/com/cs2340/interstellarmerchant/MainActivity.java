@@ -1,4 +1,4 @@
-package com.cs2340.interstellarmerchant;
+package com.example.interstellarmerchant;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
