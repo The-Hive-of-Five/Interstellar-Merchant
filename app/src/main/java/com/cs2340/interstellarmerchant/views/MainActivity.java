@@ -27,14 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
         difficultySpinner = findViewById(R.id.difficulty_spinner);
 
-        final ArrayAdapter<Difficulty> difficulties = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Difficulty.values());
+        final ArrayAdapter<Difficulty> difficulties = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, Difficulty.values());
         difficulties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         difficultySpinner.setAdapter(difficulties);
 
         Button continueBtn = (Button) findViewById(R.id.continue_btn);
 
         // get the edit text for the name edit
-        final EditText nameEdit = ((TextInputLayout) findViewById(R.id.textInputLayout)).getEditText();
+        final EditText nameEdit = ((TextInputLayout)
+                findViewById(R.id.textInputLayout)).getEditText();
         // store starting text to see if changes have been made later on
         final String startingText = nameEdit.getText().toString();
         System.err.print("ERROR: " + startingText);

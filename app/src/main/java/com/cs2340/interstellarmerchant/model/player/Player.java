@@ -57,7 +57,8 @@ public class Player implements Serializable  {
     }
 
     public Player(GameConfig config) {
-        this(0, 0, 0, 0, "Default name", config);
+        this(0, 0, 0, 0,
+                "Default name", config);
     }
 
     /**
