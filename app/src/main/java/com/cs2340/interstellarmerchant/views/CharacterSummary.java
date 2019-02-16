@@ -56,7 +56,7 @@ public class CharacterSummary extends AppCompatActivity {
         int[] skills = player.getSkillPoints();
         pilot.setText(String.valueOf(skills[Player.PILOT]));
         fighter.setText(String.valueOf(skills[Player.FIGHTER]));
-        trader.setText(String.valueOf(skills[Player.ENGINEER]));
+        trader.setText(String.valueOf(skills[Player.TRADER]));
         engineer.setText(String.valueOf(skills[Player.ENGINEER]));
     }
 }
