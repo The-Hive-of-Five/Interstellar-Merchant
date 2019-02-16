@@ -1,9 +1,15 @@
 package com.cs2340.interstellarmerchant.model.player;
 
+import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
+import com.cs2340.interstellarmerchant.model.player.ship.Ship;
+import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable  {
     public static final int MAXIMUM_POINTS = 16;
+    public static final int STARTING_CREDITS = 1000;
 
     // skill points mapping for the skill area
     public static final int PILOT = 0;
@@ -13,26 +19,52 @@ public class Player {
 
     private GameConfig config;
     private int credits;
+    private Ship ship;
     private String name;
     private int[] skillPoints; // each index represents a skill
 
-    public Player(int[] skills) {
-        this.skills = skillsArray;
+    public Player(int[] skills, Ship ship, String name, GameConfig config) {
+        // handle skill points
+        if (skills.length != 4) {
+            throw new IllegalArgumentException("The skills array is invalid");
+        }
+        this.skillPoints = skills;
+        if (!appropriateNumberOfSkillPoints()) {
+            throw new IllegalArgumentException("You have more points than the max of " +
+            Player.MAXIMUM_POINTS);
+        }
+
+        // handle other parameters
+        this.ship = ship;
+        this.credits = Player.STARTING_CREDITS;
+        if (name == null || name.length() == 0) {
+            throw new IllegalArgumentException("You must give the player a name");
+        } else {
+            this.name = name;
+        }
+
+        if (config == null) {
+            throw new IllegalArgumentException("Game config can't be null");
+        } else {
+            this.config = config;
+        }
+
     }
 
-    public Player(int pilot, int fighter, int trader, int engineer) {
-        int[] skillsArray = new int[] {pilot, fighter, trader, engineer};
+    public Player(int pilot, int fighter, int trader, int engineer, String name,
+                  GameConfig config) {
+        this(new int[] {pilot, fighter, trader, engineer}, new Ship(ShipType.GNAT), name, config);
     }
 
-    public Player() {
-
+    public Player(GameConfig config) {
+        this(0, 0, 0, 0, "Default name", config);
     }
 
     /**
      * Returns true if the player does not have more than the max number of skill points
      */
     public boolean appropriateNumberOfSkillPoints() {
-        return getAvailableSkillPoints() <= Player.MAXIMUM_POINTS;
+        return getTotalSkillPoints() <= Player.MAXIMUM_POINTS;
     }
 
     /**
@@ -55,4 +87,31 @@ public class Player {
         return sum;
     }
 
+    public GameConfig getConfig() {
+        return config;
+    }
+
+    public Difficulty getDifficulty() {
+        return getConfig().getGameDifficulty();
+    }
+
+    public int getCredits() {
+        return credits;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Ship getShip() {
+        return ship;
+    }
+
+    public ShipType getShipType() {
+        return getShip().getType();
+    }
+
+    public int[] getSkillPoints() {
+        return skillPoints;
+    }
 }
