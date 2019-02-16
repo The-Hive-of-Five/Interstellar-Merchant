@@ -14,10 +14,25 @@ public class Player {
     private GameConfig config;
     private int credits;
     private String name;
-    private int[] skillPoints; // each index represents a skill field
+    private int[] skillPoints; // each index represents a skill
+
+    public Player(int[] skills) {
+        this.skills = skillsArray;
+    }
+
+    public Player(int pilot, int fighter, int trader, int engineer) {
+        int[] skillsArray = new int[] {pilot, fighter, trader, engineer};
+    }
 
     public Player() {
-        skillPoints = new int[4]; // their are 4 skill fields; see skill point mapping values above
+
+    }
+
+    /**
+     * Returns true if the player does not have more than the max number of skill points
+     */
+    public boolean appropriateNumberOfSkillPoints() {
+        return getAvailableSkillPoints() <= Player.MAXIMUM_POINTS;
     }
 
     /**

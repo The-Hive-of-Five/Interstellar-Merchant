@@ -1,4 +1,4 @@
-package com.example.interstellarmerchant;
+package com.cs2340.interstellarmerchant.views;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.cs2340.interstellarmerchant.CharacterSummary;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.example.interstellarmerchant.R;
 
@@ -33,19 +32,15 @@ public class MainActivity extends AppCompatActivity {
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText pilotSkillPts = (EditText) findViewById(R.id.pilot_skillpts);
-                EditText fighterSkillPts = (EditText) findViewById(R.id.fighter_skillpts);
-                EditText traderSkillPts = (EditText) findViewById(R.id.trader_skillpts);
-                EditText engineerSkillPts = (EditText) findViewById(R.id.engineer_skillpts);
                 TextView result = (TextView) findViewById(R.id.char_setup_result);
 
-                int pilotP = Integer.parseInt(pilotSkillPts.getText().toString());
-                int fighterP = Integer.parseInt(fighterSkillPts.getText().toString());
-                int traderP = Integer.parseInt(traderSkillPts.getText().toString());
-                int engineerP = Integer.parseInt(engineerSkillPts.getText().toString());
+                int pilotP = parseInt(R.id.pilot_skillpts);
+                int fighterP = parseInt(R.id.fighter_skillpts);
+                int traderP = parseInt(R.id.trader_skillpts);
+                int engineerP = parseInt(R.id.engineer_skillpts);
                 int totalP = pilotP + fighterP + traderP + engineerP;
 
-                if (totalP != 16) {
+                if (totalP > 16) { // you don't need to allocate all your skills points
                     result.setText("Total allocated skillpoints must be 16!");
                 } else {
                     startActivity(new Intent(MainActivity.this, CharacterSummary.class));
@@ -53,5 +48,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * Parse int from id. Assumes is edit text field.
+     * @param id of the field
+     * @return integer or 0 if no integer can be parsed
+     */
+    private int parseInt(int id) {
+        int output;
+        try {
+            output = Integer.parseInt(((EditText) findViewById(id)).toString());
+        } catch (NumberFormatException ex) {
+            output = 0; // default value
+        }
+        return output;
     }
 }

@@ -1,16 +1,7 @@
-package com.cs2340.interstellarmerchant;
+package com.cs2340.interstellarmerchant.views;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.example.interstellarmerchant.R;
 
 public class CharacterSummary extends AppCompatActivity {
