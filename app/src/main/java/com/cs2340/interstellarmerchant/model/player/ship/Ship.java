@@ -1,6 +1,8 @@
 package com.cs2340.interstellarmerchant.model.player.ship;
 
-public class Ship {
+import java.io.Serializable;
+
+public class Ship implements Serializable {
     private ShipType type;
 
     public Ship(ShipType type) {
