@@ -1,5 +1,6 @@
 package com.example.interstellarmerchant;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.cs2340.interstellarmerchant.CharacterSummary;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.example.interstellarmerchant.R;
 
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 if (totalP != 16) {
                     result.setText("Total allocated skillpoints must be 16!");
                 } else {
-                    //implement code for going to next screen here!
+                    startActivity(new Intent(MainActivity.this, CharacterSummary.class));
                 }
 
             }
