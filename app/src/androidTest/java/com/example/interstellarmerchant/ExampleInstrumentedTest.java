@@ -1,4 +1,4 @@
-package com.example.interstellarmerchant;
+package com.cs2340.interstellarmerchant;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
