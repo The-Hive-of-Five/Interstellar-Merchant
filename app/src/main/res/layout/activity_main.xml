@@ -10,6 +10,7 @@
     <EditText
         android:id="@+id/engineer_skillpts"
         android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -31,6 +32,7 @@
     <EditText
         android:id="@+id/trader_skillpts"
         android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -52,6 +54,7 @@
     <EditText
         android:id="@+id/fighter_skillpts"
         android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -154,6 +157,7 @@
     <TextView
         android:id="@+id/pilot_name"
         android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -236,6 +240,7 @@
     <EditText
         android:id="@+id/pilot_skillpts"
         android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -275,7 +280,7 @@
     <TextView
         android:id="@+id/promt_difficulty"
         android:layout_width="161dp"
-        android:layout_height="17dp"
+        android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -284,9 +289,10 @@
         android:layout_marginBottom="8dp"
         android:text="Pick Difficulty:"
         android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/difficulty_spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
         app:layout_constraintVertical_bias="1.0" />
