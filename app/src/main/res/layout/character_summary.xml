@@ -18,14 +18,14 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/engineerpts"
-        android:textColor="#00BFFF"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="#00BFFF"
         app:layout_constraintBottom_toTopOf="@+id/difficultyDisplay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toEndOf="@+id/fighterDisplay"
         app:layout_constraintTop_toBottomOf="@+id/fighterpts"
-        app:layout_constraintVertical_bias="0.193" />
+        app:layout_constraintVertical_bias="0.191" />
 
     <TextView
         android:id="@+id/credits"
@@ -64,7 +64,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#808080"
+        android:textColor="#FFFFFF"
         app:layout_constraintVertical_bias="0.033" />
 
     <TextView
@@ -75,7 +75,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textColor="#808080"
+        android:textColor="#FFFFFF"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/welcome_summary_txt"
@@ -108,7 +108,7 @@
 
     <TextView
         android:id="@+id/skillPointHeader"
-        android:textColor="#808080"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -168,7 +168,6 @@
 
     <TextView
         android:id="@+id/fighterDisplay"
-        android:textColor="#00BFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -179,18 +178,18 @@
         android:layout_marginBottom="8dp"
         android:text="@string/fighter_txt"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="#00BFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.763"
+        app:layout_constraintHorizontal_bias="0.616"
         app:layout_constraintStart_toEndOf="@+id/pilotDisplay"
         app:layout_constraintTop_toBottomOf="@+id/skillPointHeader"
         app:layout_constraintVertical_bias="0.061" />
 
     <TextView
         android:id="@+id/engineerDisplay"
-        android:textColor="#00BFFF"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="26dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -199,16 +198,17 @@
         android:layout_marginBottom="8dp"
         android:text="@string/engineer_txt"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="#00BFFF"
         app:layout_constraintBottom_toTopOf="@+id/difficulty"
         app:layout_constraintEnd_toStartOf="@+id/engineerpts"
-        app:layout_constraintHorizontal_bias="0.993"
+        app:layout_constraintHorizontal_bias="0.763"
         app:layout_constraintStart_toEndOf="@+id/traderpts"
         app:layout_constraintTop_toBottomOf="@+id/fighterDisplay"
-        app:layout_constraintVertical_bias="0.193" />
+        app:layout_constraintVertical_bias="0.205" />
 
     <TextView
         android:id="@+id/difficultyDisplay"
-        android:textColor="#808080"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -382,7 +382,6 @@
     <TextView
         android:id="@+id/fighterpts"
         android:layout_width="wrap_content"
-        android:textColor="#00BFFF"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginLeft="7dp"
@@ -392,16 +391,17 @@
         android:layout_marginBottom="8dp"
         android:text="@string/fighter_skillpts"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="#00BFFF"
         app:layout_constraintBottom_toTopOf="@+id/engineerDisplay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toEndOf="@+id/fighterDisplay"
         app:layout_constraintTop_toBottomOf="@+id/remskillpts"
-        app:layout_constraintVertical_bias="0.707" />
+        app:layout_constraintVertical_bias="0.741" />
 
     <TextView
         android:id="@+id/difficulty"
-        android:textColor="#808080"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
