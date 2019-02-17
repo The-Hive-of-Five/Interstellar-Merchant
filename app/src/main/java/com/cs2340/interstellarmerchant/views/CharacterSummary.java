@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
-import com.example.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.R;
 
 public class CharacterSummary extends AppCompatActivity {
     private Player player;
