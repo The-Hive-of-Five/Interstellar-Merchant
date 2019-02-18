@@ -105,8 +105,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createUniverse() {
+        Universe a;
         try {
-            Universe.generateUniverse(getAssets().open("universe/universe.xml"));
+            a = Universe.generateUniverse(getAssets().open("universe/universe.xml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
