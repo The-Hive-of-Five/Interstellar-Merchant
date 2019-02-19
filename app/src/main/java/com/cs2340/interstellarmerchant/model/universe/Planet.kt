@@ -2,6 +2,7 @@ package com.cs2340.interstellarmerchant.model.universe
 
 import org.w3c.dom.Element
 import java.io.InputStream
+import java.io.Serializable
 import java.lang.NumberFormatException
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
@@ -9,7 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 data class Planet (val climate: String, val diameter: Long?, val gravity: String, val name: String,
                    val population: Long?, val rotationPeriod: Int?,
                    val resource: Resource = Resource.getRandomResource(),
-                   val tech: Tech = Tech.getRandomTech()) {
+                   var tech: Tech = Tech.getRandomTech()): Serializable {
 
     companion object {
         private fun createPlanetFromNode(xmlNode: Element): Planet {
@@ -69,5 +70,25 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
             return planets
         }
+    }
+
+    override fun toString(): String {
+        return toString(false)
+    }
+
+    /**
+     * @param detailed - whether you want a detailed to string
+     */
+    fun toString(detailed: Boolean): String {
+        val builder: StringBuilder = StringBuilder()
+        builder.appendln("Planet: $name with resource, $resource")
+        if (detailed) {
+            builder.appendln("Climate: $climate")
+            builder.appendln("Diameter: $diameter")
+            builder.appendln("Gravity: $gravity")
+            builder.appendln("Population: $population")
+            builder.appendln("Rotation Period: $rotationPeriod")
+        }
+        return builder.toString()
     }
 }

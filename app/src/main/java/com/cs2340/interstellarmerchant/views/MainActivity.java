@@ -16,6 +16,7 @@ import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.utilities.LogUtility;
 
 import java.io.IOException;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        createUniverse();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 CharacterSummary.class);
         // send the player as a parameter
         nextActivityIntent.putExtra("player", player);
+        nextActivityIntent.putExtra("universe", createUniverse());
 
         // start the character summary activity
         startActivity(nextActivityIntent);
@@ -104,12 +107,14 @@ public class MainActivity extends AppCompatActivity {
         return output;
     }
 
-    private void createUniverse() {
-        Universe a;
+    private Universe createUniverse() {
+        Universe universe = null;
         try {
-            a = Universe.generateUniverse(getAssets().open("universe/universe.xml"));
+            universe = Universe.generateUniverse(getAssets()
+                    .open("universe/universe.xml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return universe;
     }
 }

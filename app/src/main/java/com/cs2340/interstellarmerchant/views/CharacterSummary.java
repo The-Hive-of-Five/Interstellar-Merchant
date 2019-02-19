@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.universe.Universe;
+import com.cs2340.interstellarmerchant.utilities.LogUtility;
 
 public class CharacterSummary extends AppCompatActivity {
     private Player player;
@@ -30,6 +32,7 @@ public class CharacterSummary extends AppCompatActivity {
 
         // get the player
         this.player = (Player) intent.getSerializableExtra("player");
+        LogUtility.log("UNIVERSE", intent.getSerializableExtra("universe").toString());
 
         // set layout
         setContentView(R.layout.character_summary);

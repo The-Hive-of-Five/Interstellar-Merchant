@@ -1,9 +1,16 @@
 package com.cs2340.interstellarmerchant.model.universe
 
+import java.io.Serializable
 import java.util.*
 
-data class SolarSystem(val planets: MutableList<Planet>) {
+data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.getRandomTech(),
+                       var x: Int? = null, var y: Int? = null): Serializable {
     val name = planets[0].name
+
+    init {
+        syncPlanets(planets)
+    }
+
 
     companion object {
         const val MAX_SOLAR_SIZE: Int = 6
@@ -31,4 +38,23 @@ data class SolarSystem(val planets: MutableList<Planet>) {
             return solarSystems
         }
     }
+    override fun toString(): String {
+        val builder: StringBuilder = StringBuilder()
+        builder.appendln("Solar System: $name @ <$x,$y>")
+        builder.appendln("Tech level: $tech")
+        for (planet: Planet in planets) {
+            builder.append(planet.toString())
+        }
+        return builder.toString()
+    }
+
+    /**
+     * syncs the tech levels of the planets with the tech levels of the universe
+     */
+    private fun syncPlanets(planet: MutableList<Planet>) {
+        for (planet: Planet in planets) {
+            planet.tech = tech
+        }
+    }
+
 }

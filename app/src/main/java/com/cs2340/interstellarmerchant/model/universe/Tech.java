@@ -1,6 +1,8 @@
 package com.cs2340.interstellarmerchant.model.universe;
 
-public enum Tech {
+import java.io.Serializable;
+
+public enum Tech implements Serializable {
     AGRICULTURE, MEDIEVAL, RENAISSANCE, EARLY_INDUSTRIAL, INDUSTRIAL, POST_INDUSTRIAL, HI_TECH;
 
     public static Tech getRandomTech() {
