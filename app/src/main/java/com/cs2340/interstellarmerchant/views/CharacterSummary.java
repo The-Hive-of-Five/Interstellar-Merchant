@@ -54,9 +54,9 @@ public class CharacterSummary extends AppCompatActivity {
 
         // set the values
         nameText.setText(player.getName());
-        difficulty.setText(player.getDifficulty().name());
+        difficulty.setText(player.getDifficulty() + "");
         credits.setText(String.valueOf(player.getCredits()));
-        spaceShip.setText(player.getShipType().name());
+        spaceShip.setText(player.getShipType() + "");
         remaining.setText(String.valueOf(player.getAvailableSkillPoints()));
         int[] skills = player.getSkillPoints();
         pilot.setText(String.valueOf(skills[Player.PILOT]));
