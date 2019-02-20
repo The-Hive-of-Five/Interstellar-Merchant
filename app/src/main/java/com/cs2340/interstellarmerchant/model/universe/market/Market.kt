@@ -4,6 +4,8 @@ import com.cs2340.interstellarmerchant.model.universe.Resource
 import com.cs2340.interstellarmerchant.model.universe.Tech
 
 /**
+ * market class for planets
+ *
  * @param hostTech - the tech of the hosting planet
  * @param hostResource - the resource of the hosting planet
  */

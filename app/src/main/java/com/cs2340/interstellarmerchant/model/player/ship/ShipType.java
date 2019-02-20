@@ -1,5 +1,8 @@
 package com.cs2340.interstellarmerchant.model.player.ship;
 
+/**
+ * enum class to represent ship types
+ */
 public enum ShipType {
     FLEA(5),
     GNAT(15),
@@ -14,6 +17,10 @@ public enum ShipType {
 
     public final int cargoSpace;
 
+    /**
+     * constructor for ShipType
+     * @param cargoSpace - the cargo space of the ship
+     */
     ShipType(int cargoSpace) {
         this.cargoSpace = cargoSpace;
     }
