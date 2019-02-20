@@ -8,7 +8,7 @@ import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
 import java.io.Serializable;
 
 /**
- * Represents a Player in the game
+ * Represents a Player in the game. A singleton
  */
 public class Player implements Serializable  {
     private static final int MAXIMUM_POINTS = 16;
@@ -20,11 +20,25 @@ public class Player implements Serializable  {
     public static final int TRADER = 2;
     public static final int ENGINEER = 3;
 
-    private final GameConfig config;
+    // player singleton instance
+    private static Player player;
+
+    private GameConfig config;
     private int credits;
     private Ship ship;
-    private final String name;
+    private String name;
     private int[] skillPoints; // each index represents a skill
+
+    /**
+     * gets the singleton instance. call init after to send parameters
+     * @return the singleton instance
+     */
+    public static Player getInstance() {
+        if (player == null) {
+            player = new Player();
+        }
+        return player;
+    }
 
     /**
      * the constructor for the Player
@@ -34,7 +48,7 @@ public class Player implements Serializable  {
      * @param name - the name of the player
      * @param config - the game config
      */
-    public Player(int[] skills, Ship ship, String name, GameConfig config) {
+    public void init(int[] skills, Ship ship, String name, GameConfig config) {
         // handle skill points
         if (skills.length != 4) {
             throw new IllegalArgumentException("The skills array is invalid");
@@ -71,17 +85,17 @@ public class Player implements Serializable  {
      * @param name - the name skill
      * @param config - the game config
      */
-    public Player(int pilot, int fighter, int trader, int engineer, String name,
+    public void init(int pilot, int fighter, int trader, int engineer, String name,
                   GameConfig config) {
-        this(new int[] {pilot, fighter, trader, engineer}, new Ship(ShipType.GNAT), name, config);
+        init(new int[] {pilot, fighter, trader, engineer}, new Ship(ShipType.GNAT), name, config);
     }
 
     /**
      * the constructor for the player. gives players defaults for all values
      * @param config - the game config
      */
-    public Player(GameConfig config) {
-        this(0, 0, 0, 0,
+    public void init(GameConfig config) {
+        init(0, 0, 0, 0,
                 "Default name", config);
     }
 
