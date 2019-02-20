@@ -8,8 +8,8 @@ import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
 import java.io.Serializable;
 
 public class Player implements Serializable  {
-    public static final int MAXIMUM_POINTS = 16;
-    public static final int STARTING_CREDITS = 1000;
+    private static final int MAXIMUM_POINTS = 16;
+    private static final int STARTING_CREDITS = 1000;
 
     // skill points mapping for the skill area
     public static final int PILOT = 0;
@@ -17,10 +17,10 @@ public class Player implements Serializable  {
     public static final int TRADER = 2;
     public static final int ENGINEER = 3;
 
-    private GameConfig config;
+    private final GameConfig config;
     private int credits;
     private Ship ship;
-    private String name;
+    private final String name;
     private int[] skillPoints; // each index represents a skill
 
     public Player(int[] skills, Ship ship, String name, GameConfig config) {
@@ -28,7 +28,7 @@ public class Player implements Serializable  {
         if (skills.length != 4) {
             throw new IllegalArgumentException("The skills array is invalid");
         }
-        this.skillPoints = skills;
+        this.skillPoints = skills.clone();
         if (!appropriateNumberOfSkillPoints()) {
             throw new IllegalArgumentException("You have more points than the max of " +
             Player.MAXIMUM_POINTS);
@@ -37,7 +37,7 @@ public class Player implements Serializable  {
         // handle other parameters
         this.ship = ship;
         this.credits = Player.STARTING_CREDITS;
-        if (name == null || name.length() == 0) {
+        if ((name == null) || name.isEmpty()) {
             throw new IllegalArgumentException("You must give the player a name");
         } else {
             this.name = name;
@@ -64,7 +64,7 @@ public class Player implements Serializable  {
     /**
      * Returns true if the player does not have more than the max number of skill points
      */
-    public boolean appropriateNumberOfSkillPoints() {
+    public final boolean appropriateNumberOfSkillPoints() {
         return getTotalSkillPoints() <= Player.MAXIMUM_POINTS;
     }
 
@@ -93,7 +93,7 @@ public class Player implements Serializable  {
     }
 
     public Difficulty getDifficulty() {
-        return getConfig().getGameDifficulty();
+        return config.getGameDifficulty();
     }
 
     public int getCredits() {
@@ -109,10 +109,10 @@ public class Player implements Serializable  {
     }
 
     public ShipType getShipType() {
-        return getShip().getType();
+        return ship.getType();
     }
 
     public int[] getSkillPoints() {
-        return skillPoints;
+        return skillPoints.clone();
     }
 }

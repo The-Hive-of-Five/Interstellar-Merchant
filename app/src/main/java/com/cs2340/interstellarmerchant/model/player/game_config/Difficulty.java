@@ -1,11 +1,9 @@
 package com.cs2340.interstellarmerchant.model.player.game_config;
 
-import java.io.Serializable;
-
-public enum Difficulty implements Serializable {
+public enum Difficulty {
     Beginner,
     Easy,
     Normal,
     Hard,
-    Impossible;
+    Impossible
 }

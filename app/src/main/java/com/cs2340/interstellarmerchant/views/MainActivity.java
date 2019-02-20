@@ -14,7 +14,10 @@ import android.widget.TextView;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
-import com.example.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.universe.Universe;
+import com.cs2340.interstellarmerchant.R;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        createUniverse();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -32,25 +36,22 @@ public class MainActivity extends AppCompatActivity {
         difficulties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         difficultySpinner.setAdapter(difficulties);
 
-        Button continueBtn = (Button) findViewById(R.id.continue_btn);
+        Button continueBtn = findViewById(R.id.continue_btn);
 
         // get the edit text for the name edit
         final EditText nameEdit = ((TextInputLayout)
                 findViewById(R.id.textInputLayout)).getEditText();
         // store starting text to see if changes have been made later on
         final String startingText = nameEdit.getText().toString();
-        System.err.print("ERROR: " + startingText);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                TextView result = (TextView) findViewById(R.id.char_setup_result);
-
+                // parse ints from fields
                 int pilotP = parseInt(R.id.pilot_skillpts);
                 int fighterP = parseInt(R.id.fighter_skillpts);
                 int traderP = parseInt(R.id.trader_skillpts);
                 int engineerP = parseInt(R.id.engineer_skillpts);
-                int totalP = pilotP + fighterP + traderP + engineerP;
 
                 // use null if the text matches the starting value
                 String name = nameEdit.getText().toString().equals(startingText) ? null
@@ -58,8 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     createPlayer(name, pilotP, fighterP, traderP, engineerP,
-                            (Difficulty)difficultySpinner.getSelectedItem());
+                            (Difficulty) difficultySpinner.getSelectedItem());
                 } catch (IllegalArgumentException exception) {
+                    TextView result = findViewById(R.id.char_setup_result);
                     result.setText(exception.getMessage());
                 }
             }
@@ -68,13 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Creates player and moves to the next screen
-     *
+     * <p>
      * Throws exception if invalid arguments for creating player
      */
     private void createPlayer(String name, int pilot, int fighter, int trader, int engineer,
                               Difficulty gameDifficulty)
             throws
-        IllegalArgumentException{
+            IllegalArgumentException {
 
         Player player = new Player(pilot, fighter, trader, engineer, name,
                 new GameConfig(gameDifficulty));
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 CharacterSummary.class);
         // send the player as a parameter
         nextActivityIntent.putExtra("player", player);
+        nextActivityIntent.putExtra("universe", createUniverse());
 
         // start the character summary activity
         startActivity(nextActivityIntent);
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Parse int from id. Assumes is edit text field.
+     *
      * @param id of the field
      * @return integer or 0 if no integer can be parsed
      */
@@ -100,5 +104,16 @@ public class MainActivity extends AppCompatActivity {
             output = 0; // default value
         }
         return output;
+    }
+
+    private Universe createUniverse() {
+        Universe universe = null;
+        try {
+            universe = Universe.generateUniverse(getAssets()
+                    .open("universe/universe.xml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return universe;
     }
 }
