@@ -16,7 +16,6 @@ import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.R;
-import com.cs2340.interstellarmerchant.utilities.LogUtility;
 
 import java.io.IOException;
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         difficulties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         difficultySpinner.setAdapter(difficulties);
 
-        Button continueBtn = (Button) findViewById(R.id.continue_btn);
+        Button continueBtn = findViewById(R.id.continue_btn);
 
         // get the edit text for the name edit
         final EditText nameEdit = ((TextInputLayout)
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     createPlayer(name, pilotP, fighterP, traderP, engineerP,
                             (Difficulty) difficultySpinner.getSelectedItem());
                 } catch (IllegalArgumentException exception) {
-                    TextView result = (TextView) findViewById(R.id.char_setup_result);
+                    TextView result = findViewById(R.id.char_setup_result);
                     result.setText(exception.getMessage());
                 }
             }

@@ -1,8 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe;
 
-import java.io.Serializable;
-
-public enum Resource implements Serializable {
+public enum Resource {
     NOSPECIALRESOURCES, MINERALRICH, MINERALPOOR, DESERT, LOTSOFWATER, RICHSOIL, POORSOIL,
     RICHFAUNA, LIFELESS, WEIRDMUSHROOMS, LOTSOFHERBS, ARTISTIC, WARLIKE;
 

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 
 
 public class Universe implements Serializable {
@@ -22,11 +23,11 @@ public class Universe implements Serializable {
         List<SolarSystem> solarSystems = SolarSystem.Companion.generateSolarSystem(planets);
         return new Universe(solarSystems);
     }
-    public static int MAX_X = 500;
-    public static int MAX_Y = 500;
+    private static final int MAX_X = 500;
+    private static final int MAX_Y = 500;
 
 
-    private List<SolarSystem> systems;
+    private final List<SolarSystem> systems;
 
     public Universe(List<SolarSystem> systems) {
         setLocations(systems);
@@ -50,7 +51,7 @@ public class Universe implements Serializable {
      * @param systems - the list of SolarSystems being modified
      */
     private void setLocations(List<SolarSystem> systems) {
-        HashSet<Pair<Integer, Integer>> locations = new HashSet<>();
+        Set<Pair<Integer, Integer>> locations = new HashSet<>();
         Random random = new Random();
         for (SolarSystem system: systems) {
             Pair<Integer, Integer> pair;

@@ -1,8 +1,6 @@
 package com.cs2340.interstellarmerchant.model.player.ship;
 
-import java.io.Serializable;
-
-public enum ShipType implements Serializable {
+public enum ShipType {
     FLEA(5),
     GNAT(15),
     FIREFLY(20),

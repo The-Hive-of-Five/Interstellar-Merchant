@@ -8,10 +8,12 @@ public class LogUtility {
      * @param tag - the tag of the log message
      * @param content - the content of the log message
      */
+
+    private static final int maxLogLineLength = 4000;
     public static void log(String tag, String content) {
-        if (content.length() > 4000) {
-            Log.d(tag, content.substring(0, 4000));
-            log(tag, content.substring(4000));
+        if (content.length() > maxLogLineLength) {
+            Log.d(tag, content.substring(0, maxLogLineLength));
+            log(tag, content.substring(maxLogLineLength));
         } else {
             Log.d(tag, content);
         }

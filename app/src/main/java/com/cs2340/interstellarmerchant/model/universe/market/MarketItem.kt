@@ -1,7 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.market
 
 import com.cs2340.interstellarmerchant.model.universe.Resource
-import com.cs2340.interstellarmerchant.model.universe.Tech
 
 /**
  * @param item - the type of item
