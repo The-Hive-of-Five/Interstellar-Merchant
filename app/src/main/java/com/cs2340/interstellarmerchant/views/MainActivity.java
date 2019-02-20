@@ -81,8 +81,11 @@ public class MainActivity extends AppCompatActivity {
             throws
             IllegalArgumentException {
 
-        Player player = new Player(pilot, fighter, trader, engineer, name,
+        // PLAYER IS A SINGLETON
+        Player player = Player.getInstance();
+        player.init(pilot, fighter, trader, engineer, name,
                 new GameConfig(gameDifficulty));
+
         Intent nextActivityIntent = new Intent(MainActivity.this,
                 CharacterSummary.class);
         // send the player as a parameter
