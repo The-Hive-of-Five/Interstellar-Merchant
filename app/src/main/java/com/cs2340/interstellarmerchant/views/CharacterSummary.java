@@ -9,6 +9,9 @@ import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.utilities.LogUtility;
 
+/**
+ * controls the character summary
+ */
 public class CharacterSummary extends AppCompatActivity {
     private Player player;
     private TextView nameText;

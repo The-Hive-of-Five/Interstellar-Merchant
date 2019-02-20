@@ -87,6 +87,8 @@ public class Player implements Serializable  {
 
     /**
      * Returns true if the player does not have more than the max number of skill points
+     *
+     * @return if the player does not have more than the max skill points
      */
     public final boolean appropriateNumberOfSkillPoints() {
         return getTotalSkillPoints() <= Player.MAXIMUM_POINTS;

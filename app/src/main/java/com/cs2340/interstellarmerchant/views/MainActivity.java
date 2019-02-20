@@ -19,6 +19,9 @@ import com.cs2340.interstellarmerchant.R;
 
 import java.io.IOException;
 
+/**
+ * the starting activity for the game
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Spinner difficultySpinner;
