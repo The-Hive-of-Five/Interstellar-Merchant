@@ -29,6 +29,10 @@ public class Player implements Serializable  {
     private String name;
     private int[] skillPoints; // each index represents a skill
 
+    /**
+     * gets the singleton instance. call init after to send parameters
+     * @return the singleton instance
+     */
     public static Player getInstance() {
         if (player == null) {
             player = new Player();
