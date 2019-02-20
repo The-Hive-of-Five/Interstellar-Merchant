@@ -11,6 +11,9 @@ import java.util.Random;
 import java.util.Set;
 
 
+/**
+ * Universe class to keep track of solar systems and locations of those solar systems
+ */
 public class Universe implements Serializable {
 
     /**
@@ -21,17 +24,21 @@ public class Universe implements Serializable {
     public static Universe generateUniverse(InputStream fileInputStream) {
         List<Planet> planets = Planet.Companion.generatePlanets(fileInputStream);
         List<SolarSystem> solarSystems = SolarSystem.Companion.generateSolarSystem(planets);
-        return new Universe(solarSystems);
+        return new Universe(solarSystems.toArray(new SolarSystem[0]));
     }
     private static final int MAX_X = 500;
     private static final int MAX_Y = 500;
 
 
-    private final List<SolarSystem> systems;
+    private final SolarSystem[] systems;
 
-    public Universe(List<SolarSystem> systems) {
+    /**
+     * constructor for universe class
+     * @param systems - the solar systems of the universe. locations will be overwritten
+     */
+    public Universe(SolarSystem[] systems) {
         setLocations(systems);
-        this.systems = systems;
+        this.systems = systems.clone();
     }
 
     @Override
@@ -50,7 +57,7 @@ public class Universe implements Serializable {
      * Modifies the locations of each solar system and gives each a unique location
      * @param systems - the list of SolarSystems being modified
      */
-    private void setLocations(List<SolarSystem> systems) {
+    private void setLocations(SolarSystem[] systems) {
         Set<Pair<Integer, Integer>> locations = new HashSet<>();
         Random random = new Random();
         for (SolarSystem system: systems) {

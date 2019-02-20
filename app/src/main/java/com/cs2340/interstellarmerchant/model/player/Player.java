@@ -7,6 +7,9 @@ import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
 
 import java.io.Serializable;
 
+/**
+ * Represents a Player in the game
+ */
 public class Player implements Serializable  {
     private static final int MAXIMUM_POINTS = 16;
     private static final int STARTING_CREDITS = 1000;
@@ -23,6 +26,14 @@ public class Player implements Serializable  {
     private final String name;
     private int[] skillPoints; // each index represents a skill
 
+    /**
+     * the constructor for the Player
+     *
+     * @param skills - the skills of the player (max size of 4)
+     * @param ship - the player's ship
+     * @param name - the name of the player
+     * @param config - the game config
+     */
     public Player(int[] skills, Ship ship, String name, GameConfig config) {
         // handle skill points
         if (skills.length != 4) {
@@ -51,11 +62,24 @@ public class Player implements Serializable  {
 
     }
 
+    /**
+     * the constructor for the player. gives the player a default ship
+     * @param pilot - the pilot skill
+     * @param fighter - the fighter skill
+     * @param trader - the trader skill
+     * @param engineer - the engineer skill
+     * @param name - the name skill
+     * @param config - the game config
+     */
     public Player(int pilot, int fighter, int trader, int engineer, String name,
                   GameConfig config) {
         this(new int[] {pilot, fighter, trader, engineer}, new Ship(ShipType.GNAT), name, config);
     }
 
+    /**
+     * the constructor for the player. gives players defaults for all values
+     * @param config - the game config
+     */
     public Player(GameConfig config) {
         this(0, 0, 0, 0,
                 "Default name", config);
@@ -88,30 +112,58 @@ public class Player implements Serializable  {
         return sum;
     }
 
+    /**
+     * gets the game config
+     * @return gets the game config
+     */
     public GameConfig getConfig() {
         return config;
     }
 
+    /**
+     * gets the game difficulty
+     * @return the game difficulty
+     */
     public Difficulty getDifficulty() {
         return config.getGameDifficulty();
     }
 
+    /**
+     * gets the player's credits
+     * @return the player's credits
+     */
     public int getCredits() {
         return credits;
     }
 
+    /**
+     * gets the player's name
+     * @return the player's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * gets the player's ship
+     * @return the player's ship
+     */
     public Ship getShip() {
         return ship;
     }
 
+    /**
+     * get's the player's ship type
+     * @return the player's ship type
+     */
     public ShipType getShipType() {
         return ship.getType();
     }
 
+    /**
+     * gets the player's skill points
+     * @return the player's skill points
+     */
     public int[] getSkillPoints() {
         return skillPoints.clone();
     }
