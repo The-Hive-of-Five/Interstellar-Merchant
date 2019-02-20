@@ -1,10 +1,14 @@
 package com.cs2340.interstellarmerchant.model.universe
 
+import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
+import com.cs2340.interstellarmerchant.model.universe.market.Economy
+import com.cs2340.interstellarmerchant.model.universe.market.Item
 import org.w3c.dom.Element
 import java.io.InputStream
 import java.io.Serializable
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
+import kotlin.math.roundToInt
 
 /**
  * planet data class
@@ -21,9 +25,75 @@ import javax.xml.parsers.DocumentBuilderFactory
 data class Planet (val climate: String, val diameter: Long?, val gravity: String, val name: String,
                    val population: Long?, val rotationPeriod: Int?,
                    val resource: Resource = Resource.getRandomResource(),
-                   var tech: Tech = Tech.getRandomTech()): Serializable {
+                   var tech: Tech = Tech.getRandomTech()): Economy, Serializable {
+    private val currentEvents = HashSet<PlanetEvent>()
+
+    /**
+     * Used for calculating the price of items in its economy
+     */
+    override fun calculatePrice(item: Item?): Int {
+        var price: Int
+        if (item != null) {
+            price = item.base
+
+            // account for tech level difference
+            price += (tech.ordinal - item.sellTechLevel.ordinal) * item.priceIncreasePerTech
+
+            val random = Random()
+            var factor: Int
+            when {
+                item.decreaseResource == this.resource -> {// decrease the price of the item based on predefined allowed amount of variance
+                    factor =
+                            -1 * (random.nextInt(decreaseEventVar.second - decreaseEventVar.first)
+                                    + decreaseEventVar.first)
+                }  currentEvents.contains(item.increaseEvent) -> {
+                factor =
+                        1 * (random.nextInt(increaseEventVar.second
+                                - increaseEventVar.first)
+                                + decreaseEventVar.first)
+            } else -> {
+                    // determine if the variance increases the price
+                    factor = if (random.nextBoolean()) 1 else -1
+                    factor *= random.nextInt(item.variance)
+                }
+            }
+
+            val netVariance = ((factor.toDouble()/100.0) * price).roundToInt()
+            price += netVariance
+        } else {
+            price = -1
+        }
+        return price
+    }
+
+    override fun toString(): String {
+        return toString(false)
+    }
+
+    /**
+     * method to retrieve either a detailed or non-detailed version of the planet as a string
+     *
+     * @param detailed - whether you want a detailed to string
+     *
+     * @return the string representation of the planet
+     */
+    fun toString(detailed: Boolean): String {
+        val builder: StringBuilder = StringBuilder()
+        builder.appendln("Planet: $name with resource, $resource")
+        if (detailed) {
+            builder.appendln("Climate: $climate")
+            builder.appendln("Diameter: $diameter")
+            builder.appendln("Gravity: $gravity")
+            builder.appendln("Population: $population")
+            builder.appendln("Rotation Period: $rotationPeriod")
+        }
+        return builder.toString()
+    }
 
     companion object {
+        // denote the variance effects from increase and decrease events
+        val decreaseEventVar = Pair(40, 90)
+        val increaseEventVar = Pair(50, 90)
 
         /**
          * creates planet object from xml node
@@ -102,29 +172,5 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
             return planets
         }
-    }
-
-    override fun toString(): String {
-        return toString(false)
-    }
-
-    /**
-     * method to retrieve either a detailed or non-detailed version of the planet as a string
-     *
-     * @param detailed - whether you want a detailed to string
-     *
-     * @return the string representation of the planet
-     */
-    fun toString(detailed: Boolean): String {
-        val builder: StringBuilder = StringBuilder()
-        builder.appendln("Planet: $name with resource, $resource")
-        if (detailed) {
-            builder.appendln("Climate: $climate")
-            builder.appendln("Diameter: $diameter")
-            builder.appendln("Gravity: $gravity")
-            builder.appendln("Population: $population")
-            builder.appendln("Rotation Period: $rotationPeriod")
-        }
-        return builder.toString()
     }
 }

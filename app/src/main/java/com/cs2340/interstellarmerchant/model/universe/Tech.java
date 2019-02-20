@@ -3,7 +3,7 @@ package com.cs2340.interstellarmerchant.model.universe;
 /**
  * Keeps track of the various tech levels
  */
-public enum Tech {
+public enum Tech implements Comparable<Tech>{
     AGRICULTURE, MEDIEVAL, RENAISSANCE, EARLY_INDUSTRIAL, INDUSTRIAL, POST_INDUSTRIAL, HI_TECH;
 
     /**
@@ -14,4 +14,5 @@ public enum Tech {
         Tech[] tech = Tech.values();
         return tech[(int) (Math.random() * tech.length)];
     }
+    
 }
