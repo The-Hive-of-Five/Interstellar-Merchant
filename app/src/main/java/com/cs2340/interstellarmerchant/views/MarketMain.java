@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.cs2340.interstellarmerchant.R;
 
@@ -31,5 +33,14 @@ public class MarketMain extends AppCompatActivity{
 
         itemNames.add("time machine");
         itemPrices.add("$3");
+
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.recycler_market);
+        MarketBuyRecyclerViewAdapter adapter = new MarketBuyRecyclerViewAdapter(itemNames, itemPrices, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
