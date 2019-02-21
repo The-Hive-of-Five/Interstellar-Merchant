@@ -1,5 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe
 
+import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import java.io.Serializable
 import java.util.*
 

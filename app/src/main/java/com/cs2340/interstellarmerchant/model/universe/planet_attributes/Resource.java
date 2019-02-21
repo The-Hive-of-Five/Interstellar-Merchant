@@ -1,4 +1,4 @@
-package com.cs2340.interstellarmerchant.model.universe;
+package com.cs2340.interstellarmerchant.model.universe.planet_attributes;
 
 /**
  * Resource enum to keep track of resources

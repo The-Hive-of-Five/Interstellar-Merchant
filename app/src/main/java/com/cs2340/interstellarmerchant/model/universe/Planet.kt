@@ -3,10 +3,14 @@ package com.cs2340.interstellarmerchant.model.universe
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
 import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import com.cs2340.interstellarmerchant.model.universe.market.Item
+import com.cs2340.interstellarmerchant.model.universe.market.Market
+import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
+import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import org.w3c.dom.Element
 import java.io.InputStream
 import java.io.Serializable
 import java.util.*
+import java.util.stream.Collectors
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.math.roundToInt
 
@@ -26,7 +30,52 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
                    val population: Long?, val rotationPeriod: Int?,
                    val resource: Resource = Resource.getRandomResource(),
                    var tech: Tech = Tech.getRandomTech()): Economy, Serializable {
+
     private val currentEvents = HashSet<PlanetEvent>()
+
+    // market must be initialized after current events
+    val market = Market(this)
+
+
+    init {
+
+
+    }
+
+    override fun filterItems(potentialItems: List<Item>): MutableList<Item>? {
+        val random = Random()
+        val chanceInStore = 80
+        return potentialItems
+                .stream()
+                .filter { item: Item ->
+                    var output = item.produceTechLevel.compareTo(tech) <= 0
+                    output = output && random.nextInt(100) < chanceInStore
+
+                    return@filter output
+                }
+                .collect(Collectors.toList())
+    }
+
+    override fun calculateQuantity(item: Item?): Int {
+        val random = Random()
+        var factor: Int
+        var signFactor: Int
+        var minVariance: Int
+        var maxVariance: Int
+        if (item!!.idealTechLevel == tech) { // increase quantity if ideal tech level
+            minVariance = 50
+            maxVariance = 150
+            signFactor = 1
+        } else {
+            signFactor = if (random.nextBoolean()) -1 else 1
+            minVariance = 10
+            maxVariance = 90
+        }
+
+        factor = random.nextInt(maxVariance - minVariance) + minVariance
+        val netVariance = signFactor * ((factor.toDouble()/100.0) * item.baseQuantity).roundToInt()
+        return item.baseQuantity + netVariance
+    }
 
     /**
      * Used for calculating the price of items in its economy
@@ -42,15 +91,18 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
             val random = Random()
             var factor: Int
             when {
-                item.decreaseResource == this.resource -> {// decrease the price of the item based on predefined allowed amount of variance
+                item.decreaseResource == this.resource -> {
+                    // decrease the price of the item based on predefined allowed amount of variance
                     factor =
                             -1 * (random.nextInt(decreaseEventVar.second - decreaseEventVar.first)
                                     + decreaseEventVar.first)
-                }  currentEvents.contains(item.increaseEvent) -> {
-                factor =
-                        1 * (random.nextInt(increaseEventVar.second
-                                - increaseEventVar.first)
-                                + decreaseEventVar.first)
+                }
+                 currentEvents.contains(item.increaseEvent) -> {
+                    // increase the price based on event
+                    factor =
+                            1 * (random.nextInt(increaseEventVar.second
+                                    - increaseEventVar.first)
+                                    + decreaseEventVar.first)
             } else -> {
                     // determine if the variance increases the price
                     factor = if (random.nextBoolean()) 1 else -1
@@ -86,8 +138,13 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
             builder.appendln("Gravity: $gravity")
             builder.appendln("Population: $population")
             builder.appendln("Rotation Period: $rotationPeriod")
+            builder.appendln(market)
         }
         return builder.toString()
+    }
+
+    override fun getEconomyName(): String {
+        return name
     }
 
     companion object {
