@@ -102,6 +102,14 @@ public class Player implements Serializable  {
     }
 
     /**
+     * the constructor for the player. gives players defaults for all values
+     */
+    public void init() {
+        init(0, 0, 0, 0,
+                "Default name", new GameConfig(Difficulty.Hard));
+    }
+
+    /**
      * Whether the player can buy the items in the order
      * @param order - the player's order
      * @return whether the player can buy the items

@@ -1,11 +1,12 @@
 package com.cs2340.interstellarmerchant.model.universe.market.items
 
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
+import java.io.Serializable
 
 /**
  * Order wrapper
  */
-data class Order(val order: Map<MarketItem, Int>) {
+data class Order(val order: Map<MarketItem, Int>): Serializable {
     var totalCost = 0
     var quantity = 0
     // the minimum technology an entity needs to be able to sell all the items in an order

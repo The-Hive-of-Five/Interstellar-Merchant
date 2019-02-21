@@ -6,10 +6,14 @@ import com.cs2340.interstellarmerchant.model.universe.market.items.MarketItem
  * An inventory class. Objects that extend this are given an inventory
  */
 abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
+    var size: Int = 0
+
     companion object {
         const val DEFAULT_MAX = 100000
     }
-    @JvmField protected var inventory: MutableMap<MarketItem, Int>
+
+    // DO NOT MODIFY THIS FIELD OUTSIDE THIS CLASS
+    private var inventory: MutableMap<MarketItem, Int>
 
     init {
         inventory = HashMap()
@@ -32,13 +36,19 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
 
     operator fun plusAssign(subset: Map<MarketItem, Int>) {
         for ((item: MarketItem, quantity: Int) in subset) {
-            inventory[item] = inventory[item]!! + quantity
+            size += quantity
+            if (inventory[item] != null) {
+                inventory[item] = inventory[item]!! + quantity
+            } else {
+                inventory[item] = quantity
+            }
         }
     }
 
     operator fun minusAssign(subset: Map<MarketItem, Int>) {
         for ((item: MarketItem, quantity: Int) in subset) {
             inventory[item] = inventory[item]!! - quantity
+            size -= quantity
         }
     }
 
@@ -47,6 +57,30 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
      * @return the amount of available cargo
      */
     fun getAvailableSpace(): Int {
-        return maxSize - inventory.size
+        return maxSize - size
+    }
+
+    /**
+     * @return get the amount of items in the inventory
+     */
+    fun getUsedSpace(): Int {
+        return size
+    }
+
+    /**
+     * Clear inventory
+     */
+    fun clearInventory() {
+        inventory = HashMap()
+        size = 0
+    }
+
+    /**
+     * gets items (clones the map so the player can't modify the inventory)
+     *
+     * @return the items in the inventory
+     */
+    fun getInventoryClone(): HashMap<MarketItem, Int> {
+        return HashMap(inventory)
     }
 }

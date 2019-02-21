@@ -18,10 +18,13 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
 
     init {
         val acceptableItems = hostEconomy.filterItems(Item.values().toList())
+        val itemsMap: MutableMap<MarketItem, Int> = HashMap()
         for (item: Item in acceptableItems) {
             // add the item to the store
-            inventory[MarketItem(item, hostEconomy)] = hostEconomy.calculateQuantity(item)
+            itemsMap[MarketItem(item, hostEconomy)] = hostEconomy.calculateQuantity(item)
         }
+        // add the items to the inventory
+        super.plusAssign(itemsMap)
     }
 
     /**
@@ -84,7 +87,7 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
     override fun toString(): String {
         val builder = StringBuilder()
         builder.appendln("Store for ${hostEconomy.economyName}")
-        for ((item: MarketItem, quantity: Int) in inventory) {
+        for ((item: MarketItem, quantity: Int) in super.getInventoryClone()) {
             builder.appendln("$item with quantity, $quantity")
         }
         return builder.toString()
