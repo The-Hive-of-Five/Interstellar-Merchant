@@ -19,6 +19,8 @@
         <activity
             android:name="com.cs2340.interstellarmerchant.views.CharacterSummary"
             android:parentActivityName="com.cs2340.interstellarmerchant.views.MainActivity" />
+        <activity
+            android:name="com.cs2340.interstellarmerchant.views.OnPlanet" />
     </application>
 
 </manifest>
