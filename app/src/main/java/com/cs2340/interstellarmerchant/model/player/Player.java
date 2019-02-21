@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 public class Player implements Serializable  {
     private static final int MAXIMUM_POINTS = 16;
-    private static final int STARTING_CREDITS = 1000;
+    public static final int STARTING_CREDITS = 1000;
 
     // skill points mapping for the skill area
     public static final int PILOT = 0;

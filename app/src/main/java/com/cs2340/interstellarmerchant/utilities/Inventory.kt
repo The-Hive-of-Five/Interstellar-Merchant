@@ -1,6 +1,6 @@
 package com.cs2340.interstellarmerchant.utilities
 
-import com.cs2340.interstellarmerchant.model.universe.market.items.MarketItem
+import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 
 /**
  * An inventory class. Objects that extend this are given an inventory
@@ -13,7 +13,7 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
     }
 
     // DO NOT MODIFY THIS FIELD OUTSIDE THIS CLASS
-    private var inventory: MutableMap<MarketItem, Int>
+    private var inventory: MutableMap<Item, Int>
 
     init {
         inventory = HashMap()
@@ -24,9 +24,9 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
      *
      * @param subset - whether the inventory contains the subset
      */
-    operator fun contains(subset: Map<MarketItem, Int>): Boolean {
+    operator fun contains(subset: Map<Item, Int>): Boolean {
         var valid = true
-        for ((item: MarketItem, quantity: Int) in subset) {
+        for ((item: Item, quantity: Int) in subset) {
             if (subset[item] == null || subset.getValue(item) < quantity) {
                 valid = false
             }
@@ -34,8 +34,8 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
         return valid
     }
 
-    operator fun plusAssign(subset: Map<MarketItem, Int>) {
-        for ((item: MarketItem, quantity: Int) in subset) {
+    open operator fun plusAssign(subset: Map<Item, Int>) {
+        for ((item: Item, quantity: Int) in subset) {
             size += quantity
             if (inventory[item] != null) {
                 inventory[item] = inventory[item]!! + quantity
@@ -45,8 +45,8 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
         }
     }
 
-    operator fun minusAssign(subset: Map<MarketItem, Int>) {
-        for ((item: MarketItem, quantity: Int) in subset) {
+    operator fun minusAssign(subset: Map<Item, Int>) {
+        for ((item: Item, quantity: Int) in subset) {
             inventory[item] = inventory[item]!! - quantity
             size -= quantity
         }
@@ -80,7 +80,7 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
      *
      * @return the items in the inventory
      */
-    fun getInventoryClone(): HashMap<MarketItem, Int> {
+    fun getInventoryClone(): HashMap<Item, Int> {
         return HashMap(inventory)
     }
 }

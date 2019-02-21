@@ -5,7 +5,6 @@ import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.universe.Planet;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
-import com.cs2340.interstellarmerchant.model.universe.market.items.MarketItem;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech;
 import com.cs2340.interstellarmerchant.utilities.Inventory;
@@ -71,7 +70,18 @@ public class MarketTest {
         // add five food to market
         addItemsToMarket(focusMarket);
 
-        focusMarket.buyItems(generateOrder(), player);
+        Order order = generateOrder();
+        focusMarket.buyItems(order, player);
+
+        // the market should have no more items
+        assertThat(focusMarket.getUsedSpace(), is(0));
+        // the player should have five items
+        assertThat(player.getShip().getUsedSpace(), is(5));
+        // the order should now have a price
+        assertThat(order.getTotalCost() + " should be greater than 0" ,
+                order.getTotalCost() > 0);
+        // the player should have the cost of the order less credits
+        assertThat(player.getCredits(), is(Player.STARTING_CREDITS - order.getTotalCost()));
 
     }
 
@@ -90,8 +100,8 @@ public class MarketTest {
      */
     public static void addItemsToMarket(Market market) {
         // add 5 food to the market
-        HashMap<MarketItem, Integer> marketAddition = new HashMap<>();
-        marketAddition.put(new MarketItem(Item.FOOD, focusPlanet), 5);
+        HashMap<Item, Integer> marketAddition = new HashMap<>();
+        marketAddition.put(Item.FOOD, 5);
 
         market.plusAssign(marketAddition);
     }
@@ -101,9 +111,9 @@ public class MarketTest {
      * @return
      */
     public static Order generateOrder() {
-        HashMap<MarketItem, Integer> marketAddition = new HashMap<>();
-        marketAddition.put(new MarketItem(Item.FOOD, focusPlanet), 5);
-        return new Order(marketAddition);
+        HashMap<Item, Integer> order = new HashMap<>();
+        order.put(Item.FOOD, 5);
+        return new Order(order);
     }
 
 

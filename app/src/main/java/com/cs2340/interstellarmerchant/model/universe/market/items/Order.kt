@@ -6,20 +6,43 @@ import java.io.Serializable
 /**
  * Order wrapper
  */
-data class Order(val order: Map<MarketItem, Int>): Serializable {
-    var totalCost = 0
+data class Order(val order: Map<Item, Int>): Serializable {
+    private var totalCost: Int? = null
     var quantity = 0
-    // the minimum technology an entity needs to be able to sell all the items in an order
+    // the minimum technology an entity needs to be able to sell all the items in the order
     var minSellTech: Tech? = null
     init {
-        for ((item: MarketItem, quantity: Int) in order) {
-            if (minSellTech == null || minSellTech!! < item.item.sellTechLevel) {
-                minSellTech = item.item.sellTechLevel
+        for ((item: Item, quantity: Int) in order) {
+            if (minSellTech == null || minSellTech!! < item.sellTechLevel) {
+                minSellTech = item.sellTechLevel
             }
-            totalCost += item.price!! * quantity
             this.quantity += quantity
         }
     }
+
+    /**
+     * Updates the cost of the order to the market's current prices
+     *
+     * @param totalCost - the cost of all the items as determined by the market
+     */
+    fun setPrice(totalCost: Int) {
+        this.totalCost = totalCost;
+    }
+
+    /**
+     * Gets the total cost of the order
+     * @return the total cost
+     */
+    fun getTotalCost(): Int {
+        if (totalCost == null) {
+            throw IllegalStateException("No market has been passed to the order, so the order's" +
+                    "actual value hasn't been calculated");
+        } else {
+            return totalCost!!;
+        }
+    }
+
+
 
 }
 
