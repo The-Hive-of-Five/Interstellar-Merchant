@@ -54,6 +54,16 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
         return output;
     }
 
+    override fun canBuyItem(item: Item?, quantity: Int): OrderStatus {
+        var orderStatus: OrderStatus
+        if (item!!.sellTechLevel > tech) {
+            orderStatus = OrderStatus.NOT_ENOUGH_TECH;
+        } else {
+            orderStatus = OrderStatus.SUCCESS
+        }
+        return orderStatus
+    }
+
     override fun filterItems(potentialItems: List<Item>): MutableList<Item>? {
         val random = Random()
         val chanceInStore = 80

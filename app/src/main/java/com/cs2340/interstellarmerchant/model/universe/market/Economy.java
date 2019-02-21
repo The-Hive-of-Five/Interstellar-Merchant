@@ -12,11 +12,19 @@ import java.util.List;
 public interface Economy {
 
     /**
-     * Can the host economy buy the items from the player
+     * Can the host economy buy the item from the player
      * @param order - the order of items the user is trying to sell
      * @return whether the order can proceed or not
      */
     OrderStatus canBuyItems(Order order);
+
+    /**
+     * Can the host economy buy the item from the player
+     * @param item - the item
+     * @param quantity - the quantity
+     * @return whether the order can proceed or not
+     */
+    OrderStatus canBuyItem(Item item, int quantity);
 
     /**
      * Calculates the price of the item based on the economy for the market

@@ -27,7 +27,7 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
             // add the item to the store inventory
             itemsMap[item] = hostEconomy.calculateQuantity(item)
             // add the item to the store price reference
-            priceLog[item] = MarketItem(item, hostEconomy)
+            addItemToPriceRef(item)
         }
         // add the items to the inventory
         super.plusAssign(itemsMap)
@@ -36,10 +36,20 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
     override operator fun plusAssign(subset: Map<Item, Int>) {
         super.plusAssign(subset)
         for ((item: Item) in subset) { // if the item does not have a price record, add it
-            if (priceLog[item] == null) {
-                priceLog[item] = MarketItem(item, hostEconomy)
-            }
+            addItemToPriceRef(item)
         }
+    }
+
+    /**
+     * Conditionally adds item to price log AKA dictionary of prices that the market can reference
+     *
+     * @param item - the item
+     */
+    fun addItemToPriceRef(item: Item): Int {
+        if (priceLog[item] == null) {
+            priceLog[item] = MarketItem(item, hostEconomy)
+        }
+        return priceLog[item]!!.price!!
     }
 
     /**
@@ -68,6 +78,49 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
             }
             return output
         }
+    }
+
+    /**
+     * Calculates the order's price based on the market and updates its price attribute
+     *
+     * @param order - the order
+     */
+    fun calculateOrderPrice(order: Order) {
+        var totalCost: Int = 0
+        for ((item: Item, quantity: Int) in order.order) {
+            totalCost += priceLog[item]!!.price!! * quantity
+        }
+        order.setPrice(totalCost)
+    }
+
+    /**
+     * Gets the item buy price (aka user wants to buy the item)
+     * If the item is not in the store, a null pointer error will be thrown
+     *
+     * @param item - the item being bought
+     */
+    fun getItemBuyPrice(item: Item): Int {
+        return priceLog[item]!!.price!!
+    }
+
+    /**
+     * Gets the sell price of the item (value the host economy will pay the player for the item)
+     *
+     * @param item - the item you're trying to get the sell price of
+     * @return the item price or -1 if the host economy can't buy the item
+     */
+    fun getItemSellPrice(item: Item): Int {
+        var output: Int
+        val order = HashMap<Item, Int>()
+        if (hostEconomy.canBuyItem(item, 1) == OrderStatus.SUCCESS) {
+            // calculates market price for item if not in price log (.8 to reduce sell price)
+            output = (addItemToPriceRef(item) * .8).toInt()
+
+        } else {
+            // means the host economy can't even buy this item from the player
+            output = -1
+        }
+        return output
     }
 
     /**
@@ -101,19 +154,6 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
             }
             return output
         }
-    }
-
-    /**
-     * Calculates the order's price based on the market and updates its price attribute
-     *
-     * @param order - the order
-     */
-    fun calculateOrderPrice(order: Order) {
-        var totalCost: Int = 0
-        for ((item: Item, quantity: Int) in order.order) {
-            totalCost += priceLog[item]!!.price!! * quantity
-        }
-        order.setPrice(totalCost)
     }
 
     override fun toString(): String {
