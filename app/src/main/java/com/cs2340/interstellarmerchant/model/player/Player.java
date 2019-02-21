@@ -4,6 +4,8 @@ import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
 import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
+import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
+import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 
 import java.io.Serializable;
 
@@ -100,6 +102,23 @@ public class Player implements Serializable  {
     }
 
     /**
+     * Whether the player can buy the items in the order
+     * @param order - the player's order
+     * @return whether the player can buy the items
+     */
+    public OrderStatus canBuyItems(Order order) {
+        OrderStatus output;
+        if (order.getQuantity() > ship.getAvailableSpace()) {
+            output = OrderStatus.NOT_ENOUGH_SPACE;
+        } else if (order.getTotalCost() > credits) {
+            output = OrderStatus.NOT_ENOUGH_CREDITS;
+        } else {
+            output = OrderStatus.SUCCESS;
+        }
+        return output;
+    }
+
+    /**
      * Returns true if the player does not have more than the max number of skill points
      *
      * @return if the player does not have more than the max skill points
@@ -142,6 +161,14 @@ public class Player implements Serializable  {
      */
     public Difficulty getDifficulty() {
         return config.getGameDifficulty();
+    }
+
+    /**
+     * Sets the credits
+     * @param newValue - the new value of the credits
+     */
+    public void setCredits(int newValue) {
+        this.credits = newValue;
     }
 
     /**

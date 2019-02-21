@@ -65,7 +65,7 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
     /**
      * syncs the tech levels of the planets with the tech levels of the universe
      */
-    private fun syncPlanets(planet: MutableList<Planet>) {
+    private fun syncPlanets(planets: MutableList<Planet>) {
         for (planet: Planet in planets) {
             planet.tech = tech
         }

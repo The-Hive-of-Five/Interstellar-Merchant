@@ -2,8 +2,10 @@ package com.cs2340.interstellarmerchant.model.universe
 
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
 import com.cs2340.interstellarmerchant.model.universe.market.Economy
-import com.cs2340.interstellarmerchant.model.universe.market.Item
 import com.cs2340.interstellarmerchant.model.universe.market.Market
+import com.cs2340.interstellarmerchant.model.universe.market.items.Item
+import com.cs2340.interstellarmerchant.model.universe.market.items.Order
+import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import org.w3c.dom.Element
@@ -42,13 +44,23 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
     }
 
+    override fun canBuyItems(order: Order?): OrderStatus {
+        var output: OrderStatus
+        if (order!!.minSellTech!! > tech) {
+            output = OrderStatus.NOT_ENOUGH_TECH
+        } else {
+            output = OrderStatus.SUCCESS
+        }
+        return output;
+    }
+
     override fun filterItems(potentialItems: List<Item>): MutableList<Item>? {
         val random = Random()
         val chanceInStore = 80
         return potentialItems
                 .stream()
                 .filter { item: Item ->
-                    var output = item.produceTechLevel.compareTo(tech) <= 0
+                    var output = item.produceTechLevel <= tech
                     output = output && random.nextInt(100) < chanceInStore
 
                     return@filter output

@@ -1,4 +1,4 @@
-package com.cs2340.interstellarmerchant.model.universe.market
+package com.cs2340.interstellarmerchant.model.universe.market.items
 
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource

@@ -1,17 +1,14 @@
 package com.cs2340.interstellarmerchant.model.player.ship;
 
-import com.cs2340.interstellarmerchant.model.universe.market.Item;
+import com.cs2340.interstellarmerchant.utilities.Inventory;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class that represents ships
  */
-public class Ship implements Serializable {
+public class Ship extends Inventory implements Serializable {
     private ShipType type;
-    private List<Item> cargo;
 
     /**
      * Constructor for Ship class
@@ -19,8 +16,8 @@ public class Ship implements Serializable {
      * @param type - the type of the ship
      */
     public Ship(ShipType type) {
+        super(type.cargoSpace);
         this.type  = type;
-        cargo = new ArrayList<>(type.cargoSpace);
     }
 
     /**

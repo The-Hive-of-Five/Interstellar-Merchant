@@ -3,7 +3,7 @@ package com.cs2340.interstellarmerchant.model.universe.planet_attributes;
 /**
  * Keeps track of the various tech levels
  */
-public enum Tech implements Comparable<Tech>{
+public enum Tech {
     AGRICULTURE, MEDIEVAL, RENAISSANCE, EARLY_INDUSTRIAL, INDUSTRIAL, POST_INDUSTRIAL, HI_TECH;
 
     /**

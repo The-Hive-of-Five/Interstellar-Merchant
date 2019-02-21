@@ -1,5 +1,6 @@
-package com.cs2340.interstellarmerchant.model.universe.market
+package com.cs2340.interstellarmerchant.model.universe.market.items
 
+import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import java.io.Serializable
 import java.util.*
 
@@ -9,7 +10,7 @@ import java.util.*
  * @param item - the type of item
   *
  */
-data class MarketItem(private val item: Item, private val economy: Economy): Serializable {
+data class MarketItem(val item: Item, private val economy: Economy): Serializable {
     val priceHistory: MutableList<Int> = LinkedList() // keeps track of the old prices
     var price: Int? = null
 
