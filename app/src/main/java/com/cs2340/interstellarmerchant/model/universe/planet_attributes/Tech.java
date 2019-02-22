@@ -1,4 +1,4 @@
-package com.cs2340.interstellarmerchant.model.universe;
+package com.cs2340.interstellarmerchant.model.universe.planet_attributes;
 
 /**
  * Keeps track of the various tech levels
@@ -14,4 +14,5 @@ public enum Tech {
         Tech[] tech = Tech.values();
         return tech[(int) (Math.random() * tech.length)];
     }
+    
 }

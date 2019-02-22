@@ -2,6 +2,8 @@ package com.cs2340.interstellarmerchant.model.universe;
 
 import android.util.Pair;
 
+import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
+
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.HashSet;
