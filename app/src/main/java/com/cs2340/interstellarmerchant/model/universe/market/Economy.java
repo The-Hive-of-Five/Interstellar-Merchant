@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Interface to be implemented by entities with economies (AKA traders and planets)
+ * Economies DETERMINE the prices and quantities in the market
  */
 public interface Economy {
 

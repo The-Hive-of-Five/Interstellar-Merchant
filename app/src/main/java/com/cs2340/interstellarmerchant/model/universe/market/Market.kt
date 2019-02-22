@@ -44,12 +44,13 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
      * Conditionally adds item to price log AKA dictionary of prices that the market can reference
      *
      * @param item - the item
+     * @return the marketItem
      */
-    fun addItemToPriceRef(item: Item): Int {
+    fun addItemToPriceRef(item: Item): MarketItem {
         if (priceLog[item] == null) {
             priceLog[item] = MarketItem(item, hostEconomy)
         }
-        return priceLog[item]!!.price!!
+        return priceLog[item]!!
     }
 
     /**
@@ -104,23 +105,13 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
     }
 
     /**
-     * Gets the sell price of the item (value the host economy will pay the player for the item)
+     * Gets the item sell price (AKA the user wants to sell the item to the store)
+     * Will generate a buy and sell price if the item is not already in the store
      *
-     * @param item - the item you're trying to get the sell price of
-     * @return the item price or -1 if the host economy can't buy the item
+     * @param item - the item being bought
      */
     fun getItemSellPrice(item: Item): Int {
-        var output: Int
-        val order = HashMap<Item, Int>()
-        if (hostEconomy.canBuyItem(item, 1) == OrderStatus.SUCCESS) {
-            // calculates market price for item if not in price log (.8 to reduce sell price)
-            output = (addItemToPriceRef(item) * .8).toInt()
-
-        } else {
-            // means the host economy can't even buy this item from the player
-            output = -1
-        }
-        return output
+        return addItemToPriceRef(item).sellPrice!!
     }
 
     /**

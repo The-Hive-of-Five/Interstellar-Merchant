@@ -1,6 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.events.planet_events;
 
-import com.cs2340.interstellarmerchant.model.universe.Planet;
+import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource;
 
 import java.util.Arrays;

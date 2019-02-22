@@ -3,7 +3,7 @@ package com.cs2340.interstellarmerchant.model.universe.market;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
-import com.cs2340.interstellarmerchant.model.universe.Planet;
+import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech;
