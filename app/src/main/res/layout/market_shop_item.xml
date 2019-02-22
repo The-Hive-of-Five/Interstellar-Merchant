@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    android:padding="15sp"
+    android:id="@+id/shop_parent_layout">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/item_name"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginLeft="15sp"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/item_name"
+        android:text="Price"
+        android:id="@+id/item_price"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginLeft="30sp"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:layout_width="80sp"
+        android:layout_height="30sp"
+        android:id="@+id/quantity_edit"
+        android:layout_toRightOf="@+id/item_price"
+        android:layout_marginLeft="30sp"
+        android:background="#FFFFFF"
+        android:layout_centerVertical="true"
+        ></EditText>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:layout_toRightOf="@+id/quantity_edit"
+        android:layout_marginLeft="30sp"
+        android:background="#87ceeb"
+        android:layout_centerVertical="true"
+        android:text="@string/buy_label"
+        android:id="@+id/buyButton"
+        />
+</RelativeLayout>

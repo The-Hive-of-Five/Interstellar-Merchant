@@ -31,4 +31,5 @@
     <string name="default_zero">0</string>
     <string name="allocate_label">Skill points to allocate:</string>
     <string name="trader_label">Trader:</string>
+    <string name="buy_label">Buy</string>
 </resources>

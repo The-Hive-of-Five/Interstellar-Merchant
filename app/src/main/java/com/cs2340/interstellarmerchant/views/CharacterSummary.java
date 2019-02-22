@@ -3,7 +3,9 @@ package com.cs2340.interstellarmerchant.views;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Button;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.R;
@@ -23,6 +25,7 @@ public class CharacterSummary extends AppCompatActivity {
     private TextView credits;
     private TextView spaceShip;
     private TextView remaining;
+    private Button continuebtn;
 
 
     @Override
@@ -63,5 +66,13 @@ public class CharacterSummary extends AppCompatActivity {
         fighter.setText(String.valueOf(skills[Player.FIGHTER]));
         trader.setText(String.valueOf(skills[Player.TRADER]));
         engineer.setText(String.valueOf(skills[Player.ENGINEER]));
+
+        continuebtn = (Button) findViewById(R.id.Continue);
+        continuebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CharacterSummary.this, OnPlanet.class));
+            }
+        });
     }
 }
