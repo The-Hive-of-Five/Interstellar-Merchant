@@ -4,6 +4,7 @@ import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
+import java.io.Serializable
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.math.roundToInt
@@ -12,7 +13,7 @@ import kotlin.math.roundToInt
  * Used to determine various values for the planet's market based on attributes of the planet
  * @param planet - the host planet
  */
-class PlanetEconomy(private val planet: Planet): Economy {
+class PlanetEconomy(private val planet: Planet): Economy, Serializable {
     override fun canBuyItems(order: Order?): OrderStatus {
         var output: OrderStatus
         if (order!!.minSellTech!! > planet.tech) {
@@ -20,7 +21,7 @@ class PlanetEconomy(private val planet: Planet): Economy {
         } else {
             output = OrderStatus.SUCCESS
         }
-        return output;
+        return output
     }
 
     /**
@@ -29,7 +30,7 @@ class PlanetEconomy(private val planet: Planet): Economy {
     override fun canBuyItem(item: Item?, quantity: Int): OrderStatus {
         var orderStatus: OrderStatus
         if (item!!.sellTechLevel > planet.tech) {
-            orderStatus = OrderStatus.NOT_ENOUGH_TECH;
+            orderStatus = OrderStatus.NOT_ENOUGH_TECH
         } else {
             orderStatus = OrderStatus.SUCCESS
         }
