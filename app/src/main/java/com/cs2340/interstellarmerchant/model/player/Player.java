@@ -4,15 +4,20 @@ import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
 import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
+import com.cs2340.interstellarmerchant.model.travel.TravelEntity;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 
 import java.io.Serializable;
 
+import javax.inject.Singleton;
+
 /**
  * Represents a Player in the game. A singleton
  */
-public class Player implements Serializable  {
+
+@Singleton
+public class Player extends TravelEntity implements Serializable  {
     private static final int MAXIMUM_POINTS = 16;
     public static final int STARTING_CREDITS = 1000;
 
