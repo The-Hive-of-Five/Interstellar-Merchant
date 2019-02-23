@@ -1,5 +1,7 @@
 package com.cs2340.interstellarmerchant.model.universe.planet
 
+import com.cs2340.interstellarmerchant.model.travel.Location
+import com.cs2340.interstellarmerchant.model.universe.SolarSystem
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
 import com.cs2340.interstellarmerchant.model.universe.market.Market
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
@@ -26,22 +28,32 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
                    val population: Long?, val rotationPeriod: Int?,
                    val resource: Resource = Resource.getRandomResource(),
                    var tech: Tech = Tech.getRandomTech(), var x: Int? = null, var y: Int? = null)
-    : Serializable {
+    : Location(), Serializable {
 
     // keeps track of the current events (switch to event manager?)
     val currentEvents = HashSet<PlanetEvent>()
 
     // the planet's economy
-    val economy = PlanetEconomy(this)
+    private val economy = PlanetEconomy(this)
 
     // market must be initialized after current events (market for the planet)
     val market = Market(economy)
 
-
-    init {
+    override fun getX(): Int {
+        return x!!
     }
 
+    override fun getY(): Int {
+       return y!!
+    }
 
+    override fun getSolarSystem(): SolarSystem {
+        return solarSystem
+    }
+
+    override fun getLocationType(): LocationType {
+        return LocationType.PLANET
+    }
 
     override fun toString(): String {
         return toString(false)

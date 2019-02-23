@@ -43,6 +43,14 @@ public class Universe implements Serializable {
         this.systems = systems.clone();
     }
 
+    /**
+     * Gets the solar systems
+     * @return the solar systems
+     */
+    public SolarSystem[] getSystems() {
+        return systems;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

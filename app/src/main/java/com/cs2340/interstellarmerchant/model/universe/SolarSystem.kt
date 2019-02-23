@@ -20,6 +20,7 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
 
     init {
         syncPlanets(planets)
+
         setPlanetLocation(planets)
     }
 
