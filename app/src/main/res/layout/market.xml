@@ -8,9 +8,47 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/recycler_market"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shopgoods_header"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-13dp" />
 
+    <TextView
+        android:id="@+id/shopgoods_header"
+        android:layout_width="383dp"
+        android:layout_height="33dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="25dp"
+        android:text="Items Available for purchase displayed. Select Quantity:"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_market_cargo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shopcargo_header"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="1dp" />
+
+    <TextView
+        android:id="@+id/shopcargo_header"
+        android:layout_width="383dp"
+        android:layout_height="33dp"
+        android:layout_below="@+id/recycler_market"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="216dp"
+        android:layout_marginEnd="24dp"
+        android:text="Items Available to sell displayed. Select Quantity:"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
 </RelativeLayout>
