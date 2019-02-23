@@ -23,12 +23,14 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
 
     private ArrayList<String> itemNames = new ArrayList<>();
     private ArrayList<String> itemPrices = new ArrayList<>();
+    private ArrayList<String> itemTotals = new ArrayList<>();
     private Context itemContext;
 
-    public MarketSellRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext) {
+    public MarketSellRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, ArrayList<String> itemTotals, Context itemContext) {
         this.itemNames = itemNames;
         this.itemPrices = itemPrices;
         this.itemContext = itemContext;
+        this.itemTotals = itemTotals;
     }
 
     @NonNull
@@ -44,6 +46,7 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
+        viewHolder.itemTotal.setText(itemTotals.get(i));
         viewHolder.sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +67,7 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
 
         TextView itemName;
         TextView itemPrice;
+        TextView itemTotal;
         EditText quantityEdit;
         RelativeLayout sellLayout;
         Button sellButton;
@@ -71,6 +75,7 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
             super(itemView);
             itemName = itemView.findViewById(R.id.cargo_item_name);
             itemPrice = itemView.findViewById(R.id.cargo_item_price);
+            itemTotal = itemView.findViewById(R.id.total_available_cargo);
             quantityEdit = itemView.findViewById(R.id.quantity_edit);
             sellLayout = itemView.findViewById(R.id.cargo_parent_layout);
             sellButton = itemView.findViewById(R.id.sell_Button);

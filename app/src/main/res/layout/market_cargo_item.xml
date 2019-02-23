@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="80sp"
         android:layout_height="wrap_content"
         android:text="Name"
         android:id="@+id/cargo_item_name"
@@ -26,28 +26,52 @@
         android:id="@+id/cargo_item_price"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        android:layout_marginLeft="30sp"
+        android:layout_marginLeft="10sp"
         android:layout_centerVertical="true"
         />
 
     <EditText
-        android:layout_width="80sp"
+        android:layout_width="50sp"
         android:layout_height="30sp"
         android:id="@+id/cargo_quantity_edit"
         android:layout_toRightOf="@+id/cargo_item_price"
-        android:layout_marginLeft="30sp"
+        android:layout_marginLeft="20sp"
         android:background="#FFFFFF"
         android:layout_centerVertical="true"
         ></EditText>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/slash"
+        android:layout_toRightOf="@+id/cargo_quantity_edit"
+        android:text="@string/slash"
+        android:layout_marginLeft="5sp"
+        android:textColor="#FFFFFF"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:id="@+id/total_available_cargo"
+        android:text="Total"
+        android:layout_toRightOf="@+id/slash"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5sp"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="30sp"
-        android:layout_toRightOf="@+id/cargo_quantity_edit"
+        android:layout_toRightOf="@+id/total_available_cargo"
         android:layout_marginLeft="30sp"
         android:background="#87ceeb"
         android:layout_centerVertical="true"
         android:text="Sell"
         android:id="@+id/sell_Button"
+        android:layout_marginRight="30sp"
         />
 </RelativeLayout>

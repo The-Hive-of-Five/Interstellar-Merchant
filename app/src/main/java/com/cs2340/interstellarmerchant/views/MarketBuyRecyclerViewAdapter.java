@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuyRecyclerViewAdapter.ViewHolder>{
@@ -23,12 +24,14 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
 
     private ArrayList<String> itemNames = new ArrayList<>();
     private ArrayList<String> itemPrices = new ArrayList<>();
+    private ArrayList<String> itemTotals = new ArrayList<>();
     private Context itemContext;
 
-    public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext) {
+    public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, ArrayList<String> itemTotals, Context itemContext) {
         this.itemNames = itemNames;
         this.itemPrices = itemPrices;
         this.itemContext = itemContext;
+        this.itemTotals = itemTotals;
     }
 
     @NonNull
@@ -44,6 +47,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
+        viewHolder.itemTotal.setText(itemTotals.get(i));
         viewHolder.buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +68,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
 
         TextView itemName;
         TextView itemPrice;
+        TextView itemTotal;
         EditText quantityEdit;
         RelativeLayout buyLayout;
         Button buyButton;
@@ -71,6 +76,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
             itemPrice = itemView.findViewById(R.id.item_price);
+            itemTotal = itemView.findViewById(R.id.total_available_shop);
             quantityEdit = itemView.findViewById(R.id.quantity_edit);
             buyLayout = itemView.findViewById(R.id.shop_parent_layout);
             buyButton = itemView.findViewById(R.id.buyButton);
