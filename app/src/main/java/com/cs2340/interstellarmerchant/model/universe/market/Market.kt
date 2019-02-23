@@ -54,10 +54,11 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
     }
 
     /**
-     * Used to buy items
+     * User wants to buy items from the store
      *
      * @param order - the player's orders
      * @param player - the player buying the items
+     * @return Whether the order was successful
      */
     fun buyItems(order: Order, player: Player): OrderStatus {
         if(!super.contains(order.order)) { // make sure the market actually has the items
@@ -119,6 +120,7 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
      *
      * @param order - the player's orders
      * @param player - the player buying the items
+     * @return whether the order was sucessful
      */
     fun sellItems(order: Order, player: Player): OrderStatus {
         val playerInventory: Inventory = player.ship

@@ -34,7 +34,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     val currentEvents = HashSet<PlanetEvent>()
 
     // the planet's economy
-    val economy = PlanetEconomy(this)
+    private val economy = PlanetEconomy(this)
 
     // market must be initialized after current events (market for the planet)
     val market = Market(economy)
