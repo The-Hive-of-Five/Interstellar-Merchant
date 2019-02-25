@@ -11,6 +11,7 @@ import kotlin.math.roundToInt
 
 /**
  * Used to determine various values for the planet's market based on attributes of the planet
+ * Really just exists to keep the Planet class smaller
  * @param planet - the host planet
  */
 class PlanetEconomy(private val planet: Planet): Economy, Serializable {
