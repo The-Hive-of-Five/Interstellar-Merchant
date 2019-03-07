@@ -112,6 +112,7 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
      * @param item - the item being bought
      */
     fun getItemSellPrice(item: Item): Int {
+        println(addItemToPriceRef(item))
         return addItemToPriceRef(item).sellPrice!!
     }
 

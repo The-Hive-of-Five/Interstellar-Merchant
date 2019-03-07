@@ -13,7 +13,7 @@ class SpaceToll: Location() {
          *
          * @return the random toll
          */
-        fun generateRandomToll(): Trader {
+        fun generateRandomToll(): Trader? {
             return null
         }
     }

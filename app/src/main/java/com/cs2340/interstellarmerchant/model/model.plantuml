@@ -63,8 +63,6 @@ package universe {
 
      }
      class Planet {
-        +x: int
-        +y: int
      }
 
 
@@ -125,8 +123,8 @@ package universe {
 
 package travel {
       class TravelController {
-          + setLocationWithoutPenalty(player: Player, planet: Player): Void
-          + travel(player: Player, plantet: Planet): Void
+          + setLocationWithoutPenalty(entity: LocationEntity, location: Location): Void
+          + travel(entity: LocationEntity, location: Location): Void
       }
 
       class Trip {
@@ -135,6 +133,20 @@ package travel {
         + fuelCost: Int
       }
       TravelController -- Universe : Can access
+
+      abstract class Location {
+        + x: Int
+        + y: Int
+        + solarSystem: SolarSystem
+      }
+
+      abstract class LocationEntity {
+        + currentLocation: Location
+        + locationHistory: List<Location>
+      }
+      LocationEntity <|-- Player
+      Location <|-- Planet
+
 }
 
 Inventory <|-- Ship

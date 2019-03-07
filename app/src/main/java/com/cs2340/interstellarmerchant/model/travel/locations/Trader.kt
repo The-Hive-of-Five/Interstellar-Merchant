@@ -13,7 +13,7 @@ class Trader: Location() {
          *
          * @return the random trader
          */
-        fun generateRandomTrader(): Trader {
+        fun generateRandomTrader(): Trader? {
             return null
         }
     }

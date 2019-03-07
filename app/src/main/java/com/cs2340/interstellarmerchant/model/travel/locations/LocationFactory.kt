@@ -16,7 +16,7 @@ class LocationFactory {
      * @return the location
      */
     fun getLocation(locationType: String): Location {
-        var output: Location
+        var output: Location?
         when (locationType) {
             "trader" -> {
                 output = Trader.generateRandomTrader()
@@ -24,7 +24,7 @@ class LocationFactory {
                 output = SpaceToll.generateRandomToll()
             }
         }
-        return output
+        return output!!
     }
 
     /**
@@ -33,13 +33,13 @@ class LocationFactory {
      * @return the random location
      */
     fun getRandomLocation(): Location {
-        var output: Location
+        var output: Location?
         if (Random().nextBoolean()) {
             output = Trader.generateRandomTrader()
         } else {
             output = SpaceToll.generateRandomToll()
         }
 
-        return output
+        return output!!
     }
 }
