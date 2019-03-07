@@ -1,5 +1,7 @@
 package com.cs2340.interstellarmerchant.model.player;
 
+import android.util.Log;
+
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
@@ -11,6 +13,8 @@ import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 import java.io.Serializable;
 
 import javax.inject.Singleton;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Represents a Player in the game. A singleton
@@ -123,8 +127,10 @@ public class Player extends TravelEntity implements Serializable  {
         OrderStatus output;
         if (order.getQuantity() > ship.getAvailableSpace()) {
             output = OrderStatus.NOT_ENOUGH_SPACE;
+            Log.d(TAG, "not enough space on ship to buy");
         } else if (order.getTotalCost() > credits) {
             output = OrderStatus.NOT_ENOUGH_CREDITS;
+            Log.d(TAG, "not enough credits to buy");
         } else {
             output = OrderStatus.SUCCESS;
         }

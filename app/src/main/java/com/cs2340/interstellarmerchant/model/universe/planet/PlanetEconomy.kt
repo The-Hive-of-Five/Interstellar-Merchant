@@ -4,6 +4,7 @@ import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
+import com.cs2340.interstellarmerchant.utilities.logd
 import java.io.Serializable
 import java.util.*
 import java.util.stream.Collectors
@@ -18,6 +19,8 @@ class PlanetEconomy(private val planet: Planet): Economy, Serializable {
         var output: OrderStatus
         if (order!!.minSellTech!! > planet.tech) {
             output = OrderStatus.NOT_ENOUGH_TECH
+            logd("not enough tech to sell")
+
         } else {
             output = OrderStatus.SUCCESS
         }
