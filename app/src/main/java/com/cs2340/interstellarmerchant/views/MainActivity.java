@@ -1,9 +1,10 @@
 package com.cs2340.interstellarmerchant.views;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,14 +12,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.cs2340.interstellarmerchant.model.player.Player;
-import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
-import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
-import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
+import com.cs2340.interstellarmerchant.model.universe.Universe;
+import com.cs2340.interstellarmerchant.viewmodels.CreateCharacterViewModel;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * the starting activity for the game
@@ -26,12 +25,15 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private Spinner difficultySpinner;
+    private CreateCharacterViewModel charViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        createUniverse();
+        final Universe universe = createUniverse();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         difficultySpinner = findViewById(R.id.difficulty_spinner);
 
@@ -47,51 +49,41 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.textInputLayout)).getEditText();
         // store starting text to see if changes have been made later on
         final String startingText = nameEdit.getText().toString();
+        charViewModel = ViewModelProviders.of(this).get(CreateCharacterViewModel.class);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // parse ints from fields
-                int pilotP = parseInt(R.id.pilot_skillpts);
-                int fighterP = parseInt(R.id.fighter_skillpts);
-                int traderP = parseInt(R.id.trader_skillpts);
-                int engineerP = parseInt(R.id.engineer_skillpts);
-
-                // use null if the text matches the starting value
-                String name = nameEdit.getText().toString().equals(startingText) ? null
-                        : nameEdit.getText().toString();
-
                 try {
-                    createPlayer(name, pilotP, fighterP, traderP, engineerP,
-                            (Difficulty) difficultySpinner.getSelectedItem());
+                    charViewModel.universe = universe;
+                    charViewModel.makePlayer(nameEdit.getText().toString().equals(startingText) ? null
+                                    : nameEdit.getText().toString(), (Difficulty) difficultySpinner.getSelectedItem(),
+                            parseInt(R.id.pilot_skillpts), parseInt(R.id.fighter_skillpts), parseInt(R.id.trader_skillpts),
+                            parseInt(R.id.engineer_skillpts));
+
+
+                    moveToNext();
                 } catch (IllegalArgumentException exception) {
                     TextView result = findViewById(R.id.char_setup_result);
                     result.setText(exception.getMessage());
                 }
+
             }
         });
     }
 
     /**
-     * Creates player and moves to the next screen
+     * moves to the next screen
      * <p>
      * Throws exception if invalid arguments for creating player
      */
-    private void createPlayer(String name, int pilot, int fighter, int trader, int engineer,
-                              Difficulty gameDifficulty)
+    private void moveToNext()
             throws
             IllegalArgumentException {
-
-        // PLAYER IS A SINGLETON
-        Player player = Player.getInstance();
-        player.init(pilot, fighter, trader, engineer, name,
-                new GameConfig(gameDifficulty));
-
         Intent nextActivityIntent = new Intent(MainActivity.this,
                 CharacterSummary.class);
         // send the player as a parameter
-        nextActivityIntent.putExtra("player", player);
-        nextActivityIntent.putExtra("universe", createUniverse());
+        nextActivityIntent.putExtra("player", charViewModel.player);
+        nextActivityIntent.putExtra("universe", charViewModel.universe);
 
         // start the character summary activity
         startActivity(nextActivityIntent);

@@ -10,25 +10,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;
 
 public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuyRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketBuyRecyclerViewAd";
 
-    private ArrayList<String> itemNames = new ArrayList<>();
-    private ArrayList<String> itemPrices = new ArrayList<>();
+    private ArrayList<String> itemNames;
+    private ArrayList<String> itemPrices;
     private Context itemContext;
+    public MarketViewModel mv;
 
-    public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext) {
+    public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, MarketViewModel mv) {
         this.itemNames = itemNames;
         this.itemPrices = itemPrices;
         this.itemContext = itemContext;
+        this.mv = mv;
     }
 
     @NonNull
@@ -40,7 +42,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
@@ -48,11 +50,22 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on buy");
+                int finalValue = 0;
+                try {
+                    if (viewHolder.quantityEdit != null) {
+                        String val = viewHolder.quantityEdit.getText().toString();
+                        finalValue = Integer.parseInt(val);
+                    }
+                } catch (Exception e) { // CHANGE THIS, IF THE INT PARSE THROWS AN EXCEPTION IT JUST SETS AMOUNT TO 0
+                    finalValue = 0;
+                }
+                mv.buyItem(finalValue, i);
                 //get quantity from @+id/quantity_edit
                 //need calculations for if player can buy, display in toast message below
                 Toast.makeText(itemContext,"[Buy result shown here]",Toast.LENGTH_LONG).show();
             }
         });
+
     }
 
     @Override
@@ -60,13 +73,14 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
         return itemNames.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView itemName;
         TextView itemPrice;
         EditText quantityEdit;
         RelativeLayout buyLayout;
         Button buyButton;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
@@ -75,6 +89,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
             buyLayout = itemView.findViewById(R.id.shop_parent_layout);
             buyButton = itemView.findViewById(R.id.buyButton);
         }
+
     }
 
 }
