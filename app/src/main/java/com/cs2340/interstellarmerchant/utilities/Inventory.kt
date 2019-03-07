@@ -27,7 +27,7 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
     operator fun contains(subset: Map<Item, Int>): Boolean {
         var valid = true
         for ((item: Item, quantity: Int) in subset) {
-            if (subset[item] == null || subset.getValue(item) < quantity) {
+            if (inventory[item] == null || inventory[item]!! < quantity) {
                 valid = false
             }
         }
