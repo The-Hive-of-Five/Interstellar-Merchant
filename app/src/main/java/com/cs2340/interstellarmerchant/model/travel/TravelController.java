@@ -44,7 +44,7 @@ public class TravelController {
      *
      * @return the ACTUAL location the ship travels to*
      */
-    public Location Travel(TravelEntity entity, Location newLocation) {
+    public Location travel(TravelEntity entity, Location newLocation) {
         Trip trip = new Trip(entity.getCurrentLocation(), newLocation);
         Ship entityShip = entity.getShip();
 

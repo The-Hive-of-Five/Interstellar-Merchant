@@ -1,7 +1,7 @@
 package com.cs2340.interstellarmerchant.model.universe.market
 
 import com.cs2340.interstellarmerchant.model.player.Player
-import com.cs2340.interstellarmerchant.model.universe.market.items.Item
+import com.cs2340.interstellarmerchant.utilities.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.MarketItem
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus

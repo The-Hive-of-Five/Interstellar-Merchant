@@ -1,0 +1,230 @@
+@startuml
+
+title __APP's Class Diagram__\n
+
+  package com.cs2340.interstellarmerchant {
+    class BuildConfig {
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    class BuildConfig {
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.views {
+      class CharacterSummary {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.utilities {
+      package com.cs2340.interstellarmerchant.utilities.command {
+        interface Command {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.player {
+      package com.cs2340.interstellarmerchant.model.player.game_config {
+        enum Difficulty {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.universe {
+      package com.cs2340.interstellarmerchant.model.universe.market {
+        interface Economy {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.player {
+      package com.cs2340.interstellarmerchant.model.player.game_config {
+        class GameConfig {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.travel {
+      abstract class Location {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.utilities {
+      class LogUtility {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.views {
+      class MainActivity {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.views {
+      class MarketBuyRecyclerViewAdapter {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.views {
+      class MarketMain {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.views {
+      class MarketSellRecyclerViewAdapter {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.views {
+      class OnPlanet {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.universe {
+      package com.cs2340.interstellarmerchant.model.universe.events.planet_events {
+        enum PlanetEvent {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.player {
+      class Player {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.universe {
+      package com.cs2340.interstellarmerchant.model.universe.planet_attributes {
+        enum Resource {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.player {
+      package com.cs2340.interstellarmerchant.model.player.ship {
+        class Ship {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.player {
+      package com.cs2340.interstellarmerchant.model.player.ship {
+        enum ShipType {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.universe {
+      package com.cs2340.interstellarmerchant.model.universe.planet_attributes {
+        enum Tech {
+        }
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.travel {
+      class TravelController {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.travel {
+      abstract class TravelEntity {
+      }
+    }
+  }
+  
+
+  package com.cs2340.interstellarmerchant {
+    package com.cs2340.interstellarmerchant.model.universe {
+      class Universe {
+      }
+    }
+  }
+  
+
+  CharacterSummary -up-|> AppCompatActivity
+  CharacterSummary o-- Player : player
+  GameConfig -up-|> Serializable
+  GameConfig o-- Difficulty : gameDifficulty
+  MainActivity -up-|> AppCompatActivity
+  MarketBuyRecyclerViewAdapter -up-|> Adapter
+  MarketMain -up-|> AppCompatActivity
+  MarketSellRecyclerViewAdapter -up-|> Adapter
+  OnPlanet -up-|> AppCompatActivity
+  Player -up-|> Serializable
+  Player -up-|> TravelEntity
+  Player o-- GameConfig : config
+  Player o-- Ship : ship
+  Ship -up-|> Serializable
+  Ship -up-|> Inventory
+  Ship o-- ShipType : type
+  TravelEntity o-- Location : currentLocation
+  Universe -up-|> Serializable
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

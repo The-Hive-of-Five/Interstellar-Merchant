@@ -1,7 +1,7 @@
 package com.cs2340.interstellarmerchant.model.universe.planet
 
 import com.cs2340.interstellarmerchant.model.universe.market.Economy
-import com.cs2340.interstellarmerchant.model.universe.market.items.Item
+import com.cs2340.interstellarmerchant.utilities.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
 import java.io.Serializable

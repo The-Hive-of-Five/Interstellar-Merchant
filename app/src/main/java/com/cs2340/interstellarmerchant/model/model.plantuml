@@ -1,0 +1,149 @@
+@startuml
+
+title UML Diagram (if relationship multiplicity not stated, assume 1 to 1)
+
+package player {
+    package game_config {
+        class GameConfig {
+
+        }
+
+        enum Difficulty {
+        }
+        GameConfig -- Difficulty : > Contains
+
+    }
+
+    class Player {
+        +name: String
+        +skills: Int[]
+    }
+
+
+    package ship {
+        class Ship {
+            +fuel: Int
+        }
+        enum ShipType {
+        }
+        Ship -- ShipType : > Stores
+
+    }
+
+     Player -- GameConfig : > Stores
+
+     Player -- Ship : > Owns
+
+}
+package utilities {
+    abstract class Inventory {
+        +capacity: Int {read only}
+        +plusAssign(items: List<Item, Int>): Void
+        +minusAssign(items: List<Item, Int>): Void
+        +contains(items: List<Item, Int>): Void
+    }
+    enum Item {
+        +minTechLevel: Tech
+        +minRsourceLevel: Resource
+        +basePrice: Int
+        +variance: Double
+    }
+    Inventory "Many" o-- "1" Item : Contains <
+
+}
+package universe {
+      class Universe {
+          + getSystems(): SolarSystem[]
+          + toString(): String
+     }
+
+     class SolarSystem {
+        +x: int
+        +y: int
+
+     }
+     class Planet {
+        +x: int
+        +y: int
+     }
+
+
+     enum Resource {
+
+     }
+
+     enum Tech {
+
+     }
+
+      Planet -- Resource : > Described by
+      Planet -- Tech : > Described by
+
+
+
+     package market {
+        interface Economy {
+            {abstract} + canBuyItems()
+            {abstract} + canBuyItem()
+            {abstract} + calculatePrice()
+            {abstract} + filterItems()
+            {abstract} + calculateQuantity()
+            {abstract} + getEconomyName()
+        }
+
+        class Market {
+            + buy(order: Order, player: Player): OrderStatus
+            + sell(order: Order, player: Player): OrderStatus
+        }
+
+        package items {
+            class MarketItem {
+                + item: Item
+                + price: int
+                + priceHistory: List<Int>
+            }
+
+            class Order {
+                +order: Map<Item, Int>
+                +quantity: Int
+                +price: Int
+            }
+
+        }
+     }
+
+
+    Universe "Many" o-- "1" SolarSystem : Contains <
+    SolarSystem "Many" o-- "1" Planet : Contains <
+    Planet -- Market : > owns
+    Economy <|.. Planet
+
+
+    Market -- Economy : > Given
+    Market -- MarketItem : > Logs
+}
+
+package travel {
+      class TravelController {
+          + setLocationWithoutPenalty(player: Player, planet: Player): Void
+          + travel(player: Player, plantet: Planet): Void
+      }
+
+      class Trip {
+        + startingLocation: Planet
+        + endingLocation: Planet
+        + fuelCost: Int
+      }
+      TravelController -- Universe : Can access
+}
+
+Inventory <|-- Ship
+Inventory <|-- Market
+
+
+
+
+
+
+
+@enduml

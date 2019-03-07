@@ -1,6 +1,7 @@
 package com.cs2340.interstellarmerchant.model.universe.market.items
 
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
+import com.cs2340.interstellarmerchant.utilities.Item
 import java.io.Serializable
 
 /**
@@ -8,10 +9,12 @@ import java.io.Serializable
  */
 data class Order(val order: Map<Item, Int>): Serializable {
     private var totalCost: Int? = null
+    // the number of items in the order
     var quantity = 0
     // the minimum technology an entity needs to be able to sell all the items in the order
     var minSellTech: Tech? = null
     init {
+        // determines the minimum technology required to sell the item
         for ((item: Item, quantity: Int) in order) {
             if (minSellTech == null || minSellTech!! < item.sellTechLevel) {
                 minSellTech = item.sellTechLevel

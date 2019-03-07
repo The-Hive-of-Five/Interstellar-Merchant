@@ -1,7 +1,5 @@
 package com.cs2340.interstellarmerchant.utilities
 
-import com.cs2340.interstellarmerchant.model.universe.market.items.Item
-
 /**
  * An inventory class. Objects that extend this are given an inventory
  */
