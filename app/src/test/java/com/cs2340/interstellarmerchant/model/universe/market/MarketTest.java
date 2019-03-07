@@ -85,6 +85,14 @@ public class MarketTest {
 
     }
 
+    @Test
+    public void sellPriceTest() {
+        marketIsEmpty();
+        assertThat("Item sell price must be" +
+                " greater than 0 and not null",
+                focusMarket.getItemSellPrice(Item.FOOD) > 0);
+    }
+
 
     /**
      * Ensures the market is empty

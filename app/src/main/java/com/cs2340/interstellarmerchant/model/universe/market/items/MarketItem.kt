@@ -12,6 +12,9 @@ import java.util.*
  */
 data class MarketItem(val item: Item, private val economy: Economy): Serializable {
     companion object {
+        /* the constant for which the the sell price is depreciated
+        (market pays less for the item than what it would sell for
+         */
         const val sellPriceValue = .8
     }
 
@@ -21,8 +24,8 @@ data class MarketItem(val item: Item, private val economy: Economy): Serializabl
     var sellPrice: Int? = null // the price the store is willing to pay for the item
 
     init {
-        // calculate the initial price
-        price = economy.calculatePrice(item)
+        // calculate the initial buy and sell price
+        updatePrice()
     }
 
     /**
@@ -37,7 +40,7 @@ data class MarketItem(val item: Item, private val economy: Economy): Serializabl
             sellPriceHistory.add(sellPrice!!) // throw exception if sell price is null
         }
         price = calculatePrice()
-        sellPrice = calculateSellPrice(price)
+        sellPrice = calculateSellPrice(price!!)
         return price
     }
 
@@ -49,8 +52,8 @@ data class MarketItem(val item: Item, private val economy: Economy): Serializabl
         return economy.calculatePrice(item)
     }
 
-    private fun calculateSellPrice(buyPrice: Int?): Int {
-        return (buyPrice!! * sellPriceValue).toInt()
+    private fun calculateSellPrice(buyPrice: Int): Int {
+        return (buyPrice * sellPriceValue).toInt()
     }
 
 
