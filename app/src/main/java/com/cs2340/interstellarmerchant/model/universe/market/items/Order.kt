@@ -26,7 +26,7 @@ data class Order(val order: Map<Item, Int>): Serializable {
      * @param totalCost - the cost of all the items as determined by the market
      */
     fun setPrice(totalCost: Int) {
-        this.totalCost = totalCost;
+        this.totalCost = totalCost
     }
 
     /**
@@ -38,7 +38,7 @@ data class Order(val order: Map<Item, Int>): Serializable {
             throw IllegalStateException("No market has been passed to the order, so the order's" +
                     "actual value hasn't been calculated");
         } else {
-            return totalCost!!;
+            return totalCost!!
         }
     }
 

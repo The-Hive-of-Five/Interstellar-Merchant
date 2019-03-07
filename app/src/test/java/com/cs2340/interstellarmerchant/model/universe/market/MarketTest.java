@@ -3,6 +3,7 @@ package com.cs2340.interstellarmerchant.model.universe.market;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
+import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
@@ -45,6 +46,15 @@ public class MarketTest {
         focusMarket.clearInventory();
     }
 
+    @Before
+    public void resetPlayer() {
+        // clear the player inventory
+        player.getShip().clearInventory();
+
+        // reset credits
+        player.setCredits(Player.STARTING_CREDITS);
+    }
+
     @Test
     public void assertPlanetValidityTest() {
         assert(focusPlanet.getName().equals("Tatooine"));
@@ -57,7 +67,7 @@ public class MarketTest {
         marketIsEmpty();
 
         // add food
-        addItemsToMarket(focusMarket);
+        addItemsToInventory(focusMarket);
 
         assertThat(focusMarket.getUsedSpace(), is(5));
         assertThat(focusMarket.getAvailableSpace(), is(Inventory.DEFAULT_MAX - 5));
@@ -68,7 +78,7 @@ public class MarketTest {
         marketIsEmpty();
 
         // add five food to market
-        addItemsToMarket(focusMarket);
+        addItemsToInventory(focusMarket);
 
         Order order = generateOrder();
         focusMarket.buyItems(order, player);
@@ -93,6 +103,39 @@ public class MarketTest {
                 focusMarket.getItemSellPrice(Item.FOOD) > 0);
     }
 
+    @Test
+    public void sellToMarket() {
+        marketIsEmpty();
+        playerIsEmpty();
+
+        Inventory playerInventory = player.getShip();
+        // add 5 items to player's
+        addItemsToInventory(playerInventory);
+
+        // make sure the 5 items were added
+        assertThat(playerInventory.getUsedSpace(), is(5));
+
+        // a 5 food sell order
+        Order sellOrder = generateOrder();
+        // player sells the items
+        assertThat(focusMarket.sellItems(sellOrder, player), is(OrderStatus.SUCCESS));
+        // player should have no more items
+        assertThat(playerInventory.getUsedSpace(), is(0));
+
+        // player should have more credits
+        assertThat(player.getCredits(), is(Player.STARTING_CREDITS +
+                sellOrder.getTotalCost()));
+
+        boolean exception = false;
+        try {
+            assertThat(focusMarket.sellItems(sellOrder, player), is(OrderStatus.SUCCESS));
+        } catch (IllegalArgumentException ex) {
+            exception = true;
+        }
+        assertThat("Expected an exception to be thrown", exception);
+
+    }
+
 
     /**
      * Ensures the market is empty
@@ -103,16 +146,26 @@ public class MarketTest {
     }
 
     /**
-     * Adds five food to the market
+     * Ensures player's inventory is empty
+     */
+    public void playerIsEmpty() {
+        Inventory playerInventory = player.getShip();
+        assertThat(playerInventory.getUsedSpace(), is(0));
+        assertThat(playerInventory.getAvailableSpace(), is(player.getShip().getMaxSize()));
+    }
+
+    /**
+     * Adds five food to the inventory
      * @param market - the market to add food to
      */
-    public static void addItemsToMarket(Market market) {
+    public static void addItemsToInventory(Inventory market) {
         // add 5 food to the market
         HashMap<Item, Integer> marketAddition = new HashMap<>();
         marketAddition.put(Item.FOOD, 5);
 
         market.plusAssign(marketAddition);
     }
+
 
     /**
      *

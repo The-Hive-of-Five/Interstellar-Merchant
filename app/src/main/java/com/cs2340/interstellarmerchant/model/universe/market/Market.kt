@@ -67,8 +67,8 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
             throw IllegalArgumentException("The order you gave was not valid")
 
         } else {
+            calculateOrderPrice(order, true) // sets the price attribute of order
 
-            calculateOrderPrice(order) // sets the price attribute of order
             var output: OrderStatus = player.canBuyItems(order)
             if (output == OrderStatus.SUCCESS) {
                 // if the player can actually buy the items, proceed with the transaction
@@ -89,13 +89,15 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
 
     /**
      * Calculates the order's price based on the market and updates its price attribute
+     * @param buying - true if the user is buying the item
      *
      * @param order - the order
      */
-    fun calculateOrderPrice(order: Order) {
+    fun calculateOrderPrice(order: Order, buying: Boolean) {
         var totalCost: Int = 0
         for ((item: Item, quantity: Int) in order.order) {
-            totalCost += priceLog[item]!!.price!! * quantity
+            val cost = if (buying) priceLog[item]!!.price!! else priceLog[item]!!.sellPrice!!
+            totalCost +=  cost * quantity
         }
         order.setPrice(totalCost)
     }
@@ -145,10 +147,10 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
                  the plus assign function will also assign new items not in the shop a  value
                  */
                 this += order.order
-                calculateOrderPrice(order) // gives the order a price
+                calculateOrderPrice(order, false) // gives the order a price
 
                 // remove them from the player's ship
-                player.ship -= order.order
+                playerInventory -= order.order
 
                 // add credits to player
                 player.credits = player.credits + order.getTotalCost()
