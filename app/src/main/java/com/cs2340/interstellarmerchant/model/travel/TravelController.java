@@ -1,6 +1,10 @@
 package com.cs2340.interstellarmerchant.model.travel;
 
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
+import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -32,7 +36,6 @@ public class TravelController {
      */
     public void setLocationWithoutPenalty(TravelEntity entity, Location newLocation) {
         entity.setLocation(newLocation);
-
     }
 
     /**
@@ -47,14 +50,22 @@ public class TravelController {
     public Location Travel(TravelEntity entity, Location newLocation) {
         Trip trip = new Trip(entity.getCurrentLocation(), newLocation);
         Ship entityShip = entity.getShip();
-
         Location returnLocation;
-        if (trip.getFuelCost() <  5) {
+        if (trip.getFuelCost() <=  entityShip.getItemQuantity(Item.FUEL)) {
             // the ship can't afford to travel
             returnLocation = entity.getCurrentLocation();
-        } else {
-            // use the ship's fuel to travel to the location
+
+            // remove
+            Map<Item, Integer> removeMap = new HashMap<>();
+            removeMap.put(Item.FUEL, trip.getFuelCost());
+            entityShip.minusAssign(removeMap);
+
+            // travel to the location
+            entity.setLocation(newLocation);
             returnLocation = newLocation;
+        } else {
+            // don't travel because not enough fuel
+            returnLocation = entity.getCurrentLocation();
         }
 
         return returnLocation;
