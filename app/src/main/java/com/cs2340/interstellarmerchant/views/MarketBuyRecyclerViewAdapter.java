@@ -56,6 +56,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
                 try {
                     if (viewHolder.quantityEdit != null) {
                         String val = viewHolder.quantityEdit.getText().toString();
+                        viewHolder.quantityEdit.setText("");
                         finalValue = Integer.parseInt(val);
                         mv.buyItem(finalValue, i);
                         mv.update();

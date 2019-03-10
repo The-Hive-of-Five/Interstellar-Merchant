@@ -56,10 +56,8 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
                 try {
 
                     if (viewHolder.quantityEdit != null) {
-                        Log.d(TAG, "IN THE TRY IF STATEMENT");
-
                         String val = viewHolder.quantityEdit.getText().toString();
-
+                        viewHolder.quantityEdit.setText("");
                         finalValue = Integer.parseInt(val);
                         mv.sellItem(finalValue, i);
                         mv.update();

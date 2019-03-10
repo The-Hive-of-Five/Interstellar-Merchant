@@ -111,7 +111,7 @@ public class MarketViewModel extends AndroidViewModel {
         adapter1.itemNames.clear();
         adapter1.itemPrices.clear();
         for (int k = 0; k < sellItemArray.size(); k++) {
-            Log.d(TAG, ((Integer) (shipItems.get(sellItemArray.get(k)))).toString() + "YOLOLOOLOLOLOLOLOLOLOLOLOLOLOLOLOOL");
+            Log.d(TAG, ((Integer) (shipItems.get(sellItemArray.get(k)))).toString() + " - This is the quantity of each item on the ship");
             //if (!((shipItems.get(sellItemArray.get(k))).equals(new Integer(0)))) {
                 adapter1.itemNames.add(getShipItem(k));
                 adapter1.itemPrices.add(getShipItemSellPrice(k));
