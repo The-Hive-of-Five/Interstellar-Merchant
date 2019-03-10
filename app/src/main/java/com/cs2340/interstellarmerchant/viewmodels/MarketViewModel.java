@@ -11,6 +11,7 @@ import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.universe.market.Market;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
+import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.views.MarketBuyRecyclerViewAdapter;
 import com.cs2340.interstellarmerchant.views.MarketSellRecyclerViewAdapter;
@@ -123,12 +124,12 @@ public class MarketViewModel extends AndroidViewModel {
         adapter1.notifyDataSetChanged();
     }
 
-    public void buyItem(int amount, int i) {
+    public OrderStatus buyItem(int amount, int i) {
         Item item = buyItemArray.get(i);
         Log.d(TAG, "the view model buyItem method amount: " + amount);
         Map<Item, Integer> map = new HashMap<>();
         map.put(item, amount);
-        market.buyItems(new Order(map), Player.getInstance());
+        return market.buyItems(new Order(map), Player.getInstance());
     }
 
     public void sellItem(int amount, int i) {

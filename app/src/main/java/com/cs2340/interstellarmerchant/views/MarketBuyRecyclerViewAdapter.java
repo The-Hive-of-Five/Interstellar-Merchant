@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 import com.cs2340.interstellarmerchant.views.MarketMain;
 
@@ -58,8 +59,12 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
                         String val = viewHolder.quantityEdit.getText().toString();
                         viewHolder.quantityEdit.setText("");
                         finalValue = Integer.parseInt(val);
-                        mv.buyItem(finalValue, i);
-                        mv.update();
+                        OrderStatus os = mv.buyItem(finalValue, i);
+                        if(os.equals(OrderStatus.SUCCESS)) {
+                            mv.update();
+                        } else {
+                            Toast.makeText(itemContext,"buy did not go through: " + os.toString() ,Toast.LENGTH_LONG).show();
+                        }
                     }
                 } catch (Exception e) { // CHANGE THIS, IF THE INT PARSE THROWS AN EXCEPTION IT JUST SETS AMOUNT TO 0
                     Toast.makeText(itemContext,"buy did not go through",Toast.LENGTH_LONG).show();
