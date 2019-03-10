@@ -96,10 +96,10 @@ public class MarketViewModel extends AndroidViewModel {
         adapter.itemNames.clear();
         adapter.itemPrices.clear();
         for (int j = 0; j < buyItemArray.size(); j++) {
-            if (!((marketItems.get(buyItemArray.get(j))).equals(new Integer(0)))) {
+            //if (!((marketItems.get(buyItemArray.get(j))).equals(new Integer(0)))) {
                 adapter.itemNames.add(getMarketItem(j));
                 adapter.itemPrices.add(getMarketItemPrice(j));
-            }
+            //}
         }
 
         shipItems = Player.getInstance().getShip().getInventoryClone();
@@ -112,10 +112,10 @@ public class MarketViewModel extends AndroidViewModel {
         adapter1.itemPrices.clear();
         for (int k = 0; k < sellItemArray.size(); k++) {
             Log.d(TAG, ((Integer) (shipItems.get(sellItemArray.get(k)))).toString() + "YOLOLOOLOLOLOLOLOLOLOLOLOLOLOLOLOOL");
-            if (!((shipItems.get(sellItemArray.get(k))).equals(new Integer(0)))) {
+            //if (!((shipItems.get(sellItemArray.get(k))).equals(new Integer(0)))) {
                 adapter1.itemNames.add(getShipItem(k));
                 adapter1.itemPrices.add(getShipItemSellPrice(k));
-            }
+            //}
         }
 
 
