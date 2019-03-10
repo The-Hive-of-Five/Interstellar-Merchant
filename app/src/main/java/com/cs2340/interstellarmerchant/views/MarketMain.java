@@ -1,6 +1,7 @@
 package com.cs2340.interstellarmerchant.views;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.universe.market.Market;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;
@@ -49,9 +51,13 @@ public class MarketMain extends AppCompatActivity{
             cargoPrices.add(marketViewModel.getShipItemSellPrice(i));
         }
 
-
         initRecyclerView1();
     }
+
+
+
+
+
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_market);
@@ -59,7 +65,7 @@ public class MarketMain extends AppCompatActivity{
                 new MarketBuyRecyclerViewAdapter(itemNames, itemPrices, this, marketViewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        marketViewModel.adapter = adapter;
     }
 
     private void initRecyclerView1() {
@@ -68,7 +74,7 @@ public class MarketMain extends AppCompatActivity{
                 new MarketSellRecyclerViewAdapter(cargoNames, cargoPrices, this, marketViewModel);
         recyclerView1.setAdapter(adapter1);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-
+        marketViewModel.adapter1 = adapter1;
     }
 
     private int parseInt(int id) {
@@ -80,4 +86,5 @@ public class MarketMain extends AppCompatActivity{
         }
         return output;
     }
+
 }

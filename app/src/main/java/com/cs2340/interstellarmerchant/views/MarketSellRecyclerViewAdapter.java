@@ -23,8 +23,8 @@ import java.util.ArrayList;
 public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSellRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketSellRecyclerViewAd";
 
-    private ArrayList<String> itemNames;
-    private ArrayList<String> itemPrices;
+    public ArrayList<String> itemNames;
+    public ArrayList<String> itemPrices;
     private Context itemContext;
     public MarketViewModel mv;
 
@@ -52,7 +52,7 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         viewHolder.sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int finalValue = 0;
+                int finalValue;
                 try {
 
                     if (viewHolder.quantityEdit != null) {
@@ -61,17 +61,18 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
                         String val = viewHolder.quantityEdit.getText().toString();
 
                         finalValue = Integer.parseInt(val);
+                        mv.sellItem(finalValue, i);
+                        mv.update();
                     }
                 } catch (Exception e) { // CHANGE THIS, IF THE INT PARSE THROWS AN EXCEPTION IT JUST SETS AMOUNT TO 0
-                    finalValue = 0;
+                    Toast.makeText(itemContext,"Sell did not go through",Toast.LENGTH_LONG).show();
                 }
-                Log.d(TAG, "amount is " + finalValue);
+                //Log.d(TAG, "amount is " + finalValue);
 
-                mv.sellItem(finalValue, i);
-                Log.d(TAG, "onClick: clicked on sell");
+
+                //Log.d(TAG, "onClick: clicked on sell");
                 //get quantity from @+id/quantity_edit
                 //need calculations for if player can buy, display in toast message below
-                Toast.makeText(itemContext,"[Sell result shown here]",Toast.LENGTH_LONG).show();
             }
         });
     }

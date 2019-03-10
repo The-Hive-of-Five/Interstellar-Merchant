@@ -2,6 +2,8 @@ package com.cs2340.interstellarmerchant.viewmodels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -10,6 +12,8 @@ import com.cs2340.interstellarmerchant.model.universe.market.Market;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
+import com.cs2340.interstellarmerchant.views.MarketBuyRecyclerViewAdapter;
+import com.cs2340.interstellarmerchant.views.MarketSellRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +38,8 @@ public class MarketViewModel extends AndroidViewModel {
     public Map shipItems;
     public ArrayList<Item> sellItemArray;
 
+    public MarketBuyRecyclerViewAdapter adapter;
+    public MarketSellRecyclerViewAdapter adapter1;
 
 
     public MarketViewModel(@NonNull Application application) {
@@ -75,9 +81,46 @@ public class MarketViewModel extends AndroidViewModel {
     //gets the selling price from market
     public String getShipItemSellPrice(int i) {
         Item item = sellItemArray.get(i);
-        //return "$" + market.getItemSellPrice(item);
-        return "yolo";
+        return "$" + market.getItemSellPrice(item);
 
+
+    }
+
+    public void update() {
+        marketItems = market.getInventoryClone();
+        Set<Item> buyKeys = marketItems.keySet();
+        buyItemArray = new ArrayList<>();
+        for (Item key : buyKeys) {
+            buyItemArray.add(key);
+        }
+        adapter.itemNames.clear();
+        adapter.itemPrices.clear();
+        for (int j = 0; j < buyItemArray.size(); j++) {
+            if (!((marketItems.get(buyItemArray.get(j))).equals(new Integer(0)))) {
+                adapter.itemNames.add(getMarketItem(j));
+                adapter.itemPrices.add(getMarketItemPrice(j));
+            }
+        }
+
+        shipItems = Player.getInstance().getShip().getInventoryClone();
+        Set<Item> sellKeys = shipItems.keySet();
+        sellItemArray = new ArrayList<>();
+        for (Item key : sellKeys) {
+            sellItemArray.add(key);
+        }
+        adapter1.itemNames.clear();
+        adapter1.itemPrices.clear();
+        for (int k = 0; k < sellItemArray.size(); k++) {
+            Log.d(TAG, ((Integer) (shipItems.get(sellItemArray.get(k)))).toString() + "YOLOLOOLOLOLOLOLOLOLOLOLOLOLOLOLOOL");
+            if (!((shipItems.get(sellItemArray.get(k))).equals(new Integer(0)))) {
+                adapter1.itemNames.add(getShipItem(k));
+                adapter1.itemPrices.add(getShipItemSellPrice(k));
+            }
+        }
+
+
+        adapter.notifyDataSetChanged();
+        adapter1.notifyDataSetChanged();
     }
 
     public void buyItem(int amount, int i) {
@@ -94,6 +137,12 @@ public class MarketViewModel extends AndroidViewModel {
         Map<Item, Integer> map = new HashMap<>();
         map.put(item, amount);
         market.sellItems(new Order(map), Player.getInstance());
+        adapter.notifyDataSetChanged();
+        adapter1.notifyDataSetChanged();
+    }
+
+    public void onPressedBuyButton(){
+
     }
 
 

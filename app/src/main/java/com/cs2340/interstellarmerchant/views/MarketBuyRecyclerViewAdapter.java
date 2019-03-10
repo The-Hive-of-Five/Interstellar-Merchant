@@ -1,6 +1,7 @@
 package com.cs2340.interstellarmerchant.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,14 +16,15 @@ import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
+import com.cs2340.interstellarmerchant.views.MarketMain;
 
 import java.util.ArrayList;
 
 public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuyRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketBuyRecyclerViewAd";
 
-    private ArrayList<String> itemNames;
-    private ArrayList<String> itemPrices;
+    public ArrayList<String> itemNames;
+    public ArrayList<String> itemPrices;
     private Context itemContext;
     public MarketViewModel mv;
 
@@ -55,14 +57,16 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
                     if (viewHolder.quantityEdit != null) {
                         String val = viewHolder.quantityEdit.getText().toString();
                         finalValue = Integer.parseInt(val);
+                        mv.buyItem(finalValue, i);
+                        mv.update();
                     }
                 } catch (Exception e) { // CHANGE THIS, IF THE INT PARSE THROWS AN EXCEPTION IT JUST SETS AMOUNT TO 0
-                    finalValue = 0;
+                    Toast.makeText(itemContext,"buy did not go through",Toast.LENGTH_LONG).show();
                 }
-                mv.buyItem(finalValue, i);
+
                 //get quantity from @+id/quantity_edit
                 //need calculations for if player can buy, display in toast message below
-                Toast.makeText(itemContext,"[Buy result shown here]",Toast.LENGTH_LONG).show();
+
             }
         });
 
