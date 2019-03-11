@@ -20,9 +20,11 @@ public class MarketMain extends AppCompatActivity{
 
     private ArrayList<String> itemNames = new ArrayList<>();
     private ArrayList<String> itemPrices = new ArrayList<>();
+    private ArrayList<String> itemTotals = new ArrayList<>();
 
     private ArrayList<String> cargoNames = new ArrayList<>();
     private ArrayList<String> cargoPrices = new ArrayList<>();
+    private ArrayList<String> cargoTotals = new ArrayList<>();
 
     private MarketViewModel marketViewModel;
 
@@ -40,6 +42,7 @@ public class MarketMain extends AppCompatActivity{
         for (int i = 0; i < marketViewModel.buyItemArray.size(); i++) {
             itemNames.add(marketViewModel.getMarketItem(i));
             itemPrices.add(marketViewModel.getMarketItemPrice(i));
+            itemTotals.add("1");
         }
 
         initRecyclerView();
@@ -49,6 +52,7 @@ public class MarketMain extends AppCompatActivity{
         for (int i = 0; i < marketViewModel.sellItemArray.size(); i++) {
             cargoNames.add(marketViewModel.getShipItem(i));
             cargoPrices.add(marketViewModel.getShipItemSellPrice(i));
+            cargoTotals.add("5");
         }
 
         initRecyclerView1();
@@ -62,7 +66,8 @@ public class MarketMain extends AppCompatActivity{
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_market);
         MarketBuyRecyclerViewAdapter adapter =
-                new MarketBuyRecyclerViewAdapter(itemNames, itemPrices, this, marketViewModel);
+                new MarketBuyRecyclerViewAdapter(itemNames, itemPrices, this, itemTotals, marketViewModel);
+      
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         marketViewModel.adapter = adapter;
@@ -71,7 +76,7 @@ public class MarketMain extends AppCompatActivity{
     private void initRecyclerView1() {
         RecyclerView recyclerView1 = findViewById(R.id.recycler_market_cargo);
         MarketSellRecyclerViewAdapter adapter1 =
-                new MarketSellRecyclerViewAdapter(cargoNames, cargoPrices, this, marketViewModel);
+                new MarketSellRecyclerViewAdapter(cargoNames, cargoPrices, this, itemTotals, marketViewModel);
         recyclerView1.setAdapter(adapter1);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
         marketViewModel.adapter1 = adapter1;

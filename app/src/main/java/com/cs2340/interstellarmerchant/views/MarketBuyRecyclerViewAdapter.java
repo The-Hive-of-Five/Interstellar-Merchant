@@ -19,20 +19,24 @@ import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 import com.cs2340.interstellarmerchant.views.MarketMain;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuyRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketBuyRecyclerViewAd";
 
-    public ArrayList<String> itemNames;
-    public ArrayList<String> itemPrices;
+    private ArrayList<String> itemNames = new ArrayList<>();
+    private ArrayList<String> itemPrices = new ArrayList<>();
+    private ArrayList<String> itemTotals = new ArrayList<>();
+
     private Context itemContext;
     public MarketViewModel mv;
 
-    public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, MarketViewModel mv) {
+    public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, ArrayList<String> itemTotals, MarketViewModel mv) {
         this.itemNames = itemNames;
         this.itemPrices = itemPrices;
         this.itemContext = itemContext;
+        this.itemTotals = itemTotals;
         this.mv = mv;
     }
 
@@ -51,7 +55,9 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
+        viewHolder.itemTotal.setText(itemTotals.get(i));
         viewHolder.quantityEdit.setText("");
+      
         viewHolder.buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +96,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
 
         TextView itemName;
         TextView itemPrice;
+        TextView itemTotal;
         EditText quantityEdit;
         RelativeLayout buyLayout;
         Button buyButton;
@@ -98,6 +105,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
             itemPrice = itemView.findViewById(R.id.item_price);
+            itemTotal = itemView.findViewById(R.id.total_available_shop);
             quantityEdit = itemView.findViewById(R.id.quantity_edit);
             buyLayout = itemView.findViewById(R.id.shop_parent_layout);
             buyButton = itemView.findViewById(R.id.buyButton);
