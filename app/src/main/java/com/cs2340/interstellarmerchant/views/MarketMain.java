@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.cs2340.interstellarmerchant.R;
@@ -36,6 +39,20 @@ public class MarketMain extends AppCompatActivity{
 
         initShopItems();
         initCargoItems();
+
+        Button buyButton = findViewById(R.id.buy_button);
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                buyListener(v);
+            }
+        });
+        Button sellButton = findViewById(R.id.sell_button);
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sellListener(v);
+            }
+        });
+
     }
 
     private void initShopItems() {
@@ -58,10 +75,14 @@ public class MarketMain extends AppCompatActivity{
         initRecyclerView1();
     }
 
+    private void buyListener(View view) {
+        Log.d("BUY","BUYYYYYY");
 
+    }
 
-
-
+    private void sellListener(View view) {
+        Log.d("SELL","SELLLLL");
+    }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_market);
