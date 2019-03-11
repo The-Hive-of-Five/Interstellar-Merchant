@@ -36,7 +36,7 @@
         android:layout_below="@+id/shopcargo_header"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="1dp" />
+        android:layout_marginTop="7dp" />
 
     <TextView
         android:id="@+id/shopcargo_header"
@@ -46,9 +46,25 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="282dp"
+        android:layout_marginEnd="23dp"
         android:text="Items Available to sell displayed. Select Quantity:"
         android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_market"
+        android:layout_marginTop="13dp"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_market_cargo"
+        android:layout_marginTop="23dp"
+        android:text="Button" />
 </RelativeLayout>
