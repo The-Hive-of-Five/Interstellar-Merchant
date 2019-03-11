@@ -44,11 +44,14 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
         return holder;
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
+        viewHolder.quantityEdit.setText("");
         viewHolder.buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +60,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
                 try {
                     if (viewHolder.quantityEdit != null) {
                         String val = viewHolder.quantityEdit.getText().toString();
-                        viewHolder.quantityEdit.setText("");
+                        //viewHolder.quantityEdit.setText("");
                         finalValue = Integer.parseInt(val);
                         OrderStatus os = mv.buyItem(finalValue, i);
                         if(os.equals(OrderStatus.SUCCESS)) {
@@ -66,7 +69,7 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
                             Toast.makeText(itemContext,"buy did not go through: " + os.toString() ,Toast.LENGTH_LONG).show();
                         }
                     }
-                } catch (Exception e) { // CHANGE THIS, IF THE INT PARSE THROWS AN EXCEPTION IT JUST SETS AMOUNT TO 0
+                } catch (Exception e) {
                     Toast.makeText(itemContext,"buy did not go through",Toast.LENGTH_LONG).show();
                 }
 
@@ -100,6 +103,9 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
             buyButton = itemView.findViewById(R.id.buyButton);
         }
 
+
     }
+
+
 
 }

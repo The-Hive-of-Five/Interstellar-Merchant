@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.universe.market.Market;
@@ -122,6 +125,7 @@ public class MarketViewModel extends AndroidViewModel {
 
         adapter.notifyDataSetChanged();
         adapter1.notifyDataSetChanged();
+        //clearForm((ViewGroup)adapter);
     }
 
     public OrderStatus buyItem(int amount, int i) {
@@ -142,9 +146,7 @@ public class MarketViewModel extends AndroidViewModel {
         adapter1.notifyDataSetChanged();
     }
 
-    public void onPressedBuyButton(){
 
-    }
 
 
 }

@@ -49,6 +49,7 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
+        viewHolder.quantityEdit.setText("");
         viewHolder.sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
