@@ -26,7 +26,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="25dp"
-        android:text="Items Available for purchase displayed. Select Quantity:"
+        android:text="@string/items_available_for_purchase_displayed_select_quantity"
         android:textAppearance="@style/TextAppearance.AppCompat" />
 
     <android.support.v7.widget.RecyclerView
@@ -49,6 +49,60 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="216dp"
         android:layout_marginEnd="24dp"
-        android:text="Items Available to sell displayed. Select Quantity:"
+        android:text="@string/items_available_to_sell_displayed_select_quantity"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_market_cargo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginBottom="205dp"
+        android:text="@string/credits_prompt"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_market_cargo"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="203dp"
+        android:text="@string/cargo_space"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="60dp"
+        android:layout_height="18dp"
+        android:layout_below="@+id/recycler_market_cargo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="204dp"
+        android:layout_toStartOf="@+id/textView4"
+        android:text="@string/credits_market"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_market_cargo"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="122dp"
+        android:layout_marginBottom="202dp"
+        android:text="@string/cargo_space_prompt"
         android:textAppearance="@style/TextAppearance.AppCompat" />
 </RelativeLayout>

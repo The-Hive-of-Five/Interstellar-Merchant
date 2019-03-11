@@ -9,14 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.universe.market.Market;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;
-
+/**
+ * Controld main market view
+ */
 public class MarketMain extends AppCompatActivity{
+
+    private TextView credits;
+    private TextView cargospace;
 
     private ArrayList<String> itemNames = new ArrayList<>();
     private ArrayList<String> itemPrices = new ArrayList<>();
@@ -27,15 +34,32 @@ public class MarketMain extends AppCompatActivity{
     private ArrayList<String> cargoTotals = new ArrayList<>();
 
     private MarketViewModel marketViewModel;
+    private Player player;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        // the intent used to launch the activity
+//        Intent intent = getIntent();
+//
+//        // get the player
+//        this.player = (Player) intent.getSerializableExtra("player");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.market);
         marketViewModel = ViewModelProviders.of(this).get(MarketViewModel.class);
 
         initShopItems();
         initCargoItems();
+
+//        //get text fields
+//        credits = findViewById(R.id.textView3);
+//        cargospace = findViewById(R.id.textView2);
+
+//        //set value
+//        credits.setText(player.getCredits());
+//        cargospace.setText(player.getShip().getAvailableSpace());
+
+
     }
 
     private void initShopItems() {
@@ -81,6 +105,5 @@ public class MarketMain extends AppCompatActivity{
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
         marketViewModel.adapter1 = adapter1;
     }
-
 
 }

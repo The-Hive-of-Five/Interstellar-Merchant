@@ -116,6 +116,4 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
 
 
 
-
-
 }
