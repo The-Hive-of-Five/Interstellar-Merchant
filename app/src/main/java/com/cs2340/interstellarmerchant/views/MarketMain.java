@@ -42,7 +42,7 @@ public class MarketMain extends AppCompatActivity{
         for (int i = 0; i < marketViewModel.buyItemArray.size(); i++) {
             itemNames.add(marketViewModel.getMarketItem(i));
             itemPrices.add(marketViewModel.getMarketItemPrice(i));
-            itemTotals.add("1");
+            itemTotals.add(marketViewModel.getMarketTotal(i));
         }
 
         initRecyclerView();
@@ -52,7 +52,7 @@ public class MarketMain extends AppCompatActivity{
         for (int i = 0; i < marketViewModel.sellItemArray.size(); i++) {
             cargoNames.add(marketViewModel.getShipItem(i));
             cargoPrices.add(marketViewModel.getShipItemSellPrice(i));
-            cargoTotals.add("5");
+            cargoTotals.add(marketViewModel.getShipTotal(i));
         }
 
         initRecyclerView1();
@@ -76,20 +76,11 @@ public class MarketMain extends AppCompatActivity{
     private void initRecyclerView1() {
         RecyclerView recyclerView1 = findViewById(R.id.recycler_market_cargo);
         MarketSellRecyclerViewAdapter adapter1 =
-                new MarketSellRecyclerViewAdapter(cargoNames, cargoPrices, this, itemTotals, marketViewModel);
+                new MarketSellRecyclerViewAdapter(cargoNames, cargoPrices, this, cargoTotals, marketViewModel);
         recyclerView1.setAdapter(adapter1);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
         marketViewModel.adapter1 = adapter1;
     }
 
-    private int parseInt(int id) {
-        int output;
-        try {
-            output = Integer.parseInt(((EditText) findViewById(id)).getText().toString());
-        } catch (NumberFormatException ex) {
-            output = 0; // default value
-        }
-        return output;
-    }
 
 }

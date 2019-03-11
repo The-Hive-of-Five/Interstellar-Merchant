@@ -2,6 +2,7 @@ package com.cs2340.interstellarmerchant.viewmodels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.bluetooth.le.AdvertiseData;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -76,6 +77,10 @@ public class MarketViewModel extends AndroidViewModel {
         return "$" + market.getItemBuyPrice(item);
     }
 
+    public String getMarketTotal(int i) {
+        return (marketItems.get(buyItemArray.get(i))).toString();
+    }
+
 
     //gets the item to sell at index i from market
     public String getShipItem(int i) {
@@ -86,11 +91,13 @@ public class MarketViewModel extends AndroidViewModel {
     public String getShipItemSellPrice(int i) {
         Item item = sellItemArray.get(i);
         return "$" + market.getItemSellPrice(item);
-
-
     }
 
-    public void update() {
+    public String getShipTotal(int i) {
+        return (shipItems.get(sellItemArray.get(i))).toString();
+    }
+
+    public void  update() {
         marketItems = market.getInventoryClone();
         Set<Item> buyKeys = marketItems.keySet();
         buyItemArray = new ArrayList<>();
@@ -99,12 +106,13 @@ public class MarketViewModel extends AndroidViewModel {
         }
         adapter.itemNames.clear();
         adapter.itemPrices.clear();
+        adapter.itemTotals.clear();
         for (int j = 0; j < buyItemArray.size(); j++) {
-            //if (!((marketItems.get(buyItemArray.get(j))).equals(new Integer(0)))) {
-                adapter.itemNames.add(getMarketItem(j));
-                adapter.itemPrices.add(getMarketItemPrice(j));
-            //}
+            adapter.itemNames.add(getMarketItem(j));
+            adapter.itemPrices.add(getMarketItemPrice(j));
+            adapter.itemTotals.add(getMarketTotal(j));
         }
+
 
         shipItems = Player.getInstance().getShip().getInventoryClone();
         Set<Item> sellKeys = shipItems.keySet();
@@ -114,23 +122,20 @@ public class MarketViewModel extends AndroidViewModel {
         }
         adapter1.itemNames.clear();
         adapter1.itemPrices.clear();
+        adapter1.itemTotals.clear();
         for (int k = 0; k < sellItemArray.size(); k++) {
-            Log.d(TAG, ((Integer) (shipItems.get(sellItemArray.get(k)))).toString() + " - This is the quantity of each item on the ship");
-            //if (!((shipItems.get(sellItemArray.get(k))).equals(new Integer(0)))) {
-                adapter1.itemNames.add(getShipItem(k));
-                adapter1.itemPrices.add(getShipItemSellPrice(k));
-            //}
+            adapter1.itemNames.add(getShipItem(k));
+            adapter1.itemPrices.add(getShipItemSellPrice(k));
+            adapter1.itemTotals.add(getShipTotal(k));
         }
 
 
         adapter.notifyDataSetChanged();
         adapter1.notifyDataSetChanged();
-        //clearForm((ViewGroup)adapter);
     }
 
     public OrderStatus buyItem(int amount, int i) {
         Item item = buyItemArray.get(i);
-        Log.d(TAG, "the view model buyItem method amount: " + amount);
         Map<Item, Integer> map = new HashMap<>();
         map.put(item, amount);
         return market.buyItems(new Order(map), Player.getInstance());
@@ -138,12 +143,9 @@ public class MarketViewModel extends AndroidViewModel {
 
     public void sellItem(int amount, int i) {
         Item item = sellItemArray.get(i);
-        Log.d(TAG, "the view model sell method amount: " + amount);
         Map<Item, Integer> map = new HashMap<>();
         map.put(item, amount);
         market.sellItems(new Order(map), Player.getInstance());
-        adapter.notifyDataSetChanged();
-        adapter1.notifyDataSetChanged();
     }
 
 

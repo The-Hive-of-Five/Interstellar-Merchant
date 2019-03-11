@@ -25,14 +25,15 @@ import java.util.ArrayList;
 public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuyRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketBuyRecyclerViewAd";
 
-    private ArrayList<String> itemNames = new ArrayList<>();
-    private ArrayList<String> itemPrices = new ArrayList<>();
-    private ArrayList<String> itemTotals = new ArrayList<>();
+    public ArrayList<String> itemNames = new ArrayList<>();
+    public ArrayList<String> itemPrices = new ArrayList<>();
+    public ArrayList<String> itemTotals = new ArrayList<>();
 
     private Context itemContext;
     public MarketViewModel mv;
 
     public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, ArrayList<String> itemTotals, MarketViewModel mv) {
+        Log.d(TAG, "THI SI STHE MARKEY BUY RECYCLENT VIEW ADPADATER");
         this.itemNames = itemNames;
         this.itemPrices = itemPrices;
         this.itemContext = itemContext;
@@ -66,7 +67,6 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
                 try {
                     if (viewHolder.quantityEdit != null) {
                         String val = viewHolder.quantityEdit.getText().toString();
-                        //viewHolder.quantityEdit.setText("");
                         finalValue = Integer.parseInt(val);
                         OrderStatus os = mv.buyItem(finalValue, i);
                         if(os.equals(OrderStatus.SUCCESS)) {
@@ -113,6 +113,8 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
 
 
     }
+
+
 
 
 

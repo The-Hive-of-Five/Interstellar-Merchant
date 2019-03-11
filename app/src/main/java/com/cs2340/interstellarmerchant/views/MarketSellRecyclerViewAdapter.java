@@ -23,9 +23,9 @@ import java.util.ArrayList;
 public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSellRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketSellRecyclerViewAd";
 
-    private ArrayList<String> itemNames = new ArrayList<>();
-    private ArrayList<String> itemPrices = new ArrayList<>();
-    private ArrayList<String> itemTotals = new ArrayList<>();
+    public ArrayList<String> itemNames = new ArrayList<>();
+    public ArrayList<String> itemPrices = new ArrayList<>();
+    public ArrayList<String> itemTotals = new ArrayList<>();
 
     private Context itemContext;
     public MarketViewModel mv;
@@ -52,7 +52,6 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
-
         viewHolder.itemTotal.setText(itemTotals.get(i));
         viewHolder.quantityEdit.setText("");
 
@@ -101,7 +100,7 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
             itemPrice = itemView.findViewById(R.id.cargo_item_price);
 
             itemTotal = itemView.findViewById(R.id.total_available_cargo);
-            quantityEdit = itemView.findViewById(R.id.quantity_edit);
+            quantityEdit = itemView.findViewById(R.id.cargo_quantity_edit);
 
             sellLayout = itemView.findViewById(R.id.cargo_parent_layout);
             sellButton = itemView.findViewById(R.id.sell_Button);
