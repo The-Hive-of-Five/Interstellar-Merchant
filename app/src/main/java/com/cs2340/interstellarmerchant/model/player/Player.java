@@ -1,18 +1,29 @@
 package com.cs2340.interstellarmerchant.model.player;
 
+import android.util.Log;
+
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
 import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
+import com.cs2340.interstellarmerchant.model.travel.TravelEntity;
+import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
+import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 
 import java.io.Serializable;
+
+import javax.inject.Singleton;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Represents a Player in the game. A singleton
  */
-public class Player implements Serializable  {
+
+@Singleton
+public class Player extends TravelEntity implements Serializable  {
     private static final int MAXIMUM_POINTS = 16;
-    private static final int STARTING_CREDITS = 1000;
+    public static final int STARTING_CREDITS = 1000;
 
     // skill points mapping for the skill area
     public static final int PILOT = 0;
@@ -100,6 +111,33 @@ public class Player implements Serializable  {
     }
 
     /**
+     * the constructor for the player. gives players defaults for all values
+     */
+    public void init() {
+        init(0, 0, 0, 0,
+                "Default name", new GameConfig(Difficulty.Hard));
+    }
+
+    /**
+     * Whether the player can buy the items in the order
+     * @param order - the player's order
+     * @return whether the player can buy the items
+     */
+    public OrderStatus canBuyItems(Order order) {
+        OrderStatus output;
+        if (order.getQuantity() > ship.getAvailableSpace()) {
+            output = OrderStatus.NOT_ENOUGH_SPACE;
+            Log.d(TAG, "not enough space on ship to buy");
+        } else if (order.getTotalCost() > credits) {
+            output = OrderStatus.NOT_ENOUGH_CREDITS;
+            Log.d(TAG, "not enough credits to buy");
+        } else {
+            output = OrderStatus.SUCCESS;
+        }
+        return output;
+    }
+
+    /**
      * Returns true if the player does not have more than the max number of skill points
      *
      * @return if the player does not have more than the max skill points
@@ -142,6 +180,14 @@ public class Player implements Serializable  {
      */
     public Difficulty getDifficulty() {
         return config.getGameDifficulty();
+    }
+
+    /**
+     * Sets the credits
+     * @param newValue - the new value of the credits
+     */
+    public void setCredits(int newValue) {
+        this.credits = newValue;
     }
 
     /**

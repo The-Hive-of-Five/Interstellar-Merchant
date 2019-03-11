@@ -1,5 +1,11 @@
-package com.cs2340.interstellarmerchant.model.universe
+package com.cs2340.interstellarmerchant.model.universe.planet
 
+import com.cs2340.interstellarmerchant.model.travel.Location
+import com.cs2340.interstellarmerchant.model.universe.SolarSystem
+import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
+import com.cs2340.interstellarmerchant.model.universe.market.Market
+import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
+import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import org.w3c.dom.Element
 import java.io.InputStream
 import java.io.Serializable
@@ -21,9 +27,66 @@ import javax.xml.parsers.DocumentBuilderFactory
 data class Planet (val climate: String, val diameter: Long?, val gravity: String, val name: String,
                    val population: Long?, val rotationPeriod: Int?,
                    val resource: Resource = Resource.getRandomResource(),
-                   var tech: Tech = Tech.getRandomTech()): Serializable {
+                   var tech: Tech = Tech.getRandomTech(), var x: Int? = null, var y: Int? = null)
+    : Location(), Serializable {
 
+    // keeps track of the current events (switch to event manager?)
+    val currentEvents = HashSet<PlanetEvent>()
+
+    // the planet's economy
+    private val economy = PlanetEconomy(this)
+
+    // market must be initialized after current events (market for the planet)
+    val market = Market(economy)
+
+    override fun getX(): Int {
+        return x!!
+    }
+
+    override fun getY(): Int {
+       return y!!
+    }
+
+    override fun getSolarSystem(): SolarSystem {
+        return solarSystem
+    }
+
+    override fun getLocationType(): LocationType {
+        return LocationType.PLANET
+    }
+
+    override fun toString(): String {
+        return toString(false)
+    }
+
+    /**
+     * method to retrieve either a detailed or non-detailed version of the planet as a string
+     *
+     * @param detailed - whether you want a detailed to string
+     *
+     * @return the string representation of the planet
+     */
+    fun toString(detailed: Boolean): String {
+        val builder: StringBuilder = StringBuilder()
+        builder.appendln("Planet: $name with resource, $resource")
+        if (detailed) {
+            builder.appendln("Climate: $climate")
+            builder.appendln("Diameter: $diameter")
+            builder.appendln("Gravity: $gravity")
+            builder.appendln("Population: $population")
+            builder.appendln("Rotation Period: $rotationPeriod")
+            builder.appendln(market)
+        }
+        return builder.toString()
+    }
+
+    /**
+     * This is used to get the planets from the xml file.
+     */
     companion object {
+        // denote the variance effects from increase and decrease events
+        val decreaseEventVar = Pair(40, 90)
+        val increaseEventVar = Pair(50, 90)
 
         /**
          * creates planet object from xml node
@@ -93,7 +156,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
                 // iterate through every planet
                 for (nodeCounter in 0 until nList.length) {
                     // convert the node to a planet
-                    planets.add(Planet.createPlanetFromNode(
+                    planets.add(createPlanetFromNode(
                             nList.item(nodeCounter) as Element))
                 }
             } catch (e: Exception) {
@@ -102,29 +165,5 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
             return planets
         }
-    }
-
-    override fun toString(): String {
-        return toString(false)
-    }
-
-    /**
-     * method to retrieve either a detailed or non-detailed version of the planet as a string
-     *
-     * @param detailed - whether you want a detailed to string
-     *
-     * @return the string representation of the planet
-     */
-    fun toString(detailed: Boolean): String {
-        val builder: StringBuilder = StringBuilder()
-        builder.appendln("Planet: $name with resource, $resource")
-        if (detailed) {
-            builder.appendln("Climate: $climate")
-            builder.appendln("Diameter: $diameter")
-            builder.appendln("Gravity: $gravity")
-            builder.appendln("Population: $population")
-            builder.appendln("Rotation Period: $rotationPeriod")
-        }
-        return builder.toString()
     }
 }

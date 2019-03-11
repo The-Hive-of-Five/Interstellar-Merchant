@@ -2,6 +2,8 @@ package com.cs2340.interstellarmerchant.model.universe;
 
 import android.util.Pair;
 
+import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
+
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -39,6 +41,14 @@ public class Universe implements Serializable {
     public Universe(SolarSystem[] systems) {
         setLocations(systems);
         this.systems = systems.clone();
+    }
+
+    /**
+     * Gets the solar systems
+     * @return the solar systems
+     */
+    public SolarSystem[] getSystems() {
+        return systems;
     }
 
     @Override

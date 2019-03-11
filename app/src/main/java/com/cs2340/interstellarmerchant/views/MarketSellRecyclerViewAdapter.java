@@ -14,7 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;
 
@@ -24,13 +26,17 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
     private ArrayList<String> itemNames = new ArrayList<>();
     private ArrayList<String> itemPrices = new ArrayList<>();
     private ArrayList<String> itemTotals = new ArrayList<>();
-    private Context itemContext;
 
-    public MarketSellRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, ArrayList<String> itemTotals, Context itemContext) {
+    private Context itemContext;
+    public MarketViewModel mv;
+
+
+    public MarketSellRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, ArrayList<String> itemTotals, MarketViewModel mv) {
         this.itemNames = itemNames;
         this.itemPrices = itemPrices;
         this.itemContext = itemContext;
         this.itemTotals = itemTotals;
+        this.mv = mv;
     }
 
     @NonNull
@@ -42,18 +48,36 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
+
         viewHolder.itemTotal.setText(itemTotals.get(i));
-        viewHolder.sellButton.setOnClickListener(new View.OnClickListener() {
+        viewHolder.quantityEdit.setText("");
+
+      viewHolder.sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on sell");
+                int finalValue;
+                try {
+
+                    if (viewHolder.quantityEdit != null) {
+                        String val = viewHolder.quantityEdit.getText().toString();
+                        viewHolder.quantityEdit.setText("");
+                        finalValue = Integer.parseInt(val);
+                        mv.sellItem(finalValue, i);
+                        mv.update();
+                    }
+                } catch (Exception e) { // CHANGE THIS, IF THE INT PARSE THROWS AN EXCEPTION IT JUST SETS AMOUNT TO 0
+                    Toast.makeText(itemContext,"Sell did not go through",Toast.LENGTH_LONG).show();
+                }
+                //Log.d(TAG, "amount is " + finalValue);
+
+
+                //Log.d(TAG, "onClick: clicked on sell");
                 //get quantity from @+id/quantity_edit
                 //need calculations for if player can buy, display in toast message below
-                Toast.makeText(itemContext,"[Sell result shown here]",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -75,11 +99,17 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
             super(itemView);
             itemName = itemView.findViewById(R.id.cargo_item_name);
             itemPrice = itemView.findViewById(R.id.cargo_item_price);
+
             itemTotal = itemView.findViewById(R.id.total_available_cargo);
             quantityEdit = itemView.findViewById(R.id.quantity_edit);
+
             sellLayout = itemView.findViewById(R.id.cargo_parent_layout);
             sellButton = itemView.findViewById(R.id.sell_Button);
         }
+
     }
+
+
+
 
 }

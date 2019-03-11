@@ -1,5 +1,8 @@
 package com.cs2340.interstellarmerchant.model.universe
 
+import android.util.Pair
+import com.cs2340.interstellarmerchant.model.universe.planet.Planet
+import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import java.io.Serializable
 import java.util.*
 
@@ -17,11 +20,15 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
 
     init {
         syncPlanets(planets)
+
+        setPlanetLocation(planets)
     }
 
 
     companion object {
         const val MAX_SOLAR_SIZE: Int = 6
+        const val MAX_X: Int = 500
+        const val MAX_Y: Int = 500
 
         /**
          * Generates a list of random solar systems with random planets
@@ -61,10 +68,36 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
         return builder.toString()
     }
 
+
+    /**
+     * Gives every planet a unique x and y
+     */
+    private fun setPlanetLocation(planets: MutableList<Planet>) {
+        val locations = HashSet<Pair<Int, Int>>()
+        val random = Random()
+        for (planet: Planet in planets) {
+            var pair: Pair<Int, Int>
+
+            // ensures a unique coordinate
+            do {
+                val x = random.nextInt(SolarSystem.MAX_X)
+                val y = random.nextInt(SolarSystem.MAX_Y)
+                pair = Pair(x, y)
+            } while (locations.contains(pair))
+
+            // modify the solar system
+            planet.x = pair.first
+            planet.y = pair.second
+
+            // ensures the location is not reused
+            locations.add(pair)
+        }
+    }
+
     /**
      * syncs the tech levels of the planets with the tech levels of the universe
      */
-    private fun syncPlanets(planet: MutableList<Planet>) {
+    private fun syncPlanets(planets: MutableList<Planet>) {
         for (planet: Planet in planets) {
             planet.tech = tech
         }
