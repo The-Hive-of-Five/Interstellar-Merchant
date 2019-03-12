@@ -36,7 +36,7 @@
         android:layout_below="@+id/shopcargo_header"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="1dp" />
+        android:layout_marginTop="13dp" />
 
     <TextView
         android:id="@+id/shopcargo_header"
@@ -47,7 +47,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="3dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="244dp"
         android:layout_marginEnd="24dp"
         android:text="Items Available to sell displayed. Select Quantity:"
         android:textAppearance="@style/TextAppearance.AppCompat" />

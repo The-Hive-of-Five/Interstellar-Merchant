@@ -7,9 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;

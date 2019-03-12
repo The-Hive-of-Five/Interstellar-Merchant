@@ -1,8 +1,10 @@
 package com.cs2340.interstellarmerchant.model.universe;
 
-import android.util.Pair;
+
+import android.support.v4.util.Pair;
 
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
+import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -16,6 +18,7 @@ import java.util.Set;
 /**
  * Universe class to keep track of solar systems and locations of those solar systems
  */
+
 public class Universe implements Serializable {
 
     /**
@@ -28,6 +31,7 @@ public class Universe implements Serializable {
         List<SolarSystem> solarSystems = SolarSystem.Companion.generateSolarSystem(planets);
         return new Universe(solarSystems.toArray(new SolarSystem[0]));
     }
+
     private static final int MAX_X = 500;
     private static final int MAX_Y = 500;
 
@@ -91,6 +95,13 @@ public class Universe implements Serializable {
 
     }
 
-
+    /**
+     * Serializes the object
+     * @return the serialization
+     */
+    public String serialize() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
 
 }
