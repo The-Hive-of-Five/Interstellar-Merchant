@@ -9,6 +9,7 @@ import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
 import com.cs2340.interstellarmerchant.model.travel.TravelEntity;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 
@@ -39,6 +40,19 @@ public class Player extends TravelEntity implements Serializable  {
     private Ship ship;
     private String name;
     private int[] skillPoints; // each index represents a skill
+
+
+    /**
+     * Sets the singleton instance for player
+     * @param player - the player
+     */
+    public static void setInstance(Player player) {
+        if (player != null) {
+            throw new IllegalArgumentException("For some reason player is not null. A player" +
+                    "value already exists. This is not correct");
+        }
+        Player.player = player;
+    }
 
     /**
      * gets the singleton instance. call init after to send parameters
@@ -228,5 +242,14 @@ public class Player extends TravelEntity implements Serializable  {
      */
     public int[] getSkillPoints() {
         return skillPoints.clone();
+    }
+
+    /**
+     * Serializes the object
+     * @return the serialization
+     */
+    public String serialize() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
