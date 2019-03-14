@@ -135,7 +135,7 @@ package universe {
 package travel {
       class TravelController << (S,#FF7700) Singleton >> {
           + setLocationWithoutPenalty(entity: LocationEntity, location: Location): Void
-          + travel(entity: LocationEntity, location: Location): Void
+          + travel(entity: LocationEntity, location: Location): Location
       }
 
       class Trip {

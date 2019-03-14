@@ -4,6 +4,7 @@ package com.cs2340.interstellarmerchant.model.universe;
 import android.support.v4.util.Pair;
 
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
+import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -37,6 +38,7 @@ public class Universe implements Serializable {
 
 
     private final SolarSystem[] systems;
+    private final TimeController timeController;
 
     /**
      * constructor for universe class
@@ -45,6 +47,7 @@ public class Universe implements Serializable {
     public Universe(SolarSystem[] systems) {
         setLocations(systems);
         this.systems = systems.clone();
+        this.timeController = new TimeController();
     }
 
     /**
@@ -53,6 +56,14 @@ public class Universe implements Serializable {
      */
     public SolarSystem[] getSystems() {
         return systems;
+    }
+
+    /**
+     * Gets the time controller
+     * @return the time controller
+     */
+    public TimeController getTimeController() {
+        return timeController;
     }
 
     @Override

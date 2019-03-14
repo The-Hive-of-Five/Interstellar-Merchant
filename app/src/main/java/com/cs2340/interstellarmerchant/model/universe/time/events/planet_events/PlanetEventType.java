@@ -1,4 +1,4 @@
-package com.cs2340.interstellarmerchant.model.universe.events.planet_events;
+package com.cs2340.interstellarmerchant.model.universe.time.events.planet_events;
 
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * Enum to represent events on planets
  */
-public enum PlanetEvent {
+public enum PlanetEventType {
     DROUGHT(new Resource[] {Resource.LOTSOFWATER}),
     COLD,
     CROPFAIL(new Resource[] {Resource.RICHSOIL}),
@@ -32,11 +32,11 @@ public enum PlanetEvent {
      *                             AKA if the planet has the resource, the event cannot
      *                             occurr
      */
-    PlanetEvent(Resource[] conflictingResources) {
+    PlanetEventType(Resource[] conflictingResources) {
         this.conflictingResources = new HashSet<>(Arrays.asList(conflictingResources));
     }
 
-    PlanetEvent() {
+    PlanetEventType() {
         this(new Resource[0]);
     }
 
@@ -46,16 +46,16 @@ public enum PlanetEvent {
      * @param planet - the input planet
      * @return the random event
      */
-    public static PlanetEvent getRandomPlanetEvent(final Planet planet) {
-        List<PlanetEvent> possibleEvents = Arrays.asList(PlanetEvent.values())
+    public static PlanetEventType getRandomPlanetEvent(final Planet planet) {
+        List<PlanetEventType> possibleEvents = Arrays.asList(PlanetEventType.values())
                 .stream()
-                .filter(new Predicate<PlanetEvent>() {
+                .filter(new Predicate<PlanetEventType>() {
                     @Override
-                    public boolean test(PlanetEvent planetEvent) {
+                    public boolean test(PlanetEventType planetEvent) {
                         return !planetEvent.conflictingResources.contains(planet.getResource());
                     }
                 })
-                .collect(Collectors.<PlanetEvent>toList());
+                .collect(Collectors.<PlanetEventType>toList());
         return possibleEvents.get(new Random().nextInt(possibleEvents.size()));
 
     }

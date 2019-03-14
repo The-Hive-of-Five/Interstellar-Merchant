@@ -166,6 +166,16 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
         return gson.toJson(this)
     }
 
+    /**
+     * Recalculates the prices for all items. Usually the result of a random event changing
+     * prices.
+     */
+    fun recalculatePrices() {
+        for (item: MarketItem in priceLog.values) {
+            item.updatePrice()
+        }
+    }
+
     override fun toString(): String {
         val builder = StringBuilder()
         builder.appendln("Store for ${hostEconomy.economyName}")
