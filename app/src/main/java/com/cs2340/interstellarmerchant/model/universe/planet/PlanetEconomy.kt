@@ -1,6 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.planet
 
-import com.cs2340.interstellarmerchant.model.universe.time.events.planet_events.PlanetEventType
+import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEventType
 import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order

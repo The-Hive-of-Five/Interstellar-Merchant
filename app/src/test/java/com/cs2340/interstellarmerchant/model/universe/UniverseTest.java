@@ -15,6 +15,7 @@ public class UniverseTest {
         String serialization = null;
         try {
              serialization = generateUniverse().serialize();
+             System.out.println(serialization);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

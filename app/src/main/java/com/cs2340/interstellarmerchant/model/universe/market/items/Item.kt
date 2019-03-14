@@ -1,6 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.market.items
 
-import com.cs2340.interstellarmerchant.model.universe.time.events.planet_events.PlanetEventType
+import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEventType
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 

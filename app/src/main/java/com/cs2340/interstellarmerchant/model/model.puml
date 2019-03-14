@@ -88,7 +88,46 @@ package universe {
       Planet -- Resource : > Described by
       Planet -- Tech : > Described by
 
+      package time {
+        class TimeController {
+            + day: int
+            + timeJump(days: Int): Void
+            + subscribeToTime(subscriber: TimeSubScriberI): Void
+            + unsubscribe(subscriber: TimeSubScriberI): Void
 
+        }
+
+        interface TimeSubscriberI {
+            + dayUpdated(day: Int): Boolean
+            + unsubscribe(day: Int): Void
+        }
+
+        TimeController "1" o-- "0..*" TimeSubscriberI : Keeps track >
+        Universe -- TimeController : > Contains
+
+      }
+
+      package events {
+          interface Event {
+              + eventExpired(): Boolean
+          }
+
+          package planet_events {
+              class PlanetEvent {
+
+              }
+              Event <|.. PlanetEvent
+              TimeSubscriberI <|.. PlanetEvent
+              Planet "1" o-- "0..*" PlanetEvent : Keeps track >
+
+
+              enum PlanetEventType {
+              }
+
+              PlanetEvent -- PlanetEventType : > described by
+
+          }
+      }
 
      package market {
         interface Economy {
@@ -122,7 +161,7 @@ package universe {
      }
 
 
-    Universe "Many" o-- "1" SolarSystem : Contains <
+    Universe "Many" o-- "1" SolarSystem : Contains >
     SolarSystem "Many" o-- "1" Planet : Contains <
     Planet -- Market : > owns
     Economy <|.. Planet

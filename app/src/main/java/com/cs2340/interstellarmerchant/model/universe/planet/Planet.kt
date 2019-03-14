@@ -2,7 +2,7 @@ package com.cs2340.interstellarmerchant.model.universe.planet
 
 import com.cs2340.interstellarmerchant.model.travel.Location
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem
-import com.cs2340.interstellarmerchant.model.universe.time.events.planet_events.PlanetEventType
+import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEventType
 import com.cs2340.interstellarmerchant.model.universe.market.Market
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech

@@ -1,8 +1,6 @@
-package com.cs2340.interstellarmerchant.model.universe.time.events
+package com.cs2340.interstellarmerchant.model.universe.events
 
-import com.cs2340.interstellarmerchant.model.universe.time.TimeSubscriberI
-
-interface Event: TimeSubscriberI {
+interface Event {
     /**
      * Indicates whether the event should be destroyed or not from whatever is holding it.
      * In other words, has the event expired

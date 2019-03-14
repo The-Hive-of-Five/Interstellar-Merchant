@@ -1,6 +1,5 @@
 package com.cs2340.interstellarmerchant.model.universe.time
 
-import com.cs2340.interstellarmerchant.model.universe.time.events.Event
 import java.lang.IllegalArgumentException
 
 class TimeController {
