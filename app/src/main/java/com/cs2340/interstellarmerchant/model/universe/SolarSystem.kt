@@ -1,6 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe
 
-import android.util.Pair
+
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import java.io.Serializable
@@ -19,8 +19,6 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
     val name = planets[0].name
 
     init {
-        syncPlanets(planets)
-
         setPlanetLocation(planets)
     }
 
@@ -94,13 +92,5 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
         }
     }
 
-    /**
-     * syncs the tech levels of the planets with the tech levels of the universe
-     */
-    private fun syncPlanets(planets: MutableList<Planet>) {
-        for (planet: Planet in planets) {
-            planet.tech = tech
-        }
-    }
 
 }

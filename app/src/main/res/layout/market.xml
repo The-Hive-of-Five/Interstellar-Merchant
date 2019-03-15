@@ -36,6 +36,7 @@
         android:layout_below="@+id/shopcargo_header"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
+
         android:layout_marginTop="4dp" />
 
     <TextView
@@ -46,6 +47,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+
         android:layout_marginStart="0dp"
         android:layout_marginTop="314dp"
         android:layout_marginEnd="27dp"
@@ -101,4 +103,5 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#ffffff"/>
+
 </RelativeLayout>

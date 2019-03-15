@@ -65,6 +65,17 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
     }
 
     /**
+     * Gets the item quantity. 0 if the quantity is not in the inventory
+     *
+     * @param item - the item
+     *
+     * @return the item quantity
+     */
+    fun getItemQuantity(item: Item): Int {
+        return if (inventory[item] == null) 0 else inventory[item]!!
+    }
+
+    /**
      * @return get the amount of items in the inventory
      */
     fun getUsedSpace(): Int {
