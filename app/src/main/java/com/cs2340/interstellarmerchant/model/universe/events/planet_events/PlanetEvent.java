@@ -22,6 +22,19 @@ public class PlanetEvent implements Event, TimeSubscriberI {
         this(type, (int) (Math.random() * PlanetEvent.MAX_LIFE));
     }
 
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (!(other instanceof PlanetEvent)) {
+            return false;
+        }
+        PlanetEvent otherEvent = (PlanetEvent) other;
+        return this.type == otherEvent.type;
+    }
+
     @Override
     public boolean eventExpired() {
         return !eventAlive;

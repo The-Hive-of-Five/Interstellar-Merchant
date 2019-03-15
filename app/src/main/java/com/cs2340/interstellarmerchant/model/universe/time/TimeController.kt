@@ -1,24 +1,54 @@
 package com.cs2340.interstellarmerchant.model.universe.time
 
 import java.lang.IllegalArgumentException
+import java.lang.RuntimeException
+import javax.inject.Singleton
 
+@Singleton
 class TimeController {
     companion object {
+        private var timeController: TimeController? = null
+
         fun dayToString(day: Int): String {
             return "$day  sol"
         }
+
+        /**
+         * Gets the timecontroller
+         */
+        fun getTimeController(): TimeController {
+            if (timeController == null) {
+                timeController = TimeController()
+            }
+            return timeController!!
+        }
+
+        /**
+         * Used for serialization when the timecontroller has been saved.
+         */
+        fun setInstance(timeController: TimeController) {
+            this.timeController = timeController
+        }
     }
 
-    private var currentDay: Int = 0
-    get() {
-        return currentDay
-    }
+    private var currentDay = 0
 
-
+    @Transient
     private val subscribers: MutableSet<TimeSubscriberI>
 
     init {
         this.subscribers = LinkedHashSet()
+    }
+
+    /**
+     * Gets the current day
+     */
+    fun getCurrentDay(): Int {
+        return currentDay
+    }
+
+    fun isSubscribed(item: TimeSubscriberI): Boolean {
+        return subscribers.contains(item)
     }
 
     /**
@@ -45,8 +75,8 @@ class TimeController {
     }
 
     fun timeJump(timeJump: Int) {
-        if (timeJump > 0) {
-            currentDay += timeJump
+        for (counter in 1..timeJump) {
+            currentDay++
             timeUpdated()
         }
     }

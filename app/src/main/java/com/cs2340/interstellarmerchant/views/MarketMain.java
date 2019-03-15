@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.GameController;
+import com.cs2340.interstellarmerchant.utilities.LogUtility;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class MarketMain extends AppCompatActivity{
 
         initShopItems();
         initCargoItems();
+
+        LogUtility.log("SERIALIZATION",GameController.getInstance().serialization());
     }
 
     private void initShopItems() {

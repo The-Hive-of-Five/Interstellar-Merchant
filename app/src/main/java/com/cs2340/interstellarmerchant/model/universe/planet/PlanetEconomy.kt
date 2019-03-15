@@ -1,5 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.planet
 
+import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEventType
 import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
@@ -18,7 +19,7 @@ import kotlin.math.roundToInt
  * @param planet - the host planet
  */
 class PlanetEconomy(private val tech: Tech, private val resource: Resource,
-                    private val currentEventTypes: Set<PlanetEventType>): Economy, Serializable {
+                    private val currentEvents: Set<PlanetEvent>): Economy, Serializable {
     override fun canBuyItems(order: Order?): OrderStatus {
         var output: OrderStatus
         if (order!!.minSellTech!! > this.tech) {
@@ -107,7 +108,7 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                                     - Planet.decreaseEventVar.first)
                                     + Planet.decreaseEventVar.first)
                 }
-                currentEventTypes.contains(item.increaseEventType) -> {
+                currentEvents.contains(PlanetEvent(item.increaseEventType)) -> {
                     // increase the price based on event
                     factor =
                             1 * (random.nextInt(Planet.increaseEventVar.second

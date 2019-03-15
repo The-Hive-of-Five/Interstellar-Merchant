@@ -6,10 +6,12 @@ import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.MarketItem
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
+import com.cs2340.interstellarmerchant.utilities.DeserializedI
 import com.cs2340.interstellarmerchant.utilities.Inventory
 import java.io.Serializable
 import com.cs2340.interstellarmerchant.utilities.logd
 import com.google.gson.Gson
+import java.lang.IllegalStateException
 
 
 /**
@@ -17,12 +19,12 @@ import com.google.gson.Gson
  *
  * @param hostEconomy - the economy of the hosting planet
  */
-class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
-
-    private var priceLog: MutableMap<Item, MarketItem>
+class Market(@Transient private var hostEconomy: Economy): Inventory(), DeserializedI,
+        Serializable {
+    private val priceLog: MutableMap<Item, MarketItem> = HashMap() // initialize price map
 
     init {
-        priceLog = HashMap() // initialize price map
+        setEconomy(hostEconomy)
 
         val acceptableItems = hostEconomy.filterItems(Item.values().toList())
         val itemsMap: MutableMap<Item, Int> = HashMap()
@@ -34,6 +36,14 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
         }
         // add the items to the inventory
         super.plusAssign(itemsMap)
+    }
+
+    override fun afterDeserialized() {
+        if (hostEconomy == null) {
+            throw IllegalStateException("After being deserialized, the market's economy is" +
+                    "null. This should never occur. The planet should reset the market's economy" +
+                    "before the market's after deserialization is called.")
+        }
     }
 
     override operator fun plusAssign(subset: Map<Item, Int>) {
@@ -164,6 +174,10 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
     fun serialize(): String {
         val gson = Gson()
         return gson.toJson(this)
+    }
+
+    fun setEconomy(economy: Economy) {
+        this.hostEconomy = economy;
     }
 
     /**
