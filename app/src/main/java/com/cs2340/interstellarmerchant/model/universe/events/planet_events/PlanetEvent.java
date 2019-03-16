@@ -12,6 +12,7 @@ public class PlanetEvent implements Event, TimeSubscriberI {
     private int mostRecentDay = -1;
     private PlanetEventType type;
 
+
     public PlanetEvent(PlanetEventType type, int lifeSpan) {
         this.lifeSpan = lifeSpan;
         this.type = type;
@@ -49,6 +50,11 @@ public class PlanetEvent implements Event, TimeSubscriberI {
         mostRecentDay = day;
 
         return lifeSpan != 0;
+    }
+
+    @Override
+    public void onSubscribe(int day) {
+        this.mostRecentDay = day;
     }
 
     @Override

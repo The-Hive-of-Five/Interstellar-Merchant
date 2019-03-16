@@ -10,6 +10,12 @@ interface TimeSubscriberI {
     fun dayUpdated(day: Int): Boolean
 
     /**
+     * Called when the event is first subscribed to the time controller
+     */
+    fun onSubscribe(day: Int) {
+        // does nothing by default
+    }
+    /**
      * Called after the event unsubscribes
      */
     fun unsubscribe(day: Int)

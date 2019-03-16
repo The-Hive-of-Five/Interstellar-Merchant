@@ -56,7 +56,7 @@ class TimeController {
      * @param subscriber - the subscriber to the event
      */
     fun subscribeToTime(subscriber: TimeSubscriberI) {
-        this.subscribers.add(subscriber)
+        if (this.subscribers.add(subscriber)) subscriber.onSubscribe(currentDay)
     }
 
     /**

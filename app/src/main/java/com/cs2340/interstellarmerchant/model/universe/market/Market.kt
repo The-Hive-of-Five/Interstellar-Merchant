@@ -1,12 +1,11 @@
 package com.cs2340.interstellarmerchant.model.universe.market
 
-import android.util.Log
 import com.cs2340.interstellarmerchant.model.player.Player
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.MarketItem
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
-import com.cs2340.interstellarmerchant.utilities.DeserializedI
+import com.cs2340.interstellarmerchant.utilities.AfterDeserialized
 import com.cs2340.interstellarmerchant.utilities.Inventory
 import java.io.Serializable
 import com.cs2340.interstellarmerchant.utilities.logd
@@ -19,7 +18,7 @@ import java.lang.IllegalStateException
  *
  * @param hostEconomy - the economy of the hosting planet
  */
-class Market(@Transient private var hostEconomy: Economy): Inventory(), DeserializedI,
+class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDeserialized,
         Serializable {
     private val priceLog: MutableMap<Item, MarketItem> = HashMap() // initialize price map
 
@@ -39,6 +38,7 @@ class Market(@Transient private var hostEconomy: Economy): Inventory(), Deserial
     }
 
     override fun afterDeserialized() {
+        @SuppressWarnings
         if (hostEconomy == null) {
             throw IllegalStateException("After being deserialized, the market's economy is" +
                     "null. This should never occur. The planet should reset the market's economy" +

@@ -56,7 +56,9 @@ public enum PlanetEventType {
                     }
                 })
                 .collect(Collectors.<PlanetEventType>toList());
-        return possibleEvents.get(new Random().nextInt(possibleEvents.size()));
+        return possibleEvents.size() == 0 ?
+                null
+                : possibleEvents.get(new Random().nextInt(possibleEvents.size()));
 
     }
 }

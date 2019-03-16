@@ -5,12 +5,13 @@ import com.cs2340.interstellarmerchant.model.GameController
 import com.cs2340.interstellarmerchant.model.travel.Location
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
+import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEventType
 import com.cs2340.interstellarmerchant.model.universe.market.Market
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController
 import com.cs2340.interstellarmerchant.model.universe.time.TimeSubscriberI
-import com.cs2340.interstellarmerchant.utilities.DeserializedI
+import com.cs2340.interstellarmerchant.utilities.AfterDeserialized
 import org.w3c.dom.Element
 import java.io.InputStream
 import java.io.Serializable
@@ -34,7 +35,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
                    val population: Long?, val rotationPeriod: Int?,
                    val resource: Resource = Resource.getRandomResource(),
                    var tech: Tech = Tech.getRandomTech(), var x: Int? = null, var y: Int? = null)
-    : Location(), DeserializedI, Serializable, TimeSubscriberI {
+    : Location(), AfterDeserialized, Serializable, TimeSubscriberI {
 
     // keeps track of the current events (switch to event manager?)
     val currentEvents = HashSet<PlanetEvent>()
@@ -50,6 +51,9 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
         // subscribe to the time controller
         gameController.timeController.subscribeToTime(this)
+
+        // roll the dice and see if the planet should start with a random event
+        eventRoll()
     }
 
     override fun afterDeserialized() {
@@ -62,7 +66,12 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     }
 
     override fun dayUpdated(day: Int): Boolean {
-        Log.d("TIME", "$day")
+        // run the event life cycle
+        eventLifeCyle()
+
+        // try to add a new event
+        eventRoll()
+
         return true
     }
 
@@ -123,8 +132,60 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
         return builder.toString()
     }
 
-    private fun getRandomEvent() {
+    /**
+     * Removes events' with ended life cycles
+     */
+    private fun eventLifeCyle() {
+        var eventDeleted = false
+        for (event: PlanetEvent in currentEvents) {
+            // remove expired events
+            if (event.eventExpired()) {
+                eventDeleted = true
+                currentEvents.remove(event)
+            }
+        }
+        if (eventDeleted) {
+            market.recalculatePrices()
+        }
 
+    }
+
+    /**
+     * Rolls the dice and adds an event if if dice within range
+     */
+    private fun eventRoll() {
+        if (Random().nextInt(100) <= Planet.EVENT_CHANCE) {
+            try {
+                currentEvents.add(getRandomEvent())
+                market.recalculatePrices()
+            } catch (noEventException: NoEventException) {
+
+            }
+        }
+    }
+
+    class NoEventException(message: String): Exception(message)
+
+    /**
+     * Returns a random event based on the planet type. It will AUTOMATICALLY subscribe the
+     * event to the time controller
+     *
+     * @return the planet event
+     *
+     * @throws NoSuchElementException if there are no possible event types
+     */
+    @Throws(NoEventException::class)
+    private fun getRandomEvent(): PlanetEvent {
+        var planetEventType: PlanetEventType? = PlanetEventType.getRandomPlanetEvent(this)
+        planetEventType ?: throw NoEventException("There are no possible events")
+
+        // subscribe the event to the time controller
+        val event: PlanetEvent = PlanetEvent(planetEventType)
+        val gameController: GameController = GameController.getInstance()
+        val timeController: TimeController = gameController.timeController
+        timeController.subscribeToTime(event)
+
+        return event
     }
 
     /**
@@ -132,7 +193,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
      */
     companion object {
         // the chance of an event occurring the day starts
-        val EVENT_CHANCE = 5;
+        val EVENT_CHANCE = 100
 
         // denote the variance effects from increase and decrease events
         val decreaseEventVar = Pair(40, 90)

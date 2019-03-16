@@ -37,13 +37,12 @@ public class GameControllerTest {
         String serialization = null;
         try {
             serialization = GameController.getInstance().serialization();
+            System.out.println(serialization);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         assertThat("No error while serializing", serialization != null);
         assertThat("Serialization has length", serialization.length() > 0);
-
-        System.out.println(serialization);
 
     }
 
