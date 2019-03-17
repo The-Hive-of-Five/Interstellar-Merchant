@@ -90,7 +90,6 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
             itemPrice = itemView.findViewById(R.id.item_price);
             itemTotal = itemView.findViewById(R.id.total_available_shop);
             buyLayout = itemView.findViewById(R.id.shop_parent_layout);
-            buyButton = itemView.findViewById(R.id.buyButton);
             mEditText = (EditText)itemView.findViewById(R.id.quantity_edit);
             mEditText.addTextChangedListener(new TextWatcher() {
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}

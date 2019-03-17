@@ -86,7 +86,6 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
             itemPrice = itemView.findViewById(R.id.cargo_item_price);
             itemTotal = itemView.findViewById(R.id.total_available_cargo);
             sellLayout = itemView.findViewById(R.id.cargo_parent_layout);
-            sellButton = itemView.findViewById(R.id.sell_Button);
             mEditText = (EditText)itemView.findViewById(R.id.cargo_quantity_edit);
             mEditText.addTextChangedListener(new TextWatcher() {
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
