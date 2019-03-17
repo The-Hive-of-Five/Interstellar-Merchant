@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.viewmodels.CreateCharacterViewModel;
@@ -30,7 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final Universe universe = createUniverse();
+
+        // inits the gameController
+        GameController gameController = initGameController();
+        final Universe universe = gameController.getUniverse();
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -114,5 +120,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return universe;
+    }
+
+    private GameController initGameController() {
+        GameController controller = GameController.getInstance();
+        controller.init(createUniverse());
+        return controller;
     }
 }

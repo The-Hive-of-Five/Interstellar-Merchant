@@ -9,6 +9,7 @@ import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
 import com.cs2340.interstellarmerchant.utilities.Inventory
 import java.io.Serializable
 import com.cs2340.interstellarmerchant.utilities.logd
+import com.google.gson.Gson
 
 
 /**
@@ -158,6 +159,11 @@ class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
             }
             return output
         }
+    }
+
+    fun serialize(): String {
+        val gson = Gson()
+        return gson.toJson(this)
     }
 
     override fun toString(): String {

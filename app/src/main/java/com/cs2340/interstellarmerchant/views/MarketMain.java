@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.universe.market.Market;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
+import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;
 

@@ -1,9 +1,12 @@
 package com.cs2340.interstellarmerchant.model.universe.planet
 
+import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
 import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
+import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
+import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import com.cs2340.interstellarmerchant.utilities.logd
 import java.io.Serializable
 import java.util.*
@@ -14,10 +17,11 @@ import kotlin.math.roundToInt
  * Used to determine various values for the planet's market based on attributes of the planet
  * @param planet - the host planet
  */
-class PlanetEconomy(private val planet: Planet): Economy, Serializable {
+class PlanetEconomy(private val tech: Tech, private val resource: Resource,
+                    private val currentEvents: Set<PlanetEvent>): Economy, Serializable {
     override fun canBuyItems(order: Order?): OrderStatus {
         var output: OrderStatus
-        if (order!!.minSellTech!! > planet.tech) {
+        if (order!!.minSellTech!! > this.tech) {
             output = OrderStatus.NOT_ENOUGH_TECH
             logd("not enough tech to sell")
 
@@ -32,7 +36,7 @@ class PlanetEconomy(private val planet: Planet): Economy, Serializable {
      */
     override fun canBuyItem(item: Item?, quantity: Int): OrderStatus {
         var orderStatus: OrderStatus
-        if (item!!.sellTechLevel > planet.tech) {
+        if (item!!.sellTechLevel > this.tech) {
             orderStatus = OrderStatus.NOT_ENOUGH_TECH
         } else {
             orderStatus = OrderStatus.SUCCESS
@@ -49,7 +53,7 @@ class PlanetEconomy(private val planet: Planet): Economy, Serializable {
         return potentialItems
                 .stream()
                 .filter { item: Item ->
-                    var output = item.produceTechLevel <= planet.tech
+                    var output = item.produceTechLevel <= this.tech
                     output = output && random.nextInt(100) < chanceInStore
 
                     return@filter output
@@ -66,7 +70,7 @@ class PlanetEconomy(private val planet: Planet): Economy, Serializable {
         var signFactor: Int
         var minVariance: Int
         var maxVariance: Int
-        if (item!!.idealTechLevel == planet.tech) { // increase quantity if ideal tech level
+        if (item!!.idealTechLevel == this.tech) { // increase quantity if ideal tech level
             minVariance = 50
             maxVariance = 150
             signFactor = 1
@@ -91,19 +95,19 @@ class PlanetEconomy(private val planet: Planet): Economy, Serializable {
             price = item.base
 
             // account for tech level difference
-            price += (planet.tech.ordinal - item.sellTechLevel.ordinal) * item.priceIncreasePerTech
+            price += (this.tech.ordinal - item.sellTechLevel.ordinal) * item.priceIncreasePerTech
 
             val random = Random()
             var factor: Int
             when {
-                item.decreaseResource == planet.resource -> {
+                item.decreaseResource == this.resource -> {
                     // decrease the price of the item based on predefined allowed amount of variance
                     factor =
                             -1 * (random.nextInt(Planet.decreaseEventVar.second
                                     - Planet.decreaseEventVar.first)
                                     + Planet.decreaseEventVar.first)
                 }
-                planet.currentEvents.contains(item.increaseEvent) -> {
+                currentEvents.contains(item.increaseEvent) -> {
                     // increase the price based on event
                     factor =
                             1 * (random.nextInt(Planet.increaseEventVar.second
@@ -125,6 +129,6 @@ class PlanetEconomy(private val planet: Planet): Economy, Serializable {
     }
 
     override fun getEconomyName(): String {
-        return "Economy for ${planet.name}"
+        return "Economy"
     }
 }

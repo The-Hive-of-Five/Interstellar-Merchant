@@ -26,5 +26,8 @@ enum class Item (val produceTechLevel: Tech,
             230, 280),
     FOOD(Tech.MEDIEVAL, Tech.AGRICULTURE, Tech.MEDIEVAL, 100, 10,
             5,5, PlanetEvent.CROPFAIL, Resource.RICHSOIL,
-            90, 160)
+            90, 160),
+    FUEL(Tech.INDUSTRIAL, Tech.RENAISSANCE, Tech.EARLY_INDUSTRIAL, 5, 50,
+    5,5, PlanetEvent.CROPFAIL, Resource.RICHSOIL,
+    90, 160);
 }

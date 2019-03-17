@@ -136,6 +136,19 @@ public class MarketTest {
 
     }
 
+    @Test
+    public void serializeTest() {
+        String serialization = null;
+        try {
+            serialization = focusMarket.serialize();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        assertThat("No error while serializing", serialization != null);
+        assertThat("Serialization has length", serialization.length() > 0);
+
+    }
+
 
     /**
      * Ensures the market is empty
