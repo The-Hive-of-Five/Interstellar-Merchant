@@ -26,10 +26,14 @@ import java.util.Map;
 
 
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.content.ContentValues.TAG;
 
 public class MarketViewModel extends AndroidViewModel {
+
+
+    public AtomicBoolean retrieveEditText = new AtomicBoolean(false);
 
     private Planet planet;
     public Market market;
@@ -45,6 +49,12 @@ public class MarketViewModel extends AndroidViewModel {
 
     public MarketBuyRecyclerViewAdapter adapter;
     public MarketSellRecyclerViewAdapter adapter1;
+
+
+    public void upudatu(){
+        adapter.notifyDataSetChanged();
+        adapter1.notifyDataSetChanged();
+    }
 
 
     public MarketViewModel(@NonNull Application application) {
@@ -146,6 +156,34 @@ public class MarketViewModel extends AndroidViewModel {
         Map<Item, Integer> map = new HashMap<>();
         map.put(item, amount);
         market.sellItems(new Order(map), Player.getInstance());
+    }
+
+    public OrderStatus buyOrder() {
+        Map<Item, Integer> buyOrder = new HashMap<>();
+        int amount = 0;
+        Item item = null;
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            if (!(adapter.mEditTextValues.get(i).equals(""))) {
+                amount = Integer.parseInt(adapter.mEditTextValues.get(i));
+                item = buyItemArray.get(i);
+                buyOrder.put(item, amount);
+            }
+        }
+        return market.buyItems(new Order(buyOrder), Player.getInstance());
+    }
+
+    public void sellOrder() {
+        Map<Item, Integer> sellOrder = new HashMap<>();
+        int amount = 0;
+        Item item = null;
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            if (!(adapter1.mEditTextValues.get(i).equals(""))) {
+                amount = Integer.parseInt(adapter1.mEditTextValues.get(i));
+                item = sellItemArray.get(i);
+                sellOrder.put(item, amount);
+            }
+        }
+        market.sellItems(new Order(sellOrder), Player.getInstance());
     }
 
 

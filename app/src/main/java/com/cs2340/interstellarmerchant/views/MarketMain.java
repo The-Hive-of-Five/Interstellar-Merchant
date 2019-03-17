@@ -61,7 +61,6 @@ public class MarketMain extends AppCompatActivity{
             itemPrices.add(marketViewModel.getMarketItemPrice(i));
             itemTotals.add(marketViewModel.getMarketTotal(i));
         }
-
         initRecyclerView();
     }
 
@@ -71,17 +70,21 @@ public class MarketMain extends AppCompatActivity{
             cargoPrices.add(marketViewModel.getShipItemSellPrice(i));
             cargoTotals.add(marketViewModel.getShipTotal(i));
         }
-
         initRecyclerView1();
     }
 
     private void buyListener(View view) {
-        Log.d("BUY","BUYYYYYY");
-
+        try {
+            marketViewModel.buyOrder();
+        } catch (Exception e){
+            Log.d("BUY", e.getMessage());
+        }
+        marketViewModel.update();
     }
 
     private void sellListener(View view) {
-        Log.d("SELL","SELLLLL");
+        marketViewModel.sellOrder();
+        marketViewModel.update();
     }
 
     private void initRecyclerView() {

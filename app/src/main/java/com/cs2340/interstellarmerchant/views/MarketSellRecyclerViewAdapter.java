@@ -3,6 +3,8 @@ package com.cs2340.interstellarmerchant.views;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSellRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketSellRecyclerViewAd";
@@ -26,6 +29,8 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
     public ArrayList<String> itemNames = new ArrayList<>();
     public ArrayList<String> itemPrices = new ArrayList<>();
     public ArrayList<String> itemTotals = new ArrayList<>();
+    public static List<String> mEditTextValues = new ArrayList<>(10);
+
 
     private Context itemContext;
     public MarketViewModel mv;
@@ -37,6 +42,10 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         this.itemContext = itemContext;
         this.itemTotals = itemTotals;
         this.mv = mv;
+        for(int i = 0; i < 20; i++){
+            mEditTextValues.add("");
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -53,32 +62,8 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         viewHolder.itemName.setText(itemNames.get(i));
         viewHolder.itemPrice.setText(itemPrices.get(i));
         viewHolder.itemTotal.setText(itemTotals.get(i));
-        viewHolder.quantityEdit.setText("");
-
-      viewHolder.sellButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int finalValue;
-                try {
-
-                    if (viewHolder.quantityEdit != null) {
-                        String val = viewHolder.quantityEdit.getText().toString();
-                        viewHolder.quantityEdit.setText("");
-                        finalValue = Integer.parseInt(val);
-                        mv.sellItem(finalValue, i);
-                        mv.update();
-                    }
-                } catch (Exception e) { // CHANGE THIS, IF THE INT PARSE THROWS AN EXCEPTION IT JUST SETS AMOUNT TO 0
-                    Toast.makeText(itemContext,"Sell did not go through",Toast.LENGTH_LONG).show();
-                }
-                //Log.d(TAG, "amount is " + finalValue);
-
-
-                //Log.d(TAG, "onClick: clicked on sell");
-                //get quantity from @+id/quantity_edit
-                //need calculations for if player can buy, display in toast message below
-            }
-        });
+        viewHolder.mEditText.setTag(i);
+        viewHolder.mEditText.setText("");
     }
 
     @Override
@@ -91,19 +76,27 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         TextView itemName;
         TextView itemPrice;
         TextView itemTotal;
-        EditText quantityEdit;
         RelativeLayout sellLayout;
         Button sellButton;
+        private EditText mEditText;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.cargo_item_name);
             itemPrice = itemView.findViewById(R.id.cargo_item_price);
-
             itemTotal = itemView.findViewById(R.id.total_available_cargo);
-            quantityEdit = itemView.findViewById(R.id.cargo_quantity_edit);
-
             sellLayout = itemView.findViewById(R.id.cargo_parent_layout);
             sellButton = itemView.findViewById(R.id.sell_Button);
+            mEditText = (EditText)itemView.findViewById(R.id.cargo_quantity_edit);
+            mEditText.addTextChangedListener(new TextWatcher() {
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+                public void afterTextChanged(Editable editable) {}
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if(mEditText.getTag()!=null){
+                        mEditTextValues.set((int)mEditText.getTag(),charSequence.toString());
+                    }
+                }
+            });
         }
 
     }
