@@ -1,8 +1,11 @@
 package com.cs2340.interstellarmerchant.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,23 +17,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
+import com.cs2340.interstellarmerchant.views.MarketMain;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuyRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketBuyRecyclerViewAd";
 
-    private ArrayList<String> itemNames;
-    private ArrayList<String> itemPrices;
+    public ArrayList<String> itemNames = new ArrayList<>();
+    public ArrayList<String> itemPrices = new ArrayList<>();
+    public ArrayList<String> itemTotals = new ArrayList<>();
+    public static List<String> mEditTextValues = new ArrayList<>(10);
+
+
     private Context itemContext;
     public MarketViewModel mv;
 
-    public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, MarketViewModel mv) {
+    public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, ArrayList<String> itemTotals, MarketViewModel mv) {
+
         this.itemNames = itemNames;
         this.itemPrices = itemPrices;
         this.itemContext = itemContext;
+        this.itemTotals = itemTotals;
         this.mv = mv;
+        for(int i = 0; i < 20; i++){
+            mEditTextValues.add("");
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -41,31 +59,15 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
         return holder;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        Log.d(TAG, "onBindViewHolder: called");
-        viewHolder.itemName.setText(itemNames.get(i));
-        viewHolder.itemPrice.setText(itemPrices.get(i));
-        viewHolder.buyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on buy");
-                int finalValue = 0;
-                try {
-                    if (viewHolder.quantityEdit != null) {
-                        String val = viewHolder.quantityEdit.getText().toString();
-                        finalValue = Integer.parseInt(val);
-                    }
-                } catch (Exception e) { // CHANGE THIS, IF THE INT PARSE THROWS AN EXCEPTION IT JUST SETS AMOUNT TO 0
-                    finalValue = 0;
-                }
-                mv.buyItem(finalValue, i);
-                //get quantity from @+id/quantity_edit
-                //need calculations for if player can buy, display in toast message below
-                Toast.makeText(itemContext,"[Buy result shown here]",Toast.LENGTH_LONG).show();
-            }
-        });
 
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+            viewHolder.mEditText.setTag(i);
+            viewHolder.mEditText.setText("");
+            viewHolder.itemName.setText(itemNames.get(i));
+            viewHolder.itemPrice.setText(itemPrices.get(i));
+            viewHolder.itemTotal.setText(itemTotals.get(i));
     }
 
     @Override
@@ -77,19 +79,36 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
 
         TextView itemName;
         TextView itemPrice;
-        EditText quantityEdit;
+        TextView itemTotal;
         RelativeLayout buyLayout;
         Button buyButton;
+        private EditText mEditText;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
             itemPrice = itemView.findViewById(R.id.item_price);
-            quantityEdit = itemView.findViewById(R.id.quantity_edit);
+            itemTotal = itemView.findViewById(R.id.total_available_shop);
             buyLayout = itemView.findViewById(R.id.shop_parent_layout);
             buyButton = itemView.findViewById(R.id.buyButton);
+            mEditText = (EditText)itemView.findViewById(R.id.quantity_edit);
+            mEditText.addTextChangedListener(new TextWatcher() {
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+                public void afterTextChanged(Editable editable) {}
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if(mEditText.getTag()!=null){
+                        mEditTextValues.set((int)mEditText.getTag(),charSequence.toString());
+                    }
+                }
+            });
         }
 
+
     }
+
+
+
+
+
 
 }
