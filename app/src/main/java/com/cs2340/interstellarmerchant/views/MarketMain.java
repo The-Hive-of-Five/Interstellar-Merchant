@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.universe.market.Market;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
@@ -31,6 +33,9 @@ public class MarketMain extends AppCompatActivity{
     private ArrayList<String> cargoTotals = new ArrayList<>();
 
     private MarketViewModel marketViewModel;
+
+    TextView credits;
+    TextView cargo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +58,10 @@ public class MarketMain extends AppCompatActivity{
                 sellListener(v);
             }
         });
-
+        credits = findViewById(R.id.textView9);
+        credits.setText(Player.getInstance().getCredits() + "");
+        cargo = findViewById(R.id.textView14);
+        cargo.setText(Player.getInstance().getShip().getAvailableSpace() + "");
     }
 
     private void initShopItems() {
@@ -81,11 +89,19 @@ public class MarketMain extends AppCompatActivity{
             Log.d("BUY", e.getMessage());
         }
         marketViewModel.update();
+        credits.setText(Player.getInstance().getCredits() + "");
+        cargo.setText(Player.getInstance().getShip().getAvailableSpace() + "");
     }
 
     private void sellListener(View view) {
-        marketViewModel.sellOrder();
+        try {
+            marketViewModel.sellOrder();
+        } catch (Exception e) {
+            Log.d("BUY", e.getMessage());
+        }
         marketViewModel.update();
+        credits.setText(Player.getInstance().getCredits() + "");
+        cargo.setText(Player.getInstance().getShip().getAvailableSpace() + "");
     }
 
     private void initRecyclerView() {
