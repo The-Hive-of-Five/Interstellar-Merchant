@@ -107,7 +107,7 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                                     - Planet.DECREASE_EVENT_VARIANCE.first)
                                     + Planet.DECREASE_EVENT_VARIANCE.first)
                 }
-                currentEvents.contains(item.increaseEvent) -> {
+                currentEvents.contains(PlanetEvent(item.increaseEventType)) -> {
                     // increase the price based on event
                     factor =
                             1 * (random.nextInt(Planet.INCREASE_EVENT_VARIANCE.second

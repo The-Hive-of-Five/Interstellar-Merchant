@@ -47,10 +47,6 @@ public class Player extends TravelEntity implements Serializable  {
      * @param player - the player
      */
     public static void setInstance(Player player) {
-        if (player != null) {
-            throw new IllegalArgumentException("For some reason player is not null. A player" +
-                    "value already exists. This is not correct");
-        }
         Player.player = player;
     }
 
