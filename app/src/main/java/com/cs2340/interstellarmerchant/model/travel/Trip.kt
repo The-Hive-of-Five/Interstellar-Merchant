@@ -21,7 +21,7 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
          */
         fun distance(xOne: Int, yOne: Int, xTwo: Int, yTwo: Int): Double {
             val sum = Math.pow((xOne - xTwo).toDouble(), 2.0)
-                + Math.pow((yOne - yTwo).toDouble(), 2.0)
+            + Math.pow((yOne - yTwo).toDouble(), 2.0)
             return Math.sqrt(sum)
         }
     }
