@@ -2,52 +2,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#000000"
     android:padding="15sp"
     android:id="@+id/shop_parent_layout">
 
 
     <TextView
+        android:id="@+id/item_name"
+        android:layout_width="80sp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15sp"
+        android:text="Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+    <TextView
+        android:id="@+id/item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:id="@+id/item_name"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_marginLeft="15sp"
         android:layout_centerVertical="true"
-        />
+        android:layout_marginLeft="61dp"
+        android:layout_toRightOf="@+id/item_name"
+        android:text="Price"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+    <EditText
+        android:id="@+id/quantity_edit"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:layout_alignTop="@+id/item_name"
+        android:layout_marginLeft="72dp"
+        android:layout_toRightOf="@+id/item_price"
+        android:background="#FFFFFF"
+        android:inputType="numberDecimal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"></EditText>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/item_name"
-        android:text="Price"
-        android:id="@+id/item_price"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_marginLeft="30sp"
-        android:layout_centerVertical="true"
-        />
-
-    <EditText
-        android:layout_width="80sp"
-        android:layout_height="30sp"
-        android:id="@+id/quantity_edit"
-        android:layout_toRightOf="@+id/item_price"
-        android:layout_marginLeft="30sp"
-        android:background="#FFFFFF"
-        android:layout_centerVertical="true"
-        ></EditText>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="30sp"
+        android:id="@+id/slash"
         android:layout_toRightOf="@+id/quantity_edit"
-        android:layout_marginLeft="30sp"
-        android:background="#87ceeb"
+        android:text="@string/slash"
+        android:layout_marginLeft="5sp"
         android:layout_centerVertical="true"
-        android:text="@string/buy_label"
-        android:id="@+id/buyButton"
         />
+
+    <TextView
+        android:id="@+id/total_available_shop"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5sp"
+        android:layout_toRightOf="@+id/slash"
+        android:text="Total"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+
 </RelativeLayout>

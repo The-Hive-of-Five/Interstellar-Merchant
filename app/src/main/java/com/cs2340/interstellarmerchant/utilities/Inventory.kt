@@ -49,6 +49,10 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
         for ((item: Item, quantity: Int) in subset) {
             inventory[item] = inventory[item]!! - quantity
             size -= quantity
+            if (inventory[item] == 0) {   //Kartik
+                inventory.remove(item)    //added
+            }                             //these lines to remove an item if the quantity is 0, change if it doesn't work
+                                          // this allows the recycler view to not show values that have 0 quantity
         }
     }
 
