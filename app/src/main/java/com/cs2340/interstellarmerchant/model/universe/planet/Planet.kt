@@ -1,21 +1,14 @@
 package com.cs2340.interstellarmerchant.model.universe.planet
 
-import android.util.Log
-import com.cs2340.interstellarmerchant.model.GameController
 import com.cs2340.interstellarmerchant.model.travel.Location
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
-import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEventType
 import com.cs2340.interstellarmerchant.model.universe.market.Market
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
-import com.cs2340.interstellarmerchant.model.universe.time.TimeController
-import com.cs2340.interstellarmerchant.model.universe.time.TimeSubscriberI
-import com.cs2340.interstellarmerchant.utilities.AfterDeserialized
 import org.w3c.dom.Element
 import java.io.InputStream
 import java.io.Serializable
-import java.lang.IllegalArgumentException
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -35,7 +28,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
                    val population: Long?, val rotationPeriod: Int?,
                    val resource: Resource = Resource.getRandomResource(),
                    var tech: Tech = Tech.getRandomTech(), var x: Int? = null, var y: Int? = null)
-    : Location(), AfterDeserialized, Serializable, TimeSubscriberI {
+    : Location(), Serializable {
 
     // keeps track of the current events (switch to event manager?)
     val currentEvents = HashSet<PlanetEvent>()
@@ -45,40 +38,6 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
     // market must be initialized after current events (market for the planet)
     val market = Market(economy)
-
-    init {
-        val gameController = GameController.getInstance()
-
-        // subscribe to the time controller
-        gameController.timeController.subscribeToTime(this)
-
-        // roll the dice and see if the planet should start with a random event
-        eventRoll()
-    }
-
-    override fun afterDeserialized() {
-        val gameController = GameController.getInstance()
-        gameController.timeController.subscribeToTime(this)
-
-        resubscribeAllTimeEvents()
-        market.setEconomy(economy)
-        market.afterDeserialized()
-    }
-
-    override fun dayUpdated(day: Int): Boolean {
-        // run the event life cycle
-        eventLifeCyle()
-
-        // try to add a new event
-        eventRoll()
-
-        return true
-    }
-
-    override fun unsubscribe(day: Int) {
-       throw IllegalArgumentException("A planet should never unsubscribe from the " +
-               "time controller")
-    }
 
     override fun getX(): Int {
         return x!!
@@ -98,17 +57,6 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
     override fun toString(): String {
         return toString(false)
-    }
-
-    /**
-     * Call when the object is being created from a serialization. All time events need
-     * to be resubscribed to the time controller
-     */
-    fun resubscribeAllTimeEvents() {
-        val timeController = TimeController.getTimeController()
-        for (event: PlanetEvent in currentEvents) {
-            timeController.subscribeToTime(event)
-        }
     }
 
     /**
@@ -196,7 +144,6 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     companion object {
         // the chance of an event occurring the day starts
         val EVENT_CHANCE = 3
-
         // denote the variance effects from increase and decrease events
         val DECREASE_EVENT_VARIANCE = Pair(40, 90)
         val INCREASE_EVENT_VARIANCE = Pair(50, 90)

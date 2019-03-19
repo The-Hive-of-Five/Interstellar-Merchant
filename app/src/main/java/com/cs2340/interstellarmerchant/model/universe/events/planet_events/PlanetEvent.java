@@ -19,48 +19,30 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
         this.lifeSpan = lifeSpan;
         this.type = type;
         eventAlive = true;
+
     }
 
-    public PlanetEvent(PlanetEventType type) {
-        this(type, (int) (Math.random() * PlanetEvent.MAX_LIFE));
+    PlanetEvent() {
+        this(new Resource[0]);
     }
 
+    /**
+     * Gets a random event for the planet. Ensures the event does not conflict with the
+     * planet's resources
+     * @param planet - the input planet
+     * @return the random event
+     */
+    public static PlanetEvent getRandomPlanetEvent(final Planet planet) {
+        List<PlanetEvent> possibleEvents = Arrays.asList(PlanetEvent.values())
+                .stream()
+                .filter(new Predicate<PlanetEvent>() {
+                    @Override
+                    public boolean test(PlanetEvent planetEvent) {
+                        return !planetEvent.conflictingResources.contains(planet.getResource());
+                    }
+                })
+                .collect(Collectors.<PlanetEvent>toList());
+        return possibleEvents.get(new Random().nextInt(possibleEvents.size()));
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == null) {
-            return false;
-        }
-        if (!(other instanceof PlanetEvent)) {
-            return false;
-        }
-        PlanetEvent otherEvent = (PlanetEvent) other;
-        return this.type == otherEvent.type;
-    }
-
-    @Override
-    public boolean eventExpired() {
-        return !eventAlive;
-    }
-
-    @Override
-    public boolean dayUpdated(int day) {
-        if (mostRecentDay != -1) {
-            // get time jump since last updated
-            lifeSpan -= day - mostRecentDay;
-        }
-        mostRecentDay = day;
-
-        return lifeSpan != 0;
-    }
-
-    @Override
-    public void onSubscribe(int day) {
-        this.mostRecentDay = day;
-    }
-
-    @Override
-    public void unsubscribe(int day) {
-        eventAlive = false;
     }
 }

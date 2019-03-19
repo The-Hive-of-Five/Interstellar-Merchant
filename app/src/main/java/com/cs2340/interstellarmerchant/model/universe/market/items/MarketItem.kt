@@ -10,7 +10,7 @@ import java.util.*
  * @param item - the type of item
   *
  */
-data class MarketItem(val item: Item, @Transient private val economy: Economy): Serializable {
+data class MarketItem(val item: Item, private val economy: Economy): Serializable {
     companion object {
         /* the constant for which the the sell price is depreciated
         (market pays less for the item than what it would sell for
