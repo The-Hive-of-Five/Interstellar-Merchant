@@ -1,16 +1,15 @@
 package com.cs2340.interstellarmerchant.model.universe.market
 
+import android.util.Log
 import com.cs2340.interstellarmerchant.model.player.Player
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.MarketItem
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
-import com.cs2340.interstellarmerchant.utilities.AfterDeserialized
 import com.cs2340.interstellarmerchant.utilities.Inventory
 import java.io.Serializable
 import com.cs2340.interstellarmerchant.utilities.logd
 import com.google.gson.Gson
-import java.lang.IllegalStateException
 
 
 /**
@@ -18,12 +17,12 @@ import java.lang.IllegalStateException
  *
  * @param hostEconomy - the economy of the hosting planet
  */
-class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDeserialized,
-        Serializable {
-    private val priceLog: MutableMap<Item, MarketItem> = HashMap() // initialize price map
+class Market(private val hostEconomy: Economy): Inventory( ), Serializable {
+
+    private var priceLog: MutableMap<Item, MarketItem>
 
     init {
-        setEconomy(hostEconomy)
+        priceLog = HashMap() // initialize price map
 
         val acceptableItems = hostEconomy.filterItems(Item.values().toList())
         val itemsMap: MutableMap<Item, Int> = HashMap()
@@ -35,15 +34,6 @@ class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDes
         }
         // add the items to the inventory
         super.plusAssign(itemsMap)
-    }
-
-    override fun afterDeserialized() {
-        @SuppressWarnings
-        if (hostEconomy == null) {
-            throw IllegalStateException("After being deserialized, the market's economy is" +
-                    "null. This should never occur. The planet should reset the market's economy" +
-                    "before the market's after deserialization is called.")
-        }
     }
 
     override operator fun plusAssign(subset: Map<Item, Int>) {
@@ -174,20 +164,6 @@ class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDes
     fun serialize(): String {
         val gson = Gson()
         return gson.toJson(this)
-    }
-
-    fun setEconomy(economy: Economy) {
-        this.hostEconomy = economy;
-    }
-
-    /**
-     * Recalculates the prices for all items. Usually the result of a random event changing
-     * prices.
-     */
-    fun recalculatePrices() {
-        for (item: MarketItem in priceLog.values) {
-            item.updatePrice()
-        }
     }
 
     override fun toString(): String {

@@ -3,7 +3,6 @@ package com.cs2340.interstellarmerchant.model.universe
 
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
-import com.cs2340.interstellarmerchant.utilities.AfterDeserialized
 import java.io.Serializable
 import java.util.*
 
@@ -16,7 +15,7 @@ import java.util.*
  * @param y - the y locatino of the solar system; null by default
  */
 data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.getRandomTech(),
-                       var x: Int? = null, var y: Int? = null): AfterDeserialized, Serializable {
+                       var x: Int? = null, var y: Int? = null): Serializable {
     val name = planets[0].name
 
     init {
@@ -57,13 +56,6 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
             return solarSystems
         }
     }
-
-    override fun afterDeserialized() {
-        for (planet: AfterDeserialized in planets) {
-            planet.afterDeserialized()
-        }
-    }
-
     override fun toString(): String {
         val builder: StringBuilder = StringBuilder()
         builder.appendln("Solar System: $name @ <$x,$y>")

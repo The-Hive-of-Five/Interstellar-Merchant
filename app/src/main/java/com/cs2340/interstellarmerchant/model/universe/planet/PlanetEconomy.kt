@@ -1,7 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.planet
 
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
-import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEventType
 import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
@@ -108,7 +107,7 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                                     - Planet.decreaseEventVar.first)
                                     + Planet.decreaseEventVar.first)
                 }
-                currentEvents.contains(PlanetEvent(item.increaseEventType)) -> {
+                currentEvents.contains(item.increaseEvent) -> {
                     // increase the price based on event
                     factor =
                             1 * (random.nextInt(Planet.increaseEventVar.second

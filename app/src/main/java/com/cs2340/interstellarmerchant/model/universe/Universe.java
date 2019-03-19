@@ -4,7 +4,6 @@ package com.cs2340.interstellarmerchant.model.universe;
 import android.support.v4.util.Pair;
 
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
-import com.cs2340.interstellarmerchant.utilities.AfterDeserialized;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -20,7 +19,7 @@ import java.util.Set;
  * Universe class to keep track of solar systems and locations of those solar systems
  */
 
-public class Universe implements Serializable, AfterDeserialized {
+public class Universe implements Serializable {
 
     /**
      * Generates a universe
@@ -54,13 +53,6 @@ public class Universe implements Serializable, AfterDeserialized {
      */
     public SolarSystem[] getSystems() {
         return systems;
-    }
-
-    @Override
-    public void afterDeserialized() {
-        for (AfterDeserialized system: systems) {
-            system.afterDeserialized();
-        }
     }
 
     @Override
