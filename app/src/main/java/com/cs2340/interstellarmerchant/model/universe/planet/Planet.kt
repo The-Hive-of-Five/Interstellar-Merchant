@@ -133,73 +133,15 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     }
 
     /**
-     * Removes events' with ended life cycles
-     */
-    private fun eventLifeCyle() {
-        var eventDeleted = false
-        for (event: PlanetEvent in currentEvents) {
-            // remove expired events
-            if (event.eventExpired()) {
-                eventDeleted = true
-                currentEvents.remove(event)
-            }
-        }
-
-        // if an event was deleted, recalculate all market prices
-        if (eventDeleted) {
-            market.recalculatePrices()
-        }
-
-    }
-
-    /**
-     * Rolls the dice and adds an event if if dice within range
-     */
-    private fun eventRoll() {
-        if (Random().nextInt(100) <= Planet.EVENT_CHANCE) {
-            try {
-                currentEvents.add(getRandomEvent())
-                market.recalculatePrices()
-            } catch (noEventException: NoEventException) {
-
-            }
-        }
-    }
-
-    class NoEventException(message: String): Exception(message)
-
-    /**
-     * Returns a random event based on the planet type. It will AUTOMATICALLY subscribe the
-     * event to the time controller
-     *
-     * @return the planet event
-     *
-     * @throws NoSuchElementException if there are no possible event types
-     */
-    @Throws(NoEventException::class)
-    private fun getRandomEvent(): PlanetEvent {
-        var planetEventType: PlanetEventType? = PlanetEventType.getRandomPlanetEvent(this)
-        planetEventType ?: throw NoEventException("There are no possible events")
-
-        // subscribe the event to the time controller
-        val event: PlanetEvent = PlanetEvent(planetEventType)
-        val gameController: GameController = GameController.getInstance()
-        val timeController: TimeController = gameController.timeController
-        timeController.subscribeToTime(event)
-
-        return event
-    }
-
-    /**
      * This is used to get the planets from the xml file.
      */
     companion object {
         // the chance of an event occurring the day starts
         val EVENT_CHANCE = 3
-
+      
         // denote the variance effects from increase and decrease events
-        val DECREASE_EVENT_VARIANCE = Pair(40, 90)
-        val INCREASE_EVENT_VARIANCE = Pair(50, 90)
+        val decreaseEventVar = Pair(40, 90)
+        val increaseEventVar = Pair(50, 90)
 
         /**
          * creates planet object from xml node

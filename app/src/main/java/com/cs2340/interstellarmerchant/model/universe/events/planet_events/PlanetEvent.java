@@ -36,6 +36,7 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
         }
         PlanetEvent otherEvent = (PlanetEvent) other;
         return this.type == otherEvent.type;
+
     }
 
     @Override

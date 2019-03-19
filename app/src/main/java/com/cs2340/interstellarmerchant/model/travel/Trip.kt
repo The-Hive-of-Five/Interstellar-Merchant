@@ -10,11 +10,8 @@ import kotlin.math.roundToInt
  */
 data class Trip(val startingLocation: Location, val endingLocation: Location) {
     companion object {
-        const val SOLAR_MULTIPLIER = 5
-        const val PLANET_MULTIPLIER = 1
-
-        // this might need to be adjusted
-        const val FUEL_TO_TIME = .05
+        const val solarMultiplier = 5
+        const val planetMultiplier = 1
 
         /**
          * The distance formula
@@ -27,11 +24,9 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
     }
 
     var fuelCost: Int? = null
-    var time: Int? = null
 
     init {
         this.fuelCost = determineCost()
-        this.time = determineTime()
     }
 
     /**
@@ -51,7 +46,7 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
             yOne = startingLocation.y
             xTwo = endingLocation.x
             yTwo = endingLocation.y
-            multiplier = Trip.PLANET_MULTIPLIER
+            multiplier = Trip.planetMultiplier
         } else {
             // if in different solar systems, just use the distances between solar systems
             val startingSystem = startingLocation.solarSystem
@@ -60,17 +55,10 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
             yOne = startingSystem.y!!
             xTwo = endingSystem.x!!
             yTwo = endingSystem.y!!
-            multiplier = Trip.SOLAR_MULTIPLIER
+            multiplier = Trip.solarMultiplier
         }
         val distance = distance(xOne, yOne, xTwo, yTwo)
         return (distance * multiplier).roundToInt()
-    }
-
-    /**
-     * Determines the time a trip takes
-     */
-    private fun determineTime(): Int {
-        return (this.fuelCost!! * Trip.FUEL_TO_TIME).toInt()
     }
 
 }
