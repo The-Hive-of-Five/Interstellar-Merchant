@@ -3,6 +3,7 @@ package com.cs2340.interstellarmerchant.model;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.travel.TravelController;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
+import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;
@@ -39,7 +40,9 @@ public class GameController {
     public void init (String gameState) {
         SaveState state = getSaveStateFromSerialization(gameState);
         Player.setInstance(state.player);
+        TimeController.Companion.setInstance(state.timeController);
         this.universe = state.universe;
+        this.universe.afterDeserialized();
     }
 
     /**
@@ -48,6 +51,14 @@ public class GameController {
      */
     public Player getPlayer() {
         return Player.getInstance();
+    }
+
+    /**
+     * Gets the time controller
+     * @return the time controller
+     */
+    public TimeController getTimeController() {
+        return TimeController.Companion.getTimeController();
     }
 
     /**
@@ -68,11 +79,13 @@ public class GameController {
 
     private class SaveState {
         public Player player;
+        public TimeController timeController;
         public Universe universe;
 
-        private SaveState(Player player, Universe universe) {
+        private SaveState(Player player, Universe universe, TimeController timeController) {
             this.player = player;
             this.universe = universe;
+            this.timeController = timeController;
         }
     }
 
@@ -86,6 +99,7 @@ public class GameController {
      */
     public String serialization() {
         Gson gson = new Gson();
-        return gson.toJson(new SaveState(this.getPlayer(), this.getUniverse()));
+        return gson.toJson(new SaveState(this.getPlayer(), this.getUniverse(),
+                this.getTimeController()));
     }
 }

@@ -15,8 +15,8 @@ public class PlayerTest {
 
     @BeforeClass
     public static void getPlanets() throws IOException {
-        // create the player
-        player = new Player();
+        // instatiate the player
+        player = Player.getInstance();
         player.init(new GameConfig(Difficulty.Hard));
     }
 
