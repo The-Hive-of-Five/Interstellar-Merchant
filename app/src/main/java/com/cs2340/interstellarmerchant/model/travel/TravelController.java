@@ -70,4 +70,33 @@ public class TravelController {
 
         return returnLocation;
     }
+
+    /**
+     * Assumes the entity that is travelling has enough fuel. WILL definitely go to the input
+     * location. PERFORMS necessary FUEL REMOVAL and TIME JUMP
+     * @param entity - the entity travelling
+     * @param trip - the trip
+     *
+     * @return the new location AKA the one stored in the trip param
+     */
+    private Location definiteTravel(TravelEntity entity, Trip trip) {
+        Ship entityShip = entity.getShip();
+
+        // remove the fuel
+        Map<Item, Integer> removeMap = new HashMap<>();
+        removeMap.put(Item.FUEL, trip.getFuelCost());
+        entityShip.minusAssign(removeMap);
+
+        // time jump by the amount of time the trip takes
+        GameController gameController = GameController.getInstance();
+        TimeController timeController = gameController.getTimeController();
+        timeController.timeJump(trip.getTime());
+
+        // travel to the location
+        entity.setLocation(trip.getEndingLocation());
+
+        return trip.getEndingLocation();
+    }
 }
+
+
