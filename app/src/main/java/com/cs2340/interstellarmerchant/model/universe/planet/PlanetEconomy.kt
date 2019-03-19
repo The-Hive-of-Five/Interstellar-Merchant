@@ -103,16 +103,16 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                 item.decreaseResource == this.resource -> {
                     // decrease the price of the item based on predefined allowed amount of variance
                     factor =
-                            -1 * (random.nextInt(Planet.decreaseEventVar.second
-                                    - Planet.decreaseEventVar.first)
-                                    + Planet.decreaseEventVar.first)
+                            -1 * (random.nextInt(Planet.DECREASE_EVENT_VARIANCE.second
+                                    - Planet.DECREASE_EVENT_VARIANCE.first)
+                                    + Planet.DECREASE_EVENT_VARIANCE.first)
                 }
                 currentEvents.contains(PlanetEvent(item.increaseEventType)) -> {
                     // increase the price based on event
                     factor =
-                            1 * (random.nextInt(Planet.increaseEventVar.second
-                                    - Planet.increaseEventVar.first)
-                                    + Planet.decreaseEventVar.first)
+                            1 * (random.nextInt(Planet.INCREASE_EVENT_VARIANCE.second
+                                    - Planet.INCREASE_EVENT_VARIANCE.first)
+                                    + Planet.INCREASE_EVENT_VARIANCE.first)
                 } else -> {
                 // determine if the variance increases the price
                 factor = if (random.nextBoolean()) 1 else -1

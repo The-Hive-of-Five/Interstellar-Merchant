@@ -1,7 +1,9 @@
 package com.cs2340.interstellarmerchant.model.travel;
 
+import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
+import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 
 import java.util.HashMap;
 import java.util.Map;
