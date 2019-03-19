@@ -1,7 +1,9 @@
 package com.cs2340.interstellarmerchant.model.travel;
 
+import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
+import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,16 +54,8 @@ public class TravelController {
         Ship entityShip = entity.getShip();
         Location returnLocation;
         if (trip.getFuelCost() <=  entityShip.getItemQuantity(Item.FUEL)) {
-            // the ship can't afford to travel
-            returnLocation = entity.getCurrentLocation();
 
-            // remove
-            Map<Item, Integer> removeMap = new HashMap<>();
-            removeMap.put(Item.FUEL, trip.getFuelCost());
-            entityShip.minusAssign(removeMap);
 
-            // travel to the location
-            entity.setLocation(newLocation);
             returnLocation = newLocation;
         } else {
             // don't travel because not enough fuel
@@ -69,5 +63,32 @@ public class TravelController {
         }
 
         return returnLocation;
+    }
+
+    /**
+     * Assumes the entity that is travelling has enough fuel. WILL definitely go to the input
+     * location. PERFORMS necessary FUEL REMOVAL and TIME JUMP
+     * @param entity - the entity travelling
+     * @param trip - the trip
+     *
+     * @return the new location AKA the one stored in the trip param
+     */
+    private Location definiteTravel(TravelEntity entity, Trip trip) {
+        Ship entityShip = entity.getShip();
+
+        // remove the fuel
+        Map<Item, Integer> removeMap = new HashMap<>();
+        removeMap.put(Item.FUEL, trip.getFuelCost());
+        entityShip.minusAssign(removeMap);
+
+        // time jump by the amount of time the trip takes
+        GameController gameController = GameController.getInstance();
+        TimeController timeController = gameController.getTimeController();
+        timeController.timeJump(trip.getTime());
+
+        // travel to the location
+        entity.setLocation(trip.getEndingLocation());
+
+        return trip.getEndingLocation();
     }
 }

@@ -1,39 +1,25 @@
 package com.cs2340.interstellarmerchant.model.universe.events.planet_events;
 
-import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
-import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource;
+import com.cs2340.interstellarmerchant.model.universe.time.TimeSubscriberI;
+import com.cs2340.interstellarmerchant.model.universe.events.Event;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.io.Serializable;
+
+public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
+    // maximum possible lifespan for randomly generated lifespan
+    public static final int MAX_LIFE = 150;
+
+    private boolean eventAlive;
+    private int lifeSpan;
+    private int mostRecentDay = -1;
+    private PlanetEventType type;
 
 
-/**
- * Enum to represent events on planets
- */
-public enum PlanetEvent {
-    DROUGHT(new Resource[] {Resource.LOTSOFWATER}),
-    COLD,
-    CROPFAIL(new Resource[] {Resource.RICHSOIL}),
-    WAR,
-    BOREDOM,
-    PLAGUE,
-    LACKOFWORKERS;
+    public PlanetEvent(PlanetEventType type, int lifeSpan) {
+        this.lifeSpan = lifeSpan;
+        this.type = type;
+        eventAlive = true;
 
-    private final Set<Resource> conflictingResources;
-
-    /**
-     * constructor for planet event
-     * @param conflictingResources - the resources that would conflict with this event.
-     *                             AKA if the planet has the resource, the event cannot
-     *                             occurr
-     */
-    PlanetEvent(Resource[] conflictingResources) {
-        this.conflictingResources = new HashSet<>(Arrays.asList(conflictingResources));
     }
 
     PlanetEvent() {
