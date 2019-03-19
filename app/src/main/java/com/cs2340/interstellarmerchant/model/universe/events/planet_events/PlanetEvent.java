@@ -3,7 +3,9 @@ package com.cs2340.interstellarmerchant.model.universe.events.planet_events;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeSubscriberI;
 import com.cs2340.interstellarmerchant.model.universe.events.Event;
 
-public class PlanetEvent implements Event, TimeSubscriberI {
+import java.io.Serializable;
+
+public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     // maximum possible lifespan for randomly generated lifespan
     public static final int MAX_LIFE = 150;
 

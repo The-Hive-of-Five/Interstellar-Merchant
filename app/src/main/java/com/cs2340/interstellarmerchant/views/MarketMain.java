@@ -35,8 +35,6 @@ public class MarketMain extends AppCompatActivity{
 
         initShopItems();
         initCargoItems();
-
-        LogUtility.log("SERIALIZATION",GameController.getInstance().serialization());
     }
 
     private void initShopItems() {

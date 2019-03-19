@@ -144,6 +144,8 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
                 currentEvents.remove(event)
             }
         }
+
+        // if an event was deleted, recalculate all market prices
         if (eventDeleted) {
             market.recalculatePrices()
         }
@@ -193,11 +195,11 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
      */
     companion object {
         // the chance of an event occurring the day starts
-        val EVENT_CHANCE = 100
+        val EVENT_CHANCE = 3
 
         // denote the variance effects from increase and decrease events
-        val decreaseEventVar = Pair(40, 90)
-        val increaseEventVar = Pair(50, 90)
+        val DECREASE_EVENT_VARIANCE = Pair(40, 90)
+        val INCREASE_EVENT_VARIANCE = Pair(50, 90)
 
         /**
          * creates planet object from xml node
