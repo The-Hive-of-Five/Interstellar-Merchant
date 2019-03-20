@@ -31,7 +31,6 @@ public class CreateCharacterViewModel extends AndroidViewModel {
         Player player = Player.getInstance();
         player.init(pilotSkill, fighterSkill, traderSkill, engineerSkill, name,
                 this.config);
-        player.setLocation((universe.getSystems()[0]).getPlanets().get(0));
         this.player = player;
     }
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
+import com.cs2340.interstellarmerchant.model.repository.DatabaseMongo;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.viewmodels.CreateCharacterViewModel;
 
@@ -31,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        // inits the gameController
-        GameController gameController = initGameController();
-        final Universe universe = gameController.getUniverse();
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    charViewModel.universe = universe;
+
                     charViewModel.makePlayer(nameEdit.getText().toString().equals(startingText) ? null
                                     : nameEdit.getText().toString(), (Difficulty) difficultySpinner.getSelectedItem(),
                             parseInt(R.id.pilot_skillpts), parseInt(R.id.fighter_skillpts), parseInt(R.id.trader_skillpts),
@@ -87,6 +83,16 @@ public class MainActivity extends AppCompatActivity {
             IllegalArgumentException {
         Intent nextActivityIntent = new Intent(MainActivity.this,
                 CharacterSummary.class);
+
+        // create game controller
+        GameController gameController = initGameController(charViewModel.player.getName());
+
+        // get the universe
+        charViewModel.universe = gameController.getUniverse();
+        // set the player location based on the universe
+        charViewModel.player.setLocation((charViewModel.universe.getSystems()[0]).getPlanets().get(0));
+
+
         // send the player as a parameter
         nextActivityIntent.putExtra("player", charViewModel.player);
         nextActivityIntent.putExtra("universe", charViewModel.universe);
@@ -122,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
         return universe;
     }
 
-    private GameController initGameController() {
+    private GameController initGameController(String playerName) {
         GameController controller = GameController.getInstance();
-        controller.init(createUniverse());
+        controller.init(new DatabaseMongo(), createUniverse(), "GAME NAME");
         return controller;
     }
 }
