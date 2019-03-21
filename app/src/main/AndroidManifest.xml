@@ -21,6 +21,8 @@
             android:parentActivityName="com.cs2340.interstellarmerchant.views.MainActivity" />
         <activity
             android:name="com.cs2340.interstellarmerchant.views.OnPlanet" />
+        <activity
+            android:name="com.cs2340.interstellarmerchant.views.Travel" />
         <activity android:name="com.cs2340.interstellarmerchant.views.MarketMain"/>
     </application>
 
