@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GameController initGameController(String playerName) {
         GameController controller = GameController.getInstance();
-        controller.init(new DatabaseMongo(), createUniverse(), "GAME NAME");
+        controller.init(new DatabaseMongo(), createUniverse(), playerName);
         return controller;
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.GameController;
+import com.cs2340.interstellarmerchant.model.repository.save_state.SaveOverview;
 import com.cs2340.interstellarmerchant.utilities.LogUtility;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.universe.market.Market;
@@ -64,6 +65,7 @@ public class MarketMain extends AppCompatActivity{
         credits.setText(Player.getInstance().getCredits() + "");
         cargo = findViewById(R.id.textView14);
         cargo.setText(Player.getInstance().getShip().getAvailableSpace() + "");
+
     }
 
     private void initShopItems() {

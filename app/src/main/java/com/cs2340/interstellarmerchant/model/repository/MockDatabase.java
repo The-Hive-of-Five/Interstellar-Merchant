@@ -7,6 +7,16 @@ import java.util.Collection;
 
 public class MockDatabase implements Database {
     @Override
+    public boolean deleteSave(String saveName) {
+        return false;
+    }
+
+    @Override
+    public SaveState getSave(String saveName) {
+        return null;
+    }
+
+    @Override
     public void storeSave(SaveState save) {
 
     }
