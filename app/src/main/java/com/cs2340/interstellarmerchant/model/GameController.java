@@ -1,6 +1,8 @@
 package com.cs2340.interstellarmerchant.model;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
+import com.cs2340.interstellarmerchant.model.repository.Database;
+import com.cs2340.interstellarmerchant.model.repository.save_state.SaveState;
 import com.cs2340.interstellarmerchant.model.travel.TravelController;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
@@ -23,27 +25,43 @@ public class GameController {
         return controller;
     }
 
+    private Database database;
     private Universe universe;
+    private String gameName;
+
+    public GameController() {
+    }
 
     /**
      * Inits the GameController
      * @param universe - the universe for the game
      */
-    public void init (Universe universe) {
+    public void init (Database database, Universe universe, String gameName) {
+        this.database = database;
         this.universe = universe;
+        this.gameName = gameName;
     }
 
     /**
      * Inits the game through the game state string
-     * @param gameState - the state of the game
+     * @param state - the state of the game
      */
-    public void init (String gameState) {
-        SaveState state = getSaveStateFromSerialization(gameState);
+    public void init (Database database, SaveState state) {
+        this.database = database;
+        this.gameName = state.name;
+
+        // load the details from the save state
         Player.setInstance(state.player);
         TimeController.Companion.setInstance(state.timeController);
         this.universe = state.universe;
         this.universe.afterDeserialized();
     }
+
+    /**
+     * Gets the database
+     * @return the database
+     */
+    public Database getDatabase() { return database; }
 
     /**
      * Gets the player
@@ -77,29 +95,16 @@ public class GameController {
         return universe;
     }
 
-    private class SaveState {
-        public Player player;
-        public TimeController timeController;
-        public Universe universe;
-
-        private SaveState(Player player, Universe universe, TimeController timeController) {
-            this.player = player;
-            this.universe = universe;
-            this.timeController = timeController;
-        }
-    }
-
     private SaveState getSaveStateFromSerialization(String serialization) {
         return new Gson().fromJson(serialization, SaveState.class);
     }
 
     /**
-     * Serializes the object
+     * Gets the GameController as a save state
      * @return the serialization
      */
-    public String serialization() {
-        Gson gson = new Gson();
-        return gson.toJson(new SaveState(this.getPlayer(), this.getUniverse(),
-                this.getTimeController()));
+    public SaveState getSaveState() {
+        return new SaveState(this.getPlayer(), this.getUniverse(),
+                this.getTimeController(), gameName);
     }
 }

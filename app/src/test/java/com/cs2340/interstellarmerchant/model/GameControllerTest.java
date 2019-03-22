@@ -3,6 +3,8 @@ package com.cs2340.interstellarmerchant.model;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
+import com.cs2340.interstellarmerchant.model.repository.MockDatabase;
+import com.cs2340.interstellarmerchant.model.repository.save_state.SaveState;
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
@@ -29,14 +31,14 @@ public class GameControllerTest {
         Universe universe = generateUniverse();
 
         GameController controller = GameController.getInstance();
-        controller.init(universe);
+        controller.init(new MockDatabase(), universe, "SAVE NAME");
     }
 
     @Test
     public void serializeTest() {
         String serialization = null;
         try {
-            serialization = GameController.getInstance().serialization();
+            serialization = GameController.getInstance().getSaveState().getSerialization();
             System.out.println(serialization);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -49,15 +51,15 @@ public class GameControllerTest {
     @Test
     public void loadSerialization() {
         GameController controller = GameController.getInstance();
-        String serialization = controller.serialization();
-        controller.init(serialization);
+        String serialization = controller.getSaveState().getSerialization();
+        controller.init(new MockDatabase(), SaveState.saveJSONFactory(serialization));
     }
 
     @Test
     public void loadSerializationTimeResubscribed() {
         GameController controller = GameController.getInstance();
-        String serialization = controller.serialization();
-        controller.init(serialization);
+        String serialization = controller.getSaveState().getSerialization();
+        controller.init(new MockDatabase(), SaveState.saveJSONFactory(serialization));
 
         TimeController timeController = controller.getTimeController();
         Universe universe = controller.getUniverse();
