@@ -1,7 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.time
 
 import java.lang.IllegalArgumentException
-import java.lang.RuntimeException
 import javax.inject.Singleton
 
 @Singleton
@@ -69,8 +68,8 @@ class TimeController {
         }
         subscribers.remove(subscriber)
 
-        // call the unsubscribe function on the subscriber
-        subscriber.unsubscribe(currentDay)
+        // call the onUnsubscribe function on the subscriber
+        subscriber.onUnsubscribe(currentDay)
 
     }
 
@@ -84,7 +83,7 @@ class TimeController {
     private fun timeUpdated() {
         // the time has been updated. tell the subscribers
         for (subscriber: TimeSubscriberI in subscribers) {
-            // call the day updated method. if it returns false, unsubscribe the subscriber
+            // call the day updated method. if it returns false, onUnsubscribe the subscriber
             if (!subscriber.dayUpdated(currentDay)) {
                 unsubscribeToTime(subscriber)
             }

@@ -52,7 +52,11 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
         }
         mostRecentDay = day;
 
-        return lifeSpan != 0;
+        if (lifeSpan <= 0) {
+            eventAlive = false;
+        }
+
+        return eventAlive;
     }
 
     @Override
@@ -61,7 +65,6 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     }
 
     @Override
-    public void unsubscribe(int day) {
-        eventAlive = false;
+    public void onUnsubscribe(int day) {
     }
 }
