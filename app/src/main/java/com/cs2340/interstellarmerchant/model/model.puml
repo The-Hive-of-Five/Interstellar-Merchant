@@ -7,16 +7,55 @@ class GameController << (S,#FF7700) Singleton >>
   + getPlayer(): Player
   + getUniverse(): Universe
   + getTravelController(): TravelController
+  + getDatabase(): Database
+  + getTimeController(): TimeController
   + serialization(): String
+}
+
+package repository {
+    interface Database {
+        + deleteSave(saveName: String): boolean
+        + getAvailableSaves(): Collection<SaveOverview>
+        + getSave(saveName: String): SaveState
+        + storeSave(saveState: SaveState): Void
+    }
+    class MockDatabase {
+    }
+    class MongodbDatabase {
+    }
+
+    GameController -- Database : > Can access
+    Database <|.. MockDatabase
+    Database <|.. MongodbDatabase
+
+    package save_state {
+        class SaveOverview {
+            + name: String
+            + lastModified: Date
+        }
+        class SaveState {
+            + {static} saveJSONFactory(): SaveState
+            + name: String
+            + lastModified: Date
+            + player: Player
+            + timeController: TimeController
+            + universe: Universe
+            + getSerialization(): String
+
+        }
+    }
+
+
 }
 
 package player {
     package game_config {
         class GameConfig {
+          + getDatabase(): Database
           + getPlayer(): Player
           + getUniverse(): Universe
           + getTravelController(): TravelController
-          + serialization(): String
+          + getSaveState(): SaveState
         }
 
         enum Difficulty {
@@ -62,7 +101,28 @@ package utilities {
     Inventory "Many" o-- "1" Item : Contains <
 
 }
+
 package universe {
+
+    package time {
+            class TimeController {
+                + day: int
+                + timeJump(days: Int): Void
+                + subscribeToTime(subscriber: TimeSubScriberI): Void
+                + unsubscribe(subscriber: TimeSubScriberI): Void
+
+            }
+
+            interface TimeSubscriberI {
+                + dayUpdated(day: Int): Boolean
+                + onSubscribe(day: Int): Void
+                + onUnsubscribe(day: Int): Void
+            }
+
+            TimeController "1" o-- "0..*" TimeSubscriberI : Keeps track >
+            GameController -- TimeController : > Contains
+
+    }
       class Universe {
           + getSystems(): SolarSystem[]
           + toString(): String
@@ -87,25 +147,9 @@ package universe {
 
       Planet -- Resource : > Described by
       Planet -- Tech : > Described by
+      Planet -- PlanetEconomy : > Described by
 
-      package time {
-        class TimeController {
-            + day: int
-            + timeJump(days: Int): Void
-            + subscribeToTime(subscriber: TimeSubScriberI): Void
-            + unsubscribe(subscriber: TimeSubScriberI): Void
 
-        }
-
-        interface TimeSubscriberI {
-            + dayUpdated(day: Int): Boolean
-            + unsubscribe(day: Int): Void
-        }
-
-        TimeController "1" o-- "0..*" TimeSubscriberI : Keeps track >
-        Universe -- TimeController : > Contains
-
-      }
 
       package events {
           interface Event {
@@ -118,6 +162,8 @@ package universe {
               }
               Event <|.. PlanetEvent
               TimeSubscriberI <|.. PlanetEvent
+              TimeSubscriberI <|.. Planet
+
               Planet "1" o-- "0..*" PlanetEvent : Keeps track >
 
 
@@ -164,7 +210,7 @@ package universe {
     Universe "Many" o-- "1" SolarSystem : Contains >
     SolarSystem "Many" o-- "1" Planet : Contains <
     Planet -- Market : > owns
-    Economy <|.. Planet
+    Economy <|.. PlanetEconomy
 
 
     Market -- Economy : > Given

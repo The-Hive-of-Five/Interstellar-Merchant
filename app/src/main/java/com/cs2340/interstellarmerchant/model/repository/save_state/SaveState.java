@@ -67,7 +67,7 @@ public class SaveState {
     }
 
     /**
-     * Updates the last modified date with the current date
+     * Updates the last modified lastModified with the current lastModified
      */
     public void updateLastModified() {
         this.lastModified = new Date();

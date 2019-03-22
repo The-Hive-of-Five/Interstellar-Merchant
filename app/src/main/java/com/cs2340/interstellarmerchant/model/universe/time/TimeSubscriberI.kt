@@ -18,5 +18,5 @@ interface TimeSubscriberI {
     /**
      * Called after the event unsubscribes
      */
-    fun unsubscribe(day: Int)
+    fun onUnsubscribe(day: Int)
 }

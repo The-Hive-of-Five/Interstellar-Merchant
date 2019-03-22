@@ -43,17 +43,15 @@ public class GameController {
     }
 
     /**
-     * Inits the game through the game state string
+     * Inits the game through the game serialization in the form of a save state
      * @param state - the state of the game
      */
     public void init (Database database, SaveState state) {
-        this.database = database;
-        this.gameName = state.name;
-
         // load the details from the save state
         Player.setInstance(state.player);
         TimeController.Companion.setInstance(state.timeController);
-        this.universe = state.universe;
+
+        init(database, state.universe, state.name);
         this.universe.afterDeserialized();
     }
 
@@ -93,10 +91,6 @@ public class GameController {
      */
     public Universe getUniverse() {
         return universe;
-    }
-
-    private SaveState getSaveStateFromSerialization(String serialization) {
-        return new Gson().fromJson(serialization, SaveState.class);
     }
 
     /**

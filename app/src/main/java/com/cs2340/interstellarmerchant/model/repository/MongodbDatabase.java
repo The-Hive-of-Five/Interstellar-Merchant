@@ -28,7 +28,7 @@ import java.util.LinkedList;
  * Used to interface with whatever backend storage the app uses for saves
  */
 @Singleton
-public class DatabaseMongo implements Database {
+public class MongodbDatabase implements Database {
     private static final String APP_ID = "com.cs2340.interstellarmerchant";
     private static final String DATE_FORMAT = "MMM dd, yyyy hh:mm:ss a";
     private static final String DATABASE_NAME = "interstellar-merchant";
@@ -39,11 +39,11 @@ public class DatabaseMongo implements Database {
     // Create a Client for MongoDB Mobile (initializing MongoDB Mobile)
     final MongoClient mobileClient;
     // Get database
-    final MongoDatabase database;
+    final com.mongodb.client.MongoDatabase database;
     // Saves collection
     final MongoCollection<Document> savesCollection;
 
-    public DatabaseMongo() {
+    public MongodbDatabase() {
         // Create the stitch client. Initialize one if it doesn't already exist
         StitchAppClient tempClient;
         try {
@@ -81,7 +81,7 @@ public class DatabaseMongo implements Database {
                 date = formatter.parse(saveDoc.getString("lastModified"));
             } catch (ParseException exception) {
 
-                throw new IllegalStateException("The date could not be parsed from the save" +
+                throw new IllegalStateException("The lastModified could not be parsed from the save" +
                         "document. This is in an indication that the device database is broken. " +
                         "Date: " + saveDoc.getString("lastModified"));
             }

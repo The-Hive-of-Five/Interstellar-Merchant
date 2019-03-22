@@ -75,8 +75,8 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
         return true
     }
 
-    override fun unsubscribe(day: Int) {
-        throw IllegalArgumentException("A planet should never unsubscribe from the " +
+    override fun onUnsubscribe(day: Int) {
+        throw IllegalArgumentException("A planet should never onUnsubscribe from the " +
                 "time controller")
     }
 
