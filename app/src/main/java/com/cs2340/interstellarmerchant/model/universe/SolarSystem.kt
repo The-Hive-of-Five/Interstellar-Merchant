@@ -59,7 +59,8 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
     }
 
     override fun afterDeserialized() {
-        for (planet: AfterDeserialized in planets) {
+        for (planet: Planet in planets) {
+            planet.solarSystem = this
             planet.afterDeserialized()
         }
     }
@@ -94,6 +95,7 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
             // modify the solar system
             planet.x = pair.first
             planet.y = pair.second
+            planet.solarSystem = this
 
             // ensures the location is not reused
             locations.add(pair)

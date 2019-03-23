@@ -41,4 +41,15 @@
     <string name="credits_player_market">INSERT</string>
     <string name="cargo_prompt">Cargo:</string>
     <string name="cargo_player_market">INSERT</string>
+    <string name="you_are_now_on_planet">You are now on planet</string>
+    <string name="TIME">INSERT</string>
+    <string name="when_confused_visit_menu_to_read_instructions">When confused, visit menu to read instructions</string>
+    <string name="planet">Insert</string>
+    <string name="save_game">SAVE GAME</string>
+    <string name="event_happening_prompt">EVENT HAPPENING</string>
+    <string name="travel">TRAVEL</string>
+    <string name="load_game">LOAD GAME</string>
+    <string name="the_current_time_is">The current time is</string>
+    <string name="visit_market">Visit Market</string>
+    <string name="event">INSERT</string>
 </resources>

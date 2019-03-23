@@ -10,8 +10,8 @@ import kotlin.math.roundToInt
  */
 data class Trip(val startingLocation: Location, val endingLocation: Location) {
     companion object {
-        const val SOLAR_MULTIPLIER = 5
-        const val PLANET_MULTIPLIER = 1
+        const val SOLAR_MULTIPLIER = 2.0
+        const val PLANET_MULTIPLIER = .5
 
         // this might need to be adjusted
         const val FUEL_TO_TIME = .05
@@ -20,8 +20,14 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
          * The distance formula
          */
         fun distance(xOne: Int, yOne: Int, xTwo: Int, yTwo: Int): Double {
-            val sum = Math.pow((xOne - xTwo).toDouble(), 2.0)
-            + Math.pow((yOne - yTwo).toDouble(), 2.0)
+            val xDiff = xOne - xTwo
+            val yDiff = yOne - yTwo
+
+            val xPow = Math.pow(xDiff.toDouble(), 2.0)
+            val yPow = Math.pow(yDiff.toDouble(), 2.0)
+
+            val sum = xPow + yPow
+
             return Math.sqrt(sum)
         }
     }
@@ -44,7 +50,7 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
         var yOne: Int
         var xTwo: Int
         var yTwo: Int
-        var multiplier: Int
+        var multiplier: Double
         if (startingLocation.solarSystem == endingLocation.solarSystem) {
             // if in the same solar system, use the actual distance between the locations
             xOne = startingLocation.x
@@ -55,7 +61,7 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
         } else {
             // if in different solar systems, just use the distances between solar systems
             val startingSystem = startingLocation.solarSystem
-            val endingSystem = startingLocation.solarSystem
+            val endingSystem = endingLocation.solarSystem
             xOne = startingSystem.x!!
             yOne = startingSystem.y!!
             xTwo = endingSystem.x!!

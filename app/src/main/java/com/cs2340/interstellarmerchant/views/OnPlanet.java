@@ -14,6 +14,9 @@ import com.cs2340.interstellarmerchant.utilities.LogUtility;
 public class OnPlanet extends AppCompatActivity{
 
     private Button visitMarketBtn;
+    private Button travelBtn;
+    private Button saveButton;
+    private Button loadButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +24,18 @@ public class OnPlanet extends AppCompatActivity{
 
 
         visitMarketBtn = (Button) findViewById(R.id.to_market);
+        travelBtn = (Button) findViewById(R.id.travel);
         visitMarketBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(OnPlanet.this, MarketMain.class));
+            }
+        });
+
+        travelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OnPlanet.this, Travel.class));
             }
         });
 
