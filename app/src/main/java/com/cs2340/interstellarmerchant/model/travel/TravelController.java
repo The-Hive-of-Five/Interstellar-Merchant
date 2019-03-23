@@ -1,5 +1,7 @@
 package com.cs2340.interstellarmerchant.model.travel;
 
+import android.util.Log;
+
 import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
@@ -54,9 +56,6 @@ public class TravelController {
         Ship entityShip = entity.getShip();
         Location returnLocation;
         if (trip.getFuelCost() <=  entityShip.getItemQuantity(Item.FUEL)) {
-            // the ship can't afford to travel
-            returnLocation = entity.getCurrentLocation();
-
             // remove
             Map<Item, Integer> removeMap = new HashMap<>();
             removeMap.put(Item.FUEL, trip.getFuelCost());
@@ -69,7 +68,7 @@ public class TravelController {
             // don't travel because not enough fuel
             returnLocation = entity.getCurrentLocation();
         }
-
+        Log.d("TRAVEL",returnLocation.toString());
         return returnLocation;
     }
 

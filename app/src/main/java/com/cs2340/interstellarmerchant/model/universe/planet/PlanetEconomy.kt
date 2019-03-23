@@ -114,13 +114,14 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                                     - Planet.INCREASE_EVENT_VARIANCE.first)
                                     + Planet.INCREASE_EVENT_VARIANCE.first)
                 } else -> {
-                // determine if the variance increases the price
-                factor = if (random.nextBoolean()) 1 else -1
-                factor *= random.nextInt(item.variance)
-            }
+                    // determine if the variance increases the price
+                    val sign = if (random.nextBoolean()) 1 else -1
+                    val variance = random.nextInt(item.variance)
+                    factor = sign * variance
+                }
             }
 
-            val netVariance = ((factor.toDouble()/100.0) * price).roundToInt()
+            val netVariance = ((factor.toDouble()/100.0) * price.toDouble()).toInt()
             price += netVariance
         } else {
             price = -1

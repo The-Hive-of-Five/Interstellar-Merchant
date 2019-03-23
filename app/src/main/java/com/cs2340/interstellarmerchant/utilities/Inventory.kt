@@ -1,12 +1,14 @@
 package com.cs2340.interstellarmerchant.utilities
 
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
+import java.lang.IllegalArgumentException
 
 /**
  * An inventory class. Objects that extend this are given an inventory
  */
 abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
-    var size: Int = 0
+    var size: Int = 0 // accounts for the size of the item (AKA fuel has 0 size)
+    var numberOfItems: Int = 0
 
     companion object {
         const val DEFAULT_MAX = 100000
@@ -35,8 +37,19 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
     }
 
     open operator fun plusAssign(subset: Map<Item, Int>) {
+        var addSize: Int = 0
+        subset.forEach{item: Item, quant: Int ->
+            addSize += quant * item.sizeMultiplier
+        }
+
+        if (addSize > getAvailableSpace()) {
+            throw IllegalArgumentException("The inventory is already full. By trying to add," +
+                    "you are exceeding the inventory's capacity.")
+        }
+
         for ((item: Item, quantity: Int) in subset) {
-            size += quantity
+            numberOfItems += quantity
+            size += quantity * item.sizeMultiplier
             if (inventory[item] != null) {
                 inventory[item] = inventory[item]!! + quantity
             } else {
@@ -47,12 +60,15 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
 
     operator fun minusAssign(subset: Map<Item, Int>) {
         for ((item: Item, quantity: Int) in subset) {
-            inventory[item] = inventory[item]!! - quantity
-            size -= quantity
-            if (inventory[item] == 0) {   //Kartik
-                inventory.remove(item)    //added
-            }                             //these lines to remove an item if the quantity is 0, change if it doesn't work
-                                          // this allows the recycler view to not show values that have 0 quantity
+            if (quantity > 0) {
+                inventory[item] = inventory[item]!! - quantity
+                size -= quantity * item.sizeMultiplier
+                numberOfItems -= quantity
+
+                if (inventory[item] == 0) {
+                    inventory.remove(item)
+                }
+            }
         }
     }
 
