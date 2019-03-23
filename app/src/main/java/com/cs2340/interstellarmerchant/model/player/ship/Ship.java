@@ -1,13 +1,18 @@
 package com.cs2340.interstellarmerchant.model.player.ship;
 
+import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.utilities.Inventory;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class that represents ships
  */
 public class Ship extends Inventory implements Serializable {
+    private static final int STARTING_FUEL_AMOUNT = 10000;
+
     private ShipType type;
 
     /**
@@ -18,6 +23,7 @@ public class Ship extends Inventory implements Serializable {
     public Ship(ShipType type) {
         super(type.cargoSpace);
         this.type  = type;
+        giveStartingInventory();
     }
 
     /**
@@ -34,5 +40,11 @@ public class Ship extends Inventory implements Serializable {
      */
     public void setType(ShipType type) {
         this.type = type;
+    }
+
+    private void giveStartingInventory() {
+        Map<Item, Integer> startingInventory = new HashMap<>();
+        startingInventory.put(Item.FUEL, STARTING_FUEL_AMOUNT);
+        super.plusAssign(startingInventory);
     }
 }

@@ -46,6 +46,9 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     // market must be initialized after current events (market for the planet)
     val market = Market(economy)
 
+    @Transient
+    private var solarSystem: SolarSystem? = null
+
     init {
         val gameController = GameController.getInstance()
 
@@ -88,8 +91,12 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
         return y!!
     }
 
+    fun setSolarSystem(solarSystem: SolarSystem) {
+        this.solarSystem = solarSystem
+    }
+
     override fun getSolarSystem(): SolarSystem {
-        return solarSystem
+        return this.solarSystem!!
     }
 
     override fun getLocationType(): LocationType {
