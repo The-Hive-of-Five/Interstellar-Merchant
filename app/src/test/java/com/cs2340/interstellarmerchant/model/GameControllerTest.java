@@ -28,12 +28,11 @@ public class GameControllerTest {
 
     @Before
     public void instantiatePlayerUniverse() throws IOException {
-        generatePlayer();
         Universe universe = generateUniverse();
         GameController.clearGameController();
         GameController controller = GameController.getInstance();
-        controller.init(new MockDatabase(), universe,
-                TimeController.Companion.getTimeController(),"SAVE NAME");
+        controller.init(new MockDatabase(), generatePlayer(), universe,
+                new TimeController(),"SAVE NAME");
     }
 
     @Test
@@ -84,9 +83,8 @@ public class GameControllerTest {
         return Universe.generateUniverse(fileStream);
     }
 
-    public void generatePlayer() {
+    public Player generatePlayer() {
         // instatiate the player
-        player = Player.getInstance();
-        player.init(new GameConfig(Difficulty.Hard));
+        return new Player(new GameConfig(Difficulty.Hard));
     }
 }

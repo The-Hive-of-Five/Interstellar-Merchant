@@ -17,8 +17,7 @@ public class PlayerTest {
     @BeforeClass
     public static void getPlanets() {
         // instatiate the player
-        player = Player.getInstance();
-        player.init(new GameConfig(Difficulty.Hard));
+        player = generatePlayer();
     }
 
 
@@ -33,5 +32,9 @@ public class PlayerTest {
         assertThat("No error while serializing", serialization != null);
         assertThat("Serialization has length", !serialization.isEmpty());
 
+    }
+    public static Player generatePlayer() {
+        // instatiate the player
+        return new Player(new GameConfig(Difficulty.Hard));
     }
 }

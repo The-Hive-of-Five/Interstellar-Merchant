@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.GameController;
+import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.repository.MongodbDatabase;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 CharacterSummary.class);
 
         // create game controller
-        GameController gameController = initGameController(charViewModel.player.getName());
+        GameController gameController = initGameController(charViewModel.player);
 
         // get the universe
         charViewModel.universe = gameController.getUniverse();
@@ -129,10 +130,15 @@ public class MainActivity extends AppCompatActivity {
         return universe;
     }
 
-    private GameController initGameController(String playerName) {
+    private GameController initGameController(Player player) {
+
+        if (GameController.gameControllerAlreadyInitialized()) {
+            GameController.clearGameController();
+        }
+
         GameController controller = GameController.getInstance();
-        controller.init(new MongodbDatabase(),
-                createUniverse(), TimeController.Companion.getTimeController(), playerName);
+        controller.init(new MongodbDatabase(), player,
+                createUniverse(), new TimeController(), player.getName());
         return controller;
     }
 }

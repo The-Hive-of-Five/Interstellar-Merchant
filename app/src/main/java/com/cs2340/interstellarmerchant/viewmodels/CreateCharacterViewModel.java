@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.support.annotation.NonNull;
 
+import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
@@ -28,8 +29,7 @@ public class CreateCharacterViewModel extends AndroidViewModel {
         this.traderSkill = traderSkill;
         this.engineerSkill = engineerSkill;
         this. config = new GameConfig(dif);
-        Player player = Player.getInstance();
-        player.init(pilotSkill, fighterSkill, traderSkill, engineerSkill, name,
+        Player player = new Player(pilotSkill, fighterSkill, traderSkill, engineerSkill, name,
                 this.config);
         this.player = player;
     }

@@ -3,31 +3,12 @@ package com.cs2340.interstellarmerchant.model.universe.time
 import java.lang.IllegalArgumentException
 import javax.inject.Singleton
 
-@Singleton
 class TimeController {
     companion object {
-        private var timeController: TimeController? = null
-
         fun dayToString(day: Int): String {
             return "$day  sol"
         }
 
-        /**
-         * Gets the timecontroller
-         */
-        fun getTimeController(): TimeController {
-            if (timeController == null) {
-                timeController = TimeController()
-            }
-            return timeController!!
-        }
-
-        /**
-         * Used for serialization when the timecontroller has been saved.
-         */
-        fun setInstance(timeController: TimeController) {
-            this.timeController = timeController
-        }
     }
 
     private var currentDay = 0

@@ -27,11 +27,9 @@ public class TripTest {
     @BeforeClass
     public static void getPlanets() throws IOException {
         universe = generateUniverse();
-        generatePlayer();
-
         GameController controller = GameController.getInstance();
-        controller.init(new MockDatabase(), universe,
-                TimeController.Companion.getTimeController(),"SAVE NAME");
+        controller.init(new MockDatabase(), generatePlayer(), universe,
+               new TimeController(),"SAVE NAME");
     }
 
     @Test
@@ -49,9 +47,8 @@ public class TripTest {
         return Universe.generateUniverse(fileStream);
     }
 
-    private static void generatePlayer() {
+    private static Player generatePlayer() {
         // instatiate the player
-        player = Player.getInstance();
-        player.init(new GameConfig(Difficulty.Hard));
+        return new Player(new GameConfig(Difficulty.Hard));
     }
 }

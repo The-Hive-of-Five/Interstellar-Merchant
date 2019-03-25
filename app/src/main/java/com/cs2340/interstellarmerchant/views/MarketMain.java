@@ -37,6 +37,8 @@ public class MarketMain extends AppCompatActivity{
 
     private MarketViewModel marketViewModel;
 
+    private Player player;
+
     TextView credits;
     TextView cargo;
 
@@ -61,10 +63,14 @@ public class MarketMain extends AppCompatActivity{
                 sellListener(v);
             }
         });
+
+        GameController gameController = GameController.getInstance();
+        player = gameController.getPlayer();
+
         credits = findViewById(R.id.textView9);
-        credits.setText(Player.getInstance().getCredits() + "");
+        credits.setText(player.getCredits() + "");
         cargo = findViewById(R.id.textView14);
-        cargo.setText(Player.getInstance().getShip().getAvailableSpace() + "");
+        cargo.setText(player.getShip().getAvailableSpace() + "");
 
     }
 
@@ -93,8 +99,8 @@ public class MarketMain extends AppCompatActivity{
             Log.d("BUY", e.getMessage());
         }
         marketViewModel.update();
-        credits.setText(Player.getInstance().getCredits() + "");
-        cargo.setText(Player.getInstance().getShip().getAvailableSpace() + "");
+        credits.setText(player.getCredits() + "");
+        cargo.setText(player.getShip().getAvailableSpace() + "");
     }
 
     private void sellListener(View view) {
@@ -104,8 +110,8 @@ public class MarketMain extends AppCompatActivity{
             Log.d("BUY", e.getMessage());
         }
         marketViewModel.update();
-        credits.setText(Player.getInstance().getCredits() + "");
-        cargo.setText(Player.getInstance().getShip().getAvailableSpace() + "");
+        credits.setText(player.getCredits() + "");
+        cargo.setText(player.getShip().getAvailableSpace() + "");
     }
 
     private void initRecyclerView() {

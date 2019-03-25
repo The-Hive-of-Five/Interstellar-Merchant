@@ -16,6 +16,10 @@ import javax.inject.Singleton;
 public class GameController {
     private static GameController controller;
 
+    public static boolean gameControllerAlreadyInitialized() {
+        return GameController.getInstance().initialized;
+    }
+
     /**
      * Gets the instance of travel controller
      * @return the travel controller
@@ -28,7 +32,7 @@ public class GameController {
     }
 
     /**
-     * Deletes the existing game controller
+     * Uninitializes the existing game controller
      */
     public static void clearGameController() {
         controller = null;
@@ -36,6 +40,7 @@ public class GameController {
 
     private boolean initialized = false;
     private Database database;
+    private Player player;
     private TimeController timeController;
     private TravelController travelController;
     private Universe universe;
@@ -45,14 +50,15 @@ public class GameController {
      * Inits the GameController
      * @param universe - the universe for the game
      */
-    public void init (Database database, Universe universe, TimeController timeController,
-            String gameName) {
+    public void init (Database database, Player player, Universe universe,
+                      TimeController timeController, String gameName) {
         if (initialized) {
             throw new IllegalStateException("Trying to reininitialize the game controller" +
-                    "after it has been initiailized");
+                    " after it has been initiailized");
         }
 
         this.database = database;
+        this.player = player;
         this.universe = universe;
         this.timeController = timeController;
         this.travelController = TravelController.getInstance();
@@ -73,10 +79,8 @@ public class GameController {
                     "after it has been initiailized. Call clearGameController");
         }
         // load the details from the save state
-        Player.setInstance(state.player);
-        TimeController.Companion.setInstance(state.timeController);
         state.universe.afterDeserialized();
-        init(database, state.universe, TimeController.Companion.getTimeController(), state.name);
+        init(database, state.player, state.universe, state.timeController, state.name);
 
     }
 
@@ -94,7 +98,7 @@ public class GameController {
      */
     public Player getPlayer() {
         checkInitialized();
-        return Player.getInstance();
+        return player;
     }
 
     /**

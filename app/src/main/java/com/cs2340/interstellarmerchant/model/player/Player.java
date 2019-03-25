@@ -21,7 +21,6 @@ import static android.content.ContentValues.TAG;
  * Represents a Player in the game. A singleton
  */
 
-@Singleton
 public class Player extends TravelEntity implements Serializable  {
     private static final int MAXIMUM_POINTS = 16;
     public static final int STARTING_CREDITS = 1000;
@@ -41,26 +40,6 @@ public class Player extends TravelEntity implements Serializable  {
     private String name;
     private int[] skillPoints; // each index represents a skill
 
-
-    /**
-     * Sets the singleton instance for player
-     * @param player - the player
-     */
-    public static void setInstance(Player player) {
-        Player.player = player;
-    }
-
-    /**
-     * gets the singleton instance. call init after to send parameters
-     * @return the singleton instance
-     */
-    public static Player getInstance() {
-        if (player == null) {
-            player = new Player();
-        }
-        return player;
-    }
-
     /**
      * the constructor for the Player
      *
@@ -69,7 +48,7 @@ public class Player extends TravelEntity implements Serializable  {
      * @param name - the name of the player
      * @param config - the game config
      */
-    public void init(int[] skills, Ship ship, String name, GameConfig config) {
+    public Player(int[] skills, Ship ship, String name, GameConfig config) {
         // handle skill points
         if (skills.length != 4) {
             throw new IllegalArgumentException("The skills array is invalid");
@@ -106,25 +85,25 @@ public class Player extends TravelEntity implements Serializable  {
      * @param name - the name skill
      * @param config - the game config
      */
-    public void init(int pilot, int fighter, int trader, int engineer, String name,
+    public Player(int pilot, int fighter, int trader, int engineer, String name,
                   GameConfig config) {
-        init(new int[] {pilot, fighter, trader, engineer}, new Ship(ShipType.GNAT), name, config);
+        this(new int[] {pilot, fighter, trader, engineer}, new Ship(ShipType.GNAT), name, config);
     }
 
     /**
      * the constructor for the player. gives players defaults for all values
      * @param config - the game config
      */
-    public void init(GameConfig config) {
-        init(0, 0, 0, 0,
+    public Player(GameConfig config) {
+        this(0, 0, 0, 0,
                 "Default name", config);
     }
 
     /**
      * the constructor for the player. gives players defaults for all values
      */
-    public void init() {
-        init(0, 0, 0, 0,
+    public Player() {
+        this(0, 0, 0, 0,
                 "Default name", new GameConfig(Difficulty.Hard));
     }
 

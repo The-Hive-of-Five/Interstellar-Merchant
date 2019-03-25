@@ -37,8 +37,12 @@ public class MarketTest {
         focusMarket = focusPlanet.getMarket();
 
         // create the player
-        player = new Player();
-        player.init(new GameConfig(Difficulty.Hard));
+        player = generatePlayer();
+    }
+
+    private static Player generatePlayer() {
+        // instatiate the player
+        return new Player(new GameConfig(Difficulty.Hard));
     }
 
     @Before
