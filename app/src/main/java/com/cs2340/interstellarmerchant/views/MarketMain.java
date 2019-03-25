@@ -107,7 +107,7 @@ public class MarketMain extends AppCompatActivity{
         try {
             marketViewModel.sellOrder();
         } catch (Exception e) {
-            Log.d("BUY", e.getMessage());
+            Log.d("BUY", "sell did not go through");
         }
         marketViewModel.update();
         credits.setText(player.getCredits() + "");
