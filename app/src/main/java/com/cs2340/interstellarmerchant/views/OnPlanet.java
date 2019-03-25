@@ -24,9 +24,16 @@ public class OnPlanet extends AppCompatActivity{
     private Button travelBtn;
     private Button saveButton;
     private Button loadButton;
-    TextView planetText;
-    TextView timeText;
-    TextView eventText;
+    private TextView planetText;
+    private TextView timeText;
+    private TextView eventText;
+
+    private GameController gc;
+    private Player player;
+    private TimeController tc;
+    private HashSet<PlanetEvent> events;
+    private int day;
+    private Planet planet;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +42,14 @@ public class OnPlanet extends AppCompatActivity{
         timeText = findViewById(R.id.textView2);
         eventText = findViewById(R.id.textView5);
 
-        GameController gc = GameController.getInstance();
-        Player player = gc.getPlayer();
-        Planet planet  = (Planet) player.getCurrentLocation();
+        gc = GameController.getInstance();
+        player = gc.getPlayer();
+        planet  = (Planet) player.getCurrentLocation();
         planetText.setText(planet.getName());
-        TimeController tc = gc.getTimeController();
-        int day = tc.getCurrentDay();
+        tc = gc.getTimeController();
+        day = tc.getCurrentDay();
         timeText.setText("Day " + day);
-        HashSet<PlanetEvent> events = planet.getCurrentEvents();
+        events = planet.getCurrentEvents();
         if (events.isEmpty()){
             eventText.setText("None");
 
