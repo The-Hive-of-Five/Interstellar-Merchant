@@ -22,6 +22,7 @@ import java.io.InputStream;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@SuppressWarnings("LawOfDemeter")
 public class GameControllerTest {
     private Player player;
 
@@ -29,9 +30,10 @@ public class GameControllerTest {
     public void instantiatePlayerUniverse() throws IOException {
         generatePlayer();
         Universe universe = generateUniverse();
-
+        GameController.clearGameController();
         GameController controller = GameController.getInstance();
-        controller.init(new MockDatabase(), universe, "SAVE NAME");
+        controller.init(new MockDatabase(), universe,
+                TimeController.Companion.getTimeController(),"SAVE NAME");
     }
 
     @Test
@@ -44,7 +46,7 @@ public class GameControllerTest {
             ex.printStackTrace();
         }
         assertThat("No error while serializing", serialization != null);
-        assertThat("Serialization has length", serialization.length() > 0);
+        assertThat("Serialization has length", !serialization.isEmpty());
 
     }
 
@@ -52,14 +54,16 @@ public class GameControllerTest {
     public void loadSerialization() {
         GameController controller = GameController.getInstance();
         String serialization = controller.getSaveState().getSerialization();
+
+        GameController.clearGameController();
+
+        controller = GameController.getInstance();
         controller.init(new MockDatabase(), SaveState.saveJSONFactory(serialization));
     }
 
     @Test
     public void loadSerializationTimeResubscribed() {
         GameController controller = GameController.getInstance();
-        String serialization = controller.getSaveState().getSerialization();
-        controller.init(new MockDatabase(), SaveState.saveJSONFactory(serialization));
 
         TimeController timeController = controller.getTimeController();
         Universe universe = controller.getUniverse();

@@ -2,7 +2,6 @@ package com.cs2340.interstellarmerchant.model.travel;
 
 import android.util.Log;
 
-import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
@@ -11,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Singleton;
+
+import kotlin.jvm.Transient;
 
 /**
  * Controls travel for all travel entities
@@ -29,6 +30,17 @@ public class TravelController {
             controller = new TravelController();
         }
         return controller;
+    }
+
+    @Transient
+    private TimeController timeController;
+
+    /**
+     * Inits the Travel Controller class with the correct Time Controller
+     * @param timeController - the tie controller
+     */
+    public void init (TimeController timeController) {
+        this.timeController = timeController;
     }
 
     /**
@@ -51,8 +63,11 @@ public class TravelController {
      *
      * @return the ACTUAL location the ship travels to*
      */
+    @SuppressWarnings({"FeatureEnvy", "LawOfDemeter"})
     public Location Travel(TravelEntity entity, Location newLocation) {
-        Trip trip = new Trip(entity.getCurrentLocation(), newLocation);
+        Location currentLocation = entity.getCurrentLocation();
+        Trip trip = new Trip(currentLocation, newLocation);
+        trip.getFuelCost();
         Ship entityShip = entity.getShip();
         Location returnLocation;
         if (trip.getFuelCost() <=  entityShip.getItemQuantity(Item.FUEL)) {
@@ -66,7 +81,7 @@ public class TravelController {
             returnLocation = newLocation;
         } else {
             // don't travel because not enough fuel
-            returnLocation = entity.getCurrentLocation();
+            returnLocation = currentLocation;
         }
         Log.d("TRAVEL",returnLocation.toString());
         return returnLocation;
@@ -80,6 +95,7 @@ public class TravelController {
      *
      * @return the new location AKA the one stored in the trip param
      */
+    @SuppressWarnings("FeatureEnvy")
     private Location definiteTravel(TravelEntity entity, Trip trip) {
         Ship entityShip = entity.getShip();
 
@@ -89,14 +105,13 @@ public class TravelController {
         entityShip.minusAssign(removeMap);
 
         // time jump by the amount of time the trip takes
-        GameController gameController = GameController.getInstance();
-        TimeController timeController = gameController.getTimeController();
         timeController.timeJump(trip.getTime());
 
         // travel to the location
-        entity.setLocation(trip.getEndingLocation());
+        Location endingLocation = trip.getEndingLocation();
+        entity.setLocation(endingLocation);
 
-        return trip.getEndingLocation();
+        return endingLocation;
     }
 }
 

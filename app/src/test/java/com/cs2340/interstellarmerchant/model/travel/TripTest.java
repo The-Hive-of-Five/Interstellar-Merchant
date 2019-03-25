@@ -1,8 +1,14 @@
 package com.cs2340.interstellarmerchant.model.travel;
 
 
+import com.cs2340.interstellarmerchant.model.GameController;
+import com.cs2340.interstellarmerchant.model.player.Player;
+import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
+import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
+import com.cs2340.interstellarmerchant.model.repository.MockDatabase;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
+import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,10 +22,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TripTest {
     private static Universe universe;
+    private static Player player;
 
     @BeforeClass
     public static void getPlanets() throws IOException {
         universe = generateUniverse();
+        generatePlayer();
+
+        GameController controller = GameController.getInstance();
+        controller.init(new MockDatabase(), universe,
+                TimeController.Companion.getTimeController(),"SAVE NAME");
     }
 
     @Test
@@ -35,5 +47,11 @@ public class TripTest {
         InputStream fileStream  = new FileInputStream(
                 new File("src/main/assets/universe/universe.xml"));
         return Universe.generateUniverse(fileStream);
+    }
+
+    private static void generatePlayer() {
+        // instatiate the player
+        player = Player.getInstance();
+        player.init(new GameConfig(Difficulty.Hard));
     }
 }

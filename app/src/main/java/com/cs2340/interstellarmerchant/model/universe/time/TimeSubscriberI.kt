@@ -7,16 +7,16 @@ interface TimeSubscriberI {
     /**
      * @return true if the subscription should continue
      */
-    fun dayUpdated(day: Int): Boolean
+    fun dayUpdated(day: Int, timeController: TimeController): Boolean
 
     /**
      * Called when the event is first subscribed to the time controller
      */
-    fun onSubscribe(day: Int) {
+    fun onSubscribe(day: Int, timeController: TimeController) {
         // does nothing by default
     }
     /**
      * Called after the event unsubscribes
      */
-    fun onUnsubscribe(day: Int)
+    fun onUnsubscribe(day: Int, timeController: TimeController)
 }

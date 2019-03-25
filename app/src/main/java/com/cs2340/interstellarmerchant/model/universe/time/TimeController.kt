@@ -55,7 +55,7 @@ class TimeController {
      * @param subscriber - the subscriber to the event
      */
     fun subscribeToTime(subscriber: TimeSubscriberI) {
-        if (this.subscribers.add(subscriber)) subscriber.onSubscribe(currentDay)
+        if (this.subscribers.add(subscriber)) subscriber.onSubscribe(currentDay, this)
     }
 
     /**
@@ -69,7 +69,7 @@ class TimeController {
         subscribers.remove(subscriber)
 
         // call the onUnsubscribe function on the subscriber
-        subscriber.onUnsubscribe(currentDay)
+        subscriber.onUnsubscribe(currentDay, this)
 
     }
 
@@ -84,7 +84,7 @@ class TimeController {
         // the time has been updated. tell the subscribers
         for (subscriber: TimeSubscriberI in subscribers) {
             // call the day updated method. if it returns false, onUnsubscribe the subscriber
-            if (!subscriber.dayUpdated(currentDay)) {
+            if (!subscriber.dayUpdated(currentDay, this)) {
                 unsubscribeToTime(subscriber)
             }
         }

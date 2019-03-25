@@ -35,13 +35,13 @@ public class MongodbDatabase implements Database {
     private static final String SAVE_COLLECTION = "saves";
 
     // Create the default Stitch Client
-    final StitchAppClient client;
+    private final StitchAppClient client;
     // Create a Client for MongoDB Mobile (initializing MongoDB Mobile)
-    final MongoClient mobileClient;
+    private final MongoClient mobileClient;
     // Get database
-    final com.mongodb.client.MongoDatabase database;
+    private final MongoDatabase database;
     // Saves collection
-    final MongoCollection<Document> savesCollection;
+    private final MongoCollection<Document> savesCollection;
 
     public MongodbDatabase() {
         // Create the stitch client. Initialize one if it doesn't already exist

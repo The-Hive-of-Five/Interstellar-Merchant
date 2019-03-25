@@ -10,12 +10,12 @@ import java.util.List;
  */
 public abstract class TravelEntity {
     private Location currentLocation;
-    private List<Location> locationHistory;
+    private final List<Location> locationHistory;
 
     /**
      * Constructor for the TravelEntity
      */
-    public TravelEntity() {
+    protected TravelEntity() {
         locationHistory = new LinkedList<>();
     }
 

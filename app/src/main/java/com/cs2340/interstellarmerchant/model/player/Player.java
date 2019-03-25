@@ -152,7 +152,7 @@ public class Player extends TravelEntity implements Serializable  {
      *
      * @return if the player does not have more than the max skill points
      */
-    public final boolean appropriateNumberOfSkillPoints() {
+    private final boolean appropriateNumberOfSkillPoints() {
         return getTotalSkillPoints() <= Player.MAXIMUM_POINTS;
     }
 

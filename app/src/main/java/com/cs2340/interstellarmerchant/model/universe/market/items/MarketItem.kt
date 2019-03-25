@@ -10,7 +10,7 @@ import java.util.*
  * @param item - the type of item
   *
  */
-data class MarketItem(val item: Item, @Transient private val economy: Economy): Serializable {
+data class MarketItem(val item: Item, @Transient private var economy: Economy): Serializable {
     companion object {
         /* the constant for which the the sell price is depreciated
         (market pays less for the item than what it would sell for
@@ -26,6 +26,10 @@ data class MarketItem(val item: Item, @Transient private val economy: Economy): 
     init {
         // calculate the initial buy and sell price
         updatePrice()
+    }
+
+    fun setEconomy(economy: Economy) {
+        this.economy = economy
     }
 
     /**
@@ -49,7 +53,11 @@ data class MarketItem(val item: Item, @Transient private val economy: Economy): 
     }
 
     private fun calculatePrice(): Int {
-        return economy.calculatePrice(item)
+        try{
+            return economy.calculatePrice(item)
+        } catch (ex: Exception) {
+            throw ex
+        }
     }
 
     private fun calculateSellPrice(buyPrice: Int): Int {

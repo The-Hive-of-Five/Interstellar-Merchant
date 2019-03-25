@@ -9,6 +9,7 @@ import java.io.InputStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@SuppressWarnings("ALL")
 public class UniverseTest {
     @Test
     public void serializeTest() {
@@ -19,7 +20,7 @@ public class UniverseTest {
             ex.printStackTrace();
         }
         assertThat("No error while serializing", serialization != null);
-        assertThat("Serialization has length", serialization.length() > 0);
+        assertThat("Serialization has length", !serialization.isEmpty());
 
     }
 

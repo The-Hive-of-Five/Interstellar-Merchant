@@ -47,8 +47,7 @@ public enum PlanetEventType {
      * @return the random event
      */
     public static PlanetEventType getRandomPlanetEvent(final Planet planet) {
-        List<PlanetEventType> possibleEvents = Arrays.asList(PlanetEventType.values())
-                .stream()
+        List<PlanetEventType> possibleEvents = Arrays.stream(PlanetEventType.values())
                 .filter(new Predicate<PlanetEventType>() {
                     @Override
                     public boolean test(PlanetEventType planetEvent) {
@@ -56,7 +55,7 @@ public enum PlanetEventType {
                     }
                 })
                 .collect(Collectors.<PlanetEventType>toList());
-        return possibleEvents.size() == 0 ?
+        return possibleEvents.isEmpty() ?
                 null
                 : possibleEvents.get(new Random().nextInt(possibleEvents.size()));
 

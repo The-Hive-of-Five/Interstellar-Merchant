@@ -177,7 +177,10 @@ class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDes
     }
 
     fun setEconomy(economy: Economy) {
-        this.hostEconomy = economy;
+        this.hostEconomy = economy
+        for (marketItem: MarketItem in this.priceLog.values)  {
+            marketItem.setEconomy(economy)
+        }
     }
 
     /**

@@ -10,11 +10,12 @@ import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@SuppressWarnings("ALL")
 public class PlayerTest {
     private static Player player;
 
     @BeforeClass
-    public static void getPlanets() throws IOException {
+    public static void getPlanets() {
         // instatiate the player
         player = Player.getInstance();
         player.init(new GameConfig(Difficulty.Hard));
@@ -30,7 +31,7 @@ public class PlayerTest {
             ex.printStackTrace();
         }
         assertThat("No error while serializing", serialization != null);
-        assertThat("Serialization has length", serialization.length() > 0);
+        assertThat("Serialization has length", !serialization.isEmpty());
 
     }
 }
