@@ -22,16 +22,17 @@ import java.io.InputStream;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@SuppressWarnings("LawOfDemeter")
 public class GameControllerTest {
     private Player player;
 
     @Before
     public void instantiatePlayerUniverse() throws IOException {
-        generatePlayer();
         Universe universe = generateUniverse();
-
+        GameController.clearGameController();
         GameController controller = GameController.getInstance();
-        controller.init(new MockDatabase(), universe, "SAVE NAME");
+        controller.init(new MockDatabase(), generatePlayer(), universe,
+                new TimeController(),"SAVE NAME");
     }
 
     @Test
@@ -44,7 +45,7 @@ public class GameControllerTest {
             ex.printStackTrace();
         }
         assertThat("No error while serializing", serialization != null);
-        assertThat("Serialization has length", serialization.length() > 0);
+        assertThat("Serialization has length", !serialization.isEmpty());
 
     }
 
@@ -52,14 +53,16 @@ public class GameControllerTest {
     public void loadSerialization() {
         GameController controller = GameController.getInstance();
         String serialization = controller.getSaveState().getSerialization();
+
+        GameController.clearGameController();
+
+        controller = GameController.getInstance();
         controller.init(new MockDatabase(), SaveState.saveJSONFactory(serialization));
     }
 
     @Test
     public void loadSerializationTimeResubscribed() {
         GameController controller = GameController.getInstance();
-        String serialization = controller.getSaveState().getSerialization();
-        controller.init(new MockDatabase(), SaveState.saveJSONFactory(serialization));
 
         TimeController timeController = controller.getTimeController();
         Universe universe = controller.getUniverse();
@@ -80,9 +83,8 @@ public class GameControllerTest {
         return Universe.generateUniverse(fileStream);
     }
 
-    public void generatePlayer() {
+    public Player generatePlayer() {
         // instatiate the player
-        player = Player.getInstance();
-        player.init(new GameConfig(Difficulty.Hard));
+        return new Player(new GameConfig(Difficulty.Hard));
     }
 }

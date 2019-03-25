@@ -24,6 +24,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@SuppressWarnings("LawOfDemeter")
 public class MarketTest {
     private static Planet focusPlanet;
     private static Player player;
@@ -36,8 +37,12 @@ public class MarketTest {
         focusMarket = focusPlanet.getMarket();
 
         // create the player
-        player = new Player();
-        player.init(new GameConfig(Difficulty.Hard));
+        player = generatePlayer();
+    }
+
+    private static Player generatePlayer() {
+        // instatiate the player
+        return new Player(new GameConfig(Difficulty.Hard));
     }
 
     @Before
@@ -145,7 +150,7 @@ public class MarketTest {
             ex.printStackTrace();
         }
         assertThat("No error while serializing", serialization != null);
-        assertThat("Serialization has length", serialization.length() > 0);
+        assertThat("Serialization has length", !serialization.isEmpty());
 
     }
 

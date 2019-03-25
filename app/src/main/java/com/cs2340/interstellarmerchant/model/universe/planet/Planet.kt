@@ -50,35 +50,31 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     private var solarSystem: SolarSystem? = null
 
     init {
-        val gameController = GameController.getInstance()
-
-        // subscribe to the time controller
-        gameController.timeController.subscribeToTime(this)
-
-        // roll the dice and see if the planet should start with a random event
-        eventRoll()
     }
 
     override fun afterDeserialized() {
-        val gameController = GameController.getInstance()
-        gameController.timeController.subscribeToTime(this)
-
-        resubscribeAllTimeEvents()
         market.setEconomy(economy)
         market.afterDeserialized()
     }
 
-    override fun dayUpdated(day: Int): Boolean {
+    override fun dayUpdated(day: Int, controller: TimeController): Boolean {
         // run the event life cycle
         eventLifeCyle()
 
         // try to add a new event
-        eventRoll()
+        eventRoll(controller)
 
         return true
     }
 
-    override fun onUnsubscribe(day: Int) {
+    override fun onSubscribe(day: Int, timeController: TimeController) {
+        for (event: PlanetEvent in currentEvents) {
+            timeController.subscribeToTime(event)
+        }
+        eventRoll(timeController)
+    }
+
+    override fun onUnsubscribe(day: Int, controller: TimeController) {
         throw IllegalArgumentException("A planet should never onUnsubscribe from the " +
                 "time controller")
     }
@@ -105,17 +101,6 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
     override fun toString(): String {
         return toString(false)
-    }
-
-    /**
-     * Call when the object is being created from a serialization. All time events need
-     * to be resubscribed to the time controller
-     */
-    fun resubscribeAllTimeEvents() {
-        val timeController = TimeController.getTimeController()
-        for (event: PlanetEvent in currentEvents) {
-            timeController.subscribeToTime(event)
-        }
     }
 
     /**
@@ -162,7 +147,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     /**
      * Rolls the dice and adds an event if if dice within range
      */
-    private fun eventRoll() {
+    private fun eventRoll(controller: TimeController) {
         if (Random().nextInt(100) <= Planet.EVENT_CHANCE) {
             try {
                 currentEvents.add(getRandomEvent())

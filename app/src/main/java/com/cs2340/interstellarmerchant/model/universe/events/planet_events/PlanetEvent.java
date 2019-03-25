@@ -1,5 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.events.planet_events;
 
+import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeSubscriberI;
 import com.cs2340.interstellarmerchant.model.universe.events.Event;
 
@@ -7,12 +8,12 @@ import java.io.Serializable;
 
 public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     // maximum possible lifespan for randomly generated lifespan
-    public static final int MAX_LIFE = 150;
+    private static final int MAX_LIFE = 150;
 
     private boolean eventAlive;
     private int lifeSpan;
     private int mostRecentDay = -1;
-    private PlanetEventType type;
+    private final PlanetEventType type;
 
 
     public PlanetEvent(PlanetEventType type, int lifeSpan) {
@@ -45,7 +46,7 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     }
 
     @Override
-    public boolean dayUpdated(int day) {
+    public boolean dayUpdated(int day, TimeController controller) {
         if (mostRecentDay != -1) {
             // get time jump since last updated
             lifeSpan -= day - mostRecentDay;
@@ -60,11 +61,12 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     }
 
     @Override
-    public void onSubscribe(int day) {
+    public void onSubscribe(int day, TimeController controller) {
         this.mostRecentDay = day;
     }
 
     @Override
-    public void onUnsubscribe(int day) {
+    public void onUnsubscribe(int day, TimeController controller) {
+        lifeSpan = 0;
     }
 }

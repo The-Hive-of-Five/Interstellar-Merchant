@@ -20,7 +20,7 @@ import java.util.Set;
  * Universe class to keep track of solar systems and locations of those solar systems
  */
 
-public class Universe implements Serializable, AfterDeserialized {
+public final class Universe implements Serializable, AfterDeserialized {
 
     /**
      * Generates a universe
@@ -43,7 +43,7 @@ public class Universe implements Serializable, AfterDeserialized {
      * constructor for universe class
      * @param systems - the solar systems of the universe. locations will be overwritten
      */
-    public Universe(SolarSystem[] systems) {
+    private Universe(SolarSystem[] systems) {
         setLocations(systems);
         this.systems = systems.clone();
     }

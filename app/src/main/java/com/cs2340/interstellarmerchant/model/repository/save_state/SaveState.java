@@ -19,6 +19,7 @@ public class SaveState {
      * @param universe - the universe
      * @param timeController - the time controller
      */
+    @SuppressWarnings("ChainedMethodCall")
     public static SaveState createSaveWithNoName(Player player, Universe universe,
                                                  TimeController timeController) {
        String name = "Save-" + new Random().nextInt(RANDOM_NUMBER_FOR_SAVE);
@@ -36,10 +37,10 @@ public class SaveState {
     }
 
     public Date lastModified;
-    public Player player;
-    public String name;
-    public TimeController timeController;
-    public Universe universe;
+    public final Player player;
+    public final String name;
+    public final TimeController timeController;
+    public final Universe universe;
 
     /**
      * Generates a SaveState

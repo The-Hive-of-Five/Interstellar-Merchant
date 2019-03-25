@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.universe.market.Market;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
@@ -36,6 +37,8 @@ public class MarketViewModel extends AndroidViewModel {
     public AtomicBoolean retrieveEditText = new AtomicBoolean(false);
 
     private Planet planet;
+    private Player player;
+
     public Market market;
 
     //market items for buying
@@ -59,7 +62,10 @@ public class MarketViewModel extends AndroidViewModel {
 
     public MarketViewModel(@NonNull Application application) {
         super(application);
-        planet = (Planet) Player.getInstance().getCurrentLocation();
+        GameController gameController = GameController.getInstance();
+        this.player = gameController.getPlayer();
+
+        planet = (Planet) player.getCurrentLocation();
         market = planet.getMarket();
 
         marketItems = market.getInventoryClone();
@@ -69,7 +75,7 @@ public class MarketViewModel extends AndroidViewModel {
             buyItemArray.add(key);
         }
 
-        shipItems = Player.getInstance().getShip().getInventoryClone();
+        shipItems = player.getShip().getInventoryClone();
         Set<Item> sellKeys = shipItems.keySet();
         sellItemArray = new ArrayList<>();
         for (Item key : sellKeys) {
@@ -124,7 +130,7 @@ public class MarketViewModel extends AndroidViewModel {
         }
 
 
-        shipItems = Player.getInstance().getShip().getInventoryClone();
+        shipItems = player.getShip().getInventoryClone();
         Set<Item> sellKeys = shipItems.keySet();
         sellItemArray = new ArrayList<>();
         for (Item key : sellKeys) {
@@ -148,14 +154,14 @@ public class MarketViewModel extends AndroidViewModel {
         Item item = buyItemArray.get(i);
         Map<Item, Integer> map = new HashMap<>();
         map.put(item, amount);
-        return market.buyItems(new Order(map), Player.getInstance());
+        return market.buyItems(new Order(map), player);
     }
 
     public void sellItem(int amount, int i) {
         Item item = sellItemArray.get(i);
         Map<Item, Integer> map = new HashMap<>();
         map.put(item, amount);
-        market.sellItems(new Order(map), Player.getInstance());
+        market.sellItems(new Order(map), player);
     }
 
     public OrderStatus buyOrder() {
@@ -169,7 +175,7 @@ public class MarketViewModel extends AndroidViewModel {
                 buyOrder.put(item, amount);
             }
         }
-        return market.buyItems(new Order(buyOrder), Player.getInstance());
+        return market.buyItems(new Order(buyOrder), player);
     }
 
     public void sellOrder() {
@@ -183,7 +189,7 @@ public class MarketViewModel extends AndroidViewModel {
                 sellOrder.put(item, amount);
             }
         }
-        market.sellItems(new Order(sellOrder), Player.getInstance());
+        market.sellItems(new Order(sellOrder), player);
     }
 
 
