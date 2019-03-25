@@ -3,6 +3,7 @@ package com.cs2340.interstellarmerchant.views;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -50,6 +51,8 @@ public class OnPlanet extends AppCompatActivity{
             for (PlanetEvent pe : events) {
                 eventNames += pe.toString() + ", ";
             }
+            Log.d("events", eventNames);
+
             eventText.setText(eventNames);
         }
         visitMarketBtn = (Button) findViewById(R.id.to_market);
