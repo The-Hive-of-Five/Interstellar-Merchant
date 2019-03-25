@@ -64,7 +64,7 @@ public class TravelController {
      * @return the ACTUAL location the ship travels to*
      */
     @SuppressWarnings({"FeatureEnvy", "LawOfDemeter"})
-    public Location Travel(TravelEntity entity, Location newLocation) {
+    public Location Travel(TravelEntity entity, Location newLocation) throws Exception {
         Location currentLocation = entity.getCurrentLocation();
         Trip trip = new Trip(currentLocation, newLocation);
         trip.getFuelCost();
@@ -82,6 +82,7 @@ public class TravelController {
         } else {
             // don't travel because not enough fuel
             returnLocation = currentLocation;
+            throw new Exception("not enough fuel to travel!");
         }
         Log.d("TRAVEL",returnLocation.toString());
         return returnLocation;

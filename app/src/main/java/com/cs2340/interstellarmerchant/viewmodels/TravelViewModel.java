@@ -57,7 +57,7 @@ public class TravelViewModel extends AndroidViewModel {
         return planets;
     }
 
-    public void travel(String ss, String p) {
+    public void travel(String ss, String p) throws Exception {
         int ssIndex = solarSystemList.indexOf(ss);
         int planetIndex = planetList.indexOf(p);
         Log.d("click", "Traveling to Solar System " + universe.getSystems()[ssIndex]);
