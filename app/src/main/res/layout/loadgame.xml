@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/Load_Srollview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/loadback"
+        android:layout_height="wrap_content">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_load"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/load_header"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="0dp"
+            android:scrollbars="vertical" />
+
+        <TextView
+            android:id="@+id/load_header"
+            android:layout_width="383dp"
+            android:layout_height="33dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="21dp"
+            android:textColor="#FFFFFF"
+            android:text="Enter the name of the game you wish to load:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+
+        <Button
+            android:id="@+id/buy_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recycler_load"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="53dp"
+            android:layout_marginEnd="67dp"
+            android:layout_toEndOf="@+id/textInputLayout"
+            android:background="#330000"
+            android:text="Load"
+            android:textColor="#FFFFFF" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="200dp"
+            android:layout_height="49dp"
+            android:layout_below="@+id/recycler_load"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="13dp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_load"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.238"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.015">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/game_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:hint="Enter name"
+                android:textColor="#000000" />
+        </android.support.design.widget.TextInputLayout>
+
+
+    </RelativeLayout>
+</ScrollView>

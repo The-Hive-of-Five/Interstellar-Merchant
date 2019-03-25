@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.cs2340.interstellarmerchant.R;
@@ -82,9 +80,9 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemName = itemView.findViewById(R.id.cargo_item_name);
-            itemPrice = itemView.findViewById(R.id.cargo_item_price);
-            itemTotal = itemView.findViewById(R.id.total_available_cargo);
+            itemName = itemView.findViewById(R.id.game_name_prompt);
+            itemPrice = itemView.findViewById(R.id.game_name);
+            itemTotal = itemView.findViewById(R.id.game_time);
             sellLayout = itemView.findViewById(R.id.cargo_parent_layout);
             mEditText = (EditText)itemView.findViewById(R.id.cargo_quantity_edit);
             mEditText.addTextChangedListener(new TextWatcher() {

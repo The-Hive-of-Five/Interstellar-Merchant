@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="15sp"
+    android:background="#808080"
     android:id="@+id/cargo_parent_layout">
 
 
     <TextView
         android:id="@+id/game_name_prompt"
-        android:layout_width="80sp"
+        android:layout_width="59dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="15sp"
@@ -17,41 +18,38 @@
 
     <TextView
         android:id="@+id/game_name"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="61dp"
+        android:layout_marginLeft="33dp"
         android:layout_toRightOf="@+id/game_name_prompt"
-        android:text="Price"
+        android:text="INSERT"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-    <EditText
-        android:id="@+id/cargo_quantity_edit"
-        android:layout_width="50sp"
-        android:layout_height="30sp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="72dp"
-        android:layout_toRightOf="@+id/game_name"
-        android:background="#FFFFFF"
-        android:inputType="numberDecimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"></EditText>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/slash"
-        android:layout_toRightOf="@+id/cargo_quantity_edit"
-        android:text="@string/slash"
-        android:layout_marginLeft="5sp"
-        android:layout_centerVertical="true"
-        />
 
     <TextView
         android:id="@+id/game_time"
-        android:layout_width="50sp"
-        android:layout_height="30sp"
-        android:layout_centerVertical="true"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/game_name_prompt"
+        android:layout_marginStart="43dp"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="0dp"
         android:layout_marginRight="5sp"
+        android:layout_toEndOf="@+id/game_name"
+        android:layout_toRightOf="@+id/slash"
+        android:text="Time:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+    <TextView
+        android:id="@+id/total_available_cargo2"
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/game_name_prompt"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="5sp"
+        android:layout_toEndOf="@+id/game_time"
         android:layout_toRightOf="@+id/slash"
         android:text="Total"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
