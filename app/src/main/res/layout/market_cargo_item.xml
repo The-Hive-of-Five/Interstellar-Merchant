@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/game_name_prompt"
+        android:id="@+id/cargo_item_name"
         android:layout_width="80sp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -16,12 +16,12 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <TextView
-        android:id="@+id/game_name"
+        android:id="@+id/cargo_item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="61dp"
-        android:layout_toRightOf="@+id/game_name_prompt"
+        android:layout_toRightOf="@+id/cargo_item_name"
         android:text="Price"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -31,7 +31,7 @@
         android:layout_height="30sp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="72dp"
-        android:layout_toRightOf="@+id/game_name"
+        android:layout_toRightOf="@+id/cargo_item_price"
         android:background="#FFFFFF"
         android:inputType="numberDecimal"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"></EditText>
@@ -47,7 +47,7 @@
         />
 
     <TextView
-        android:id="@+id/game_time"
+        android:id="@+id/total_available_cargo"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:layout_centerVertical="true"

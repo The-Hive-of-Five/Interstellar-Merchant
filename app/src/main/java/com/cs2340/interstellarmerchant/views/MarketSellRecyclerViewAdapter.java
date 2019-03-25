@@ -80,9 +80,9 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemName = itemView.findViewById(R.id.game_name_prompt);
-            itemPrice = itemView.findViewById(R.id.game_name);
-            itemTotal = itemView.findViewById(R.id.game_time);
+            itemName = itemView.findViewById(R.id.cargo_item_name);
+            itemPrice = itemView.findViewById(R.id.cargo_item_price);
+            itemTotal = itemView.findViewById(R.id.total_available_cargo);
             sellLayout = itemView.findViewById(R.id.cargo_parent_layout);
             mEditText = (EditText)itemView.findViewById(R.id.cargo_quantity_edit);
             mEditText.addTextChangedListener(new TextWatcher() {
