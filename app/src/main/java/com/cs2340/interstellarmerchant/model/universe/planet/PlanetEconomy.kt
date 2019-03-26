@@ -13,13 +13,11 @@ import kotlin.math.roundToInt
 
 /**
  * Used to determine various values for the planet's market based on attributes of the planet
- * @param planet - the host planet
  */
 class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                     private val currentEvents: Set<PlanetEvent>): Economy, Serializable {
     override fun canBuyItem(item: Item, quantity: Int): OrderStatus {
-        var output: OrderStatus
-        output =
+        var output =
                 if (item.sellTechLevel > this.tech) {
                     OrderStatus.NOT_ENOUGH_TECH
                 } else {

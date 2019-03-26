@@ -110,7 +110,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
      * @return the string representation of the planet
      */
     fun toString(detailed: Boolean): String {
-        val builder: StringBuilder = StringBuilder()
+        val builder = StringBuilder()
         builder.appendln("Planet: $name with resource, $resource")
         if (detailed) {
             builder.appendln("Climate: $climate")
@@ -173,7 +173,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
         planetEventType ?: throw NoEventException("There are no possible events")
 
         // subscribe the event to the time controller
-        val event: PlanetEvent = PlanetEvent(planetEventType)
+        val event = PlanetEvent(planetEventType)
         val gameController: GameController = GameController.getInstance()
         val timeController: TimeController = gameController.timeController
         timeController.subscribeToTime(event)
@@ -186,7 +186,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
      */
     companion object {
         // the chance of an event occurring the day starts
-        val EVENT_CHANCE = 3
+        private const val EVENT_CHANCE = 3
 
         // denote the variance effects from increase and decrease events
         val DECREASE_EVENT_VARIANCE = Pair(40, 90)

@@ -25,7 +25,7 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
 
 
     companion object {
-        const val MAX_SOLAR_SIZE: Int = 6
+        private const val MAX_SOLAR_SIZE: Int = 6
         const val MAX_X: Int = 500
         const val MAX_Y: Int = 500
 
@@ -66,7 +66,7 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
     }
 
     override fun toString(): String {
-        val builder: StringBuilder = StringBuilder()
+        val builder = StringBuilder()
         builder.appendln("Solar System: $name @ <$x,$y>")
         builder.appendln("Tech level: $tech")
         for (planet: Planet in planets) {

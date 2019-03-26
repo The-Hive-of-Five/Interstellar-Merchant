@@ -36,6 +36,7 @@ public class GameController {
      * Gets the instance of travel controller
      * @return the travel controller
      */
+    @SuppressWarnings("NonThreadSafeLazyInitialization")
     public static GameController getInstance() {
         if (controller == null) {
             controller = new GameController();

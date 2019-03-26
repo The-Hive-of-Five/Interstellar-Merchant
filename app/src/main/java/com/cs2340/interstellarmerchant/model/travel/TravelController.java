@@ -19,16 +19,14 @@ import kotlin.jvm.Transient;
  */
 @Singleton
 public class TravelController {
-    private static TravelController controller;
+
+    private static final TravelController controller = new TravelController();
 
     /**
      * Gets the instance of travel controller
      * @return the travel controller
      */
     public static TravelController getInstance() {
-        if (controller == null) {
-            controller = new TravelController();
-        }
         return controller;
     }
 
