@@ -1,6 +1,5 @@
 package com.cs2340.interstellarmerchant.model.universe.planet
 
-import android.util.Log
 import com.cs2340.interstellarmerchant.model.GameController
 import com.cs2340.interstellarmerchant.model.travel.Location
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem

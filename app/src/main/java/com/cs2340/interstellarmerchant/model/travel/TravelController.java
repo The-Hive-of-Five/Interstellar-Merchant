@@ -63,7 +63,6 @@ public class TravelController {
      *
      * @return the ACTUAL location the ship travels to*
      */
-    @SuppressWarnings({"FeatureEnvy", "LawOfDemeter"})
     public Location Travel(TravelEntity entity, Location newLocation) {
         Location currentLocation = entity.getCurrentLocation();
         Trip trip = new Trip(currentLocation, newLocation);
@@ -95,7 +94,6 @@ public class TravelController {
      *
      * @return the new location AKA the one stored in the trip param
      */
-    @SuppressWarnings("FeatureEnvy")
     private Location definiteTravel(TravelEntity entity, Trip trip) {
         Ship entityShip = entity.getShip();
 

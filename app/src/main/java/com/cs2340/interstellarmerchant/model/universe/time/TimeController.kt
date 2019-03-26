@@ -1,7 +1,6 @@
 package com.cs2340.interstellarmerchant.model.universe.time
 
 import java.lang.IllegalArgumentException
-import javax.inject.Singleton
 
 class TimeController {
     companion object {
@@ -72,6 +71,6 @@ class TimeController {
     }
 
     override fun toString(): String {
-        return TimeController.dayToString(currentDay);
+        return TimeController.dayToString(currentDay)
     }
 }

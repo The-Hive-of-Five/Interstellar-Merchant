@@ -25,6 +25,7 @@ public interface Economy {
     /**
      * Can the host economy buy the item from the player
      * @param item - the item
+     * @param quantity - the quantity of the item that the user is trying to sell to the market
      * @return whether the order can proceed or not (can the economy buy the items from the player)
      */
     OrderStatus canBuyItem(Item item, int quantity);
@@ -42,6 +43,7 @@ public interface Economy {
      * @param potentialItems - potential items within the economy
      * @return the items that will be in the market
      */
+    @SuppressWarnings("AbstractMethodWithMissingImplementations")
     List<Item> filterItems(List<Item> potentialItems);
 
     /**

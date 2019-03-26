@@ -46,6 +46,7 @@ public enum PlanetEventType {
      * @param planet - the input planet
      * @return the random event
      */
+    @SuppressWarnings("ChainedMethodCall")
     public static PlanetEventType getRandomPlanetEvent(final Planet planet) {
         List<PlanetEventType> possibleEvents = Arrays.stream(PlanetEventType.values())
                 .filter(new Predicate<PlanetEventType>() {
@@ -54,7 +55,7 @@ public enum PlanetEventType {
                         return !planetEvent.conflictingResources.contains(planet.getResource());
                     }
                 })
-                .collect(Collectors.<PlanetEventType>toList());
+                .collect(Collectors.toList());
         return possibleEvents.isEmpty() ?
                 null
                 : possibleEvents.get(new Random().nextInt(possibleEvents.size()));

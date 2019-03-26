@@ -22,7 +22,7 @@ import java.io.InputStream;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@SuppressWarnings("LawOfDemeter")
+@SuppressWarnings("ALL")
 public class GameControllerTest {
     private Player player;
 

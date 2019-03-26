@@ -13,8 +13,6 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 
-import javax.inject.Singleton;
-
 import static android.content.ContentValues.TAG;
 
 /**
@@ -34,11 +32,12 @@ public class Player extends TravelEntity implements Serializable  {
     // player singleton instance
     private static Player player;
 
-    private GameConfig config;
+    private final GameConfig config;
     private int credits;
+    @SuppressWarnings("FieldMayBeFinal")
     private Ship ship;
-    private String name;
-    private int[] skillPoints; // each index represents a skill
+    private final String name;
+    private final int[] skillPoints; // each index represents a skill
 
     /**
      * the constructor for the Player
@@ -131,7 +130,7 @@ public class Player extends TravelEntity implements Serializable  {
      *
      * @return if the player does not have more than the max skill points
      */
-    private final boolean appropriateNumberOfSkillPoints() {
+    private boolean appropriateNumberOfSkillPoints() {
         return getTotalSkillPoints() <= Player.MAXIMUM_POINTS;
     }
 
@@ -195,10 +194,7 @@ public class Player extends TravelEntity implements Serializable  {
         return name;
     }
 
-    /**
-     * gets the player's ship
-     * @return the player's ship
-     */
+    @Override
     public Ship getShip() {
         return ship;
     }

@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@SuppressWarnings("ALL")
 public class TripTest {
     private static Universe universe;
     private static Player player;

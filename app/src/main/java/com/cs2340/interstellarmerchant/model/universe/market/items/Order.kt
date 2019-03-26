@@ -47,7 +47,7 @@ data class Order(val order: Map<Item, Int>): Serializable {
     fun getTotalCost(): Int {
         if (totalCost == null) {
             throw IllegalStateException("No market has been passed to the order, so the order's" +
-                    "actual value hasn't been calculated");
+                    "actual value hasn't been calculated")
         } else {
             return totalCost!!
         }
