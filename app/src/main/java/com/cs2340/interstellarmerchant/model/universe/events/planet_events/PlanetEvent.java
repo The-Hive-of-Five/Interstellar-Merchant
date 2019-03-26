@@ -69,4 +69,9 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     public void onUnsubscribe(int day, TimeController controller) {
         lifeSpan = 0;
     }
+
+    @Override
+    public String toString() {
+        return type.name();
+    }
 }

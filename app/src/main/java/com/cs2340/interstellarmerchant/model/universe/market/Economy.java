@@ -13,17 +13,19 @@ import java.util.List;
 public interface Economy {
 
     /**
-     * Can the host economy buy the item from the player
      * @param order - the order of items the user is trying to sell
-     * @return whether the order can proceed or not
+     * @return whether the order can proceed or not given the economy (can the economy
+     * buy the items from the player)
      */
-    OrderStatus canBuyItems(Order order);
+    default OrderStatus canBuyItems(Order order) {
+        Item highestItem = order.getHighestSellTechItem();
+        return canBuyItem(highestItem, order.getItemQuantity(highestItem));
+    }
 
     /**
      * Can the host economy buy the item from the player
      * @param item - the item
-     * @param quantity - the quantity
-     * @return whether the order can proceed or not
+     * @return whether the order can proceed or not (can the economy buy the items from the player)
      */
     OrderStatus canBuyItem(Item item, int quantity);
 

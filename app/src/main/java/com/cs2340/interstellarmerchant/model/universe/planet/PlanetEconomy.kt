@@ -19,30 +19,16 @@ import kotlin.math.roundToInt
  */
 class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                     private val currentEvents: Set<PlanetEvent>): Economy, Serializable {
-    override fun canBuyItems(order: Order?): OrderStatus {
+    override fun canBuyItem(item: Item, quantity: Int): OrderStatus {
         var output: OrderStatus
-        if (order!!.minSellTech!! > this.tech) {
+        if (item.sellTechLevel > this.tech) {
             output = OrderStatus.NOT_ENOUGH_TECH
-            logd("not enough tech to sell")
-
         } else {
             output = OrderStatus.SUCCESS
         }
         return output
     }
 
-    /**
-     * Whether the host economy can buy the economy. ONLY market should use (the class)
-     */
-    override fun canBuyItem(item: Item?, quantity: Int): OrderStatus {
-        var orderStatus: OrderStatus
-        if (item!!.sellTechLevel > this.tech) {
-            orderStatus = OrderStatus.NOT_ENOUGH_TECH
-        } else {
-            orderStatus = OrderStatus.SUCCESS
-        }
-        return orderStatus
-    }
 
     /**
      * ONLY market should use (the class)
