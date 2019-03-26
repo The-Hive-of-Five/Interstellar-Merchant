@@ -24,6 +24,7 @@
         <activity
             android:name="com.cs2340.interstellarmerchant.views.Travel" />
         <activity android:name="com.cs2340.interstellarmerchant.views.MarketMain"/>
+        <activity android:name="com.cs2340.interstellarmerchant.views.Loadgame"/>
     </application>
 
 </manifest>
