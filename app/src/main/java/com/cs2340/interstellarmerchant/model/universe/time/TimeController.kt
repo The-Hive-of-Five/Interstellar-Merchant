@@ -1,8 +1,16 @@
 package com.cs2340.interstellarmerchant.model.universe.time
 
 import java.lang.IllegalArgumentException
-import java.sql.Time
 
+/**
+ * Works in a life cycle
+ *
+ * 1. time changes
+ * 2. iterate through the queue of subscribers to be subscribed and subscribe them
+ * 3. iterate through all the subscribers and call their time changed method
+ * 4. if the subscribers try to subscribe new events during a lifecycle, they will be added
+ * to the queue to be subscribed
+ */
 class TimeController {
     companion object {
         fun dayToString(day: Int): String {
@@ -36,7 +44,9 @@ class TimeController {
     }
 
     /**
-     * subscribes the subscriber to time changes
+     * subscribes the subscriber to time changes. the time controller
+     * operates in a life cycle so first the subscribers are put in a queue in case
+     * a day life is already occurring
      * @param subscriber - the subscriber to the event
      */
     fun subscribeToTime(subscriber: TimeSubscriberI) {
