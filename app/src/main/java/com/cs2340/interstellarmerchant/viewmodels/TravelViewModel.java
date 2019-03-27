@@ -6,11 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cs2340.interstellarmerchant.model.GameController;
-import com.cs2340.interstellarmerchant.model.player.Player;
-import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
-import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.travel.TravelController;
-import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 
 import java.util.ArrayList;
@@ -62,7 +58,8 @@ public class TravelViewModel extends AndroidViewModel {
         int planetIndex = planetList.indexOf(p);
         Log.d("click", "Traveling to Solar System " + universe.getSystems()[ssIndex]);
         Log.d("click", "Traveling to planet " + universe.getSystems()[ssIndex].getPlanets().get(planetIndex));
-        tc.Travel(gc.getPlayer(), universe.getSystems()[ssIndex].getPlanets().get(planetIndex));
+        tc.travel(universe.getSystems()[ssIndex].getPlanets().get(planetIndex),
+                gc.getTimeController());
     }
 
 

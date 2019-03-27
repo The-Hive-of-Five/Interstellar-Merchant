@@ -5,8 +5,8 @@ import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import com.cs2340.interstellarmerchant.model.universe.market.items.MarketItem
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
-import com.cs2340.interstellarmerchant.utilities.AfterDeserialized
-import com.cs2340.interstellarmerchant.utilities.Inventory
+import com.cs2340.interstellarmerchant.model.utilities.AfterDeserialized
+import com.cs2340.interstellarmerchant.model.utilities.inventory.StandardInventory
 import java.io.Serializable
 import com.cs2340.interstellarmerchant.utilities.logd
 import com.google.gson.Gson
@@ -18,7 +18,7 @@ import java.lang.IllegalStateException
  *
  * @param hostEconomy - the economy of the hosting planet
  */
-class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDeserialized,
+class Market(@Transient private var hostEconomy: Economy): StandardInventory(), AfterDeserialized,
         Serializable {
     private val priceLog: MutableMap<Item, MarketItem> = HashMap() // initialize price map
 
@@ -142,7 +142,7 @@ class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDes
      */
     fun sellItems(order: Order, player: Player): OrderStatus {
         logd(order.toString())
-        val playerInventory: Inventory = player.ship
+        val playerInventory: StandardInventory = player.ship
         if(!playerInventory.contains(order.order)) { // make sure the player actually has the items
             throw IllegalArgumentException("The order you gave was not valid")
         } else {

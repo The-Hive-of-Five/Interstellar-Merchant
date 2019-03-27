@@ -10,7 +10,7 @@ import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController
 import com.cs2340.interstellarmerchant.model.universe.time.TimeSubscriberI
-import com.cs2340.interstellarmerchant.utilities.AfterDeserialized
+import com.cs2340.interstellarmerchant.model.utilities.AfterDeserialized
 import org.w3c.dom.Element
 import java.io.InputStream
 import java.io.Serializable

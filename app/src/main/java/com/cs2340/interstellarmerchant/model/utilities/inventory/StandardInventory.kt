@@ -1,4 +1,4 @@
-package com.cs2340.interstellarmerchant.utilities
+package com.cs2340.interstellarmerchant.model.utilities.inventory
 
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
 import java.lang.IllegalArgumentException
@@ -6,7 +6,7 @@ import java.lang.IllegalArgumentException
 /**
  * An inventory class. Objects that extend this are given an inventory
  */
-abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
+abstract class StandardInventory(val maxSize: Int = DEFAULT_MAX) : Inventory {
     var size: Int = 0 // accounts for the size of the item (AKA fuel has 0 size)
     var numberOfItems: Int = 0
 
@@ -21,23 +21,27 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
         inventory = HashMap()
     }
 
-    /**
-     * Whether the inventory contains the subset
-     *
-     * @param subset - whether the inventory contains the subset
-     */
-    operator fun contains(subset: Map<Item, Int>): Boolean {
+    override operator fun contains(subset: Map<Item, Int>): Boolean {
         var valid = true
         for ((item: Item, quantity: Int) in subset) {
-            if (inventory[item] == null || inventory[item]!! < quantity) {
-                valid = false
+            valid = contains(item, quantity)
+            if (!valid) {
+                break
             }
         }
         return valid
     }
 
-    open operator fun plusAssign(subset: Map<Item, Int>) {
-        var addSize: Int = 0
+    override fun contains(item: Item, quantity: Int): Boolean {
+        var contains = true
+        if (inventory[item] == null || inventory[item]!! < quantity) {
+            contains = false
+        }
+        return contains
+    }
+
+    override operator fun plusAssign(subset: Map<Item, Int>) {
+        var addSize = 0
         subset.forEach{item: Item, quant: Int ->
             addSize += quant * item.sizeMultiplier
         }
@@ -58,7 +62,7 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
         }
     }
 
-    operator fun minusAssign(subset: Map<Item, Int>) {
+    override operator fun minusAssign(subset: Map<Item, Int>) {
         for ((item: Item, quantity: Int) in subset) {
             if (quantity > 0) {
                 inventory[item] = inventory[item]!! - quantity
@@ -72,46 +76,24 @@ abstract class Inventory(val maxSize: Int = Inventory.DEFAULT_MAX){
         }
     }
 
-    /**
-     * Gets the number of available space
-     * @return the amount of available cargo
-     */
-    fun getAvailableSpace(): Int {
+    override fun getAvailableSpace(): Int {
         return maxSize - size
     }
 
-    /**
-     * Gets the item quantity. 0 if the quantity is not in the inventory
-     *
-     * @param item - the item
-     *
-     * @return the item quantity
-     */
-    fun getItemQuantity(item: Item): Int {
+    override fun getItemQuantity(item: Item): Int {
         return if (inventory[item] == null) 0 else inventory[item]!!
     }
 
-    /**
-     * @return get the amount of items in the inventory
-     */
-    fun getUsedSpace(): Int {
+    override fun getUsedSpace(): Int {
         return size
     }
 
-    /**
-     * Clear inventory
-     */
-    fun clearInventory() {
+    override fun clearInventory() {
         inventory = HashMap()
         size = 0
     }
 
-    /**
-     * gets items (clones the map so the player can't modify the inventory)
-     *
-     * @return the items in the inventory
-     */
-    fun getInventoryClone(): HashMap<Item, Int> {
+    override fun getInventoryClone(): HashMap<Item, Int> {
         return HashMap(inventory)
     }
 }

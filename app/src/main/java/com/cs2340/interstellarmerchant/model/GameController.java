@@ -79,7 +79,7 @@ public class GameController {
         this.player = player;
         this.universe = universe;
         this.timeController = timeController;
-        this.travelController = new TravelController(this.timeController);
+        this.travelController = player;
         this.gameName = gameName;
         this.initialized = true;
 
