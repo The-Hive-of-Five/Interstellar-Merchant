@@ -9,6 +9,7 @@ import com.cs2340.interstellarmerchant.model.utilities.inventory.Inventory;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +42,7 @@ public abstract class TravelEntity implements Inventory, TravelController {
      * @return the entity's location history
      */
     public List<Location> getLocationHistory() {
-        return locationHistory;
+        return Collections.unmodifiableList(locationHistory);
     }
 
     /**
