@@ -43,7 +43,7 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
     fun getTripLog(): TripLog {
         if (fuelCost == null || time == null) {
             throw IllegalStateException("Can't output fuel cost and time if they have not" +
-                    "already been calculated");
+                    "already been calculated")
         }
         return TripLog(fuelCost!!, time!!)
     }

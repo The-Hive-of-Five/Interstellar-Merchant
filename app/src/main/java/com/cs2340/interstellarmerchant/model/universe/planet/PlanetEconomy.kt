@@ -16,21 +16,23 @@ import kotlin.math.roundToInt
  */
 class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                     private val currentEvents: Set<PlanetEvent>): Economy, Serializable {
+
+    override val economyName: String
+        get() = "Economy"
+
     override fun canBuyItem(item: Item, quantity: Int): OrderStatus {
-        var output =
-                if (item.sellTechLevel > this.tech) {
+        return (if (item.sellTechLevel > this.tech) {
                     OrderStatus.NOT_ENOUGH_TECH
                 } else {
                     OrderStatus.SUCCESS
-                }
-        return output
+                })
     }
 
 
     /**
      * ONLY market should use (the class)
      */
-    override fun filterItems(potentialItems: List<Item>): MutableList<Item>? {
+    override fun filterItems(potentialItems: List<Item>): List<Item> {
         val random = Random()
         val chanceInStore = 80
         return potentialItems
@@ -47,13 +49,13 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
     /**
      * ONLY market should use (the class)
      */
-    override fun calculateQuantity(item: Item?): Int {
+    override fun calculateQuantity(item: Item): Int {
         val random = Random()
         var factor: Int
         var signFactor: Int
         var minVariance: Int
         var maxVariance: Int
-        if (item!!.idealTechLevel == this.tech) { // increase quantity if ideal tech level
+        if (item.idealTechLevel == this.tech) { // increase quantity if ideal tech level
             minVariance = 50
             maxVariance = 150
             signFactor = 1
@@ -72,7 +74,7 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
      * Used for calculating the price of items in its economy
      * Only market should use (the class)
      */
-    override fun calculatePrice(item: Item?): Int {
+    override fun calculatePrice(item: Item): Int {
         var price: Int
         if (item != null) {
             price = item.base
@@ -112,7 +114,4 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
         return price
     }
 
-    override fun getEconomyName(): String {
-        return "Economy"
-    }
 }

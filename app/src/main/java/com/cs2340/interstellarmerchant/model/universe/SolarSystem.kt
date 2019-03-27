@@ -3,7 +3,7 @@ package com.cs2340.interstellarmerchant.model.universe
 
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
-import com.cs2340.interstellarmerchant.utilities.AfterDeserialized
+import com.cs2340.interstellarmerchant.model.utilities.AfterDeserialized
 import java.io.Serializable
 import java.util.*
 

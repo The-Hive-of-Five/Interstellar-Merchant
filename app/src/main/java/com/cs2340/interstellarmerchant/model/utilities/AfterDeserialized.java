@@ -1,4 +1,4 @@
-package com.cs2340.interstellarmerchant.utilities;
+package com.cs2340.interstellarmerchant.model.utilities;
 
 /**
  * Indicates that a special procedure must occur after deserialization

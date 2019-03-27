@@ -1,96 +1,31 @@
 package com.cs2340.interstellarmerchant.model.travel;
 
-import android.util.Log;
-
-import com.cs2340.interstellarmerchant.model.player.ship.Ship;
-import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.inject.Singleton;
-
-import kotlin.jvm.Transient;
-
 /**
- * Controls travel for all travel entities
- * A Singleton
+ * Basically a temporary interface so I didn't have to refactor all the code and replace
+ * it with TravelEntity
  */
-public class TravelController {
-    private TimeController timeController;
-
-    /**
-     * Inits the Travel Controller class with the correct Time Controller
-     * @param timeController - the tie controller
-     */
-    public TravelController(TimeController timeController) {
-        this.timeController = timeController;
-    }
-
+public interface TravelController {
     /**
      * Set's the travel entity's location without penalty (teleports)
      *
-     * @param entity - the travel entity
      * @param newLocation - the new location
      *
      */
-    public void setLocationWithoutPenalty(TravelEntity entity, Location newLocation) {
-        entity.setLocation(newLocation);
-    }
+    void setLocationWithoutPenalty(Location newLocation);
+
 
     /**
      * Set's the travel entity's location with penalty. Possibility of a random
      * Random events could take you to a DIFFERENT LOCATION
      *
-     * @param entity - the travel entity
      * @param newLocation - the new location
+     * @param timeController - the time controller
      *
      * @return the ACTUAL location the ship travels to*
      */
-    public Location Travel(TravelEntity entity, Location newLocation) {
-        Location currentLocation = entity.getCurrentLocation();
-        Trip trip = new Trip(currentLocation, newLocation);
+    Location travel(Location newLocation, TimeController timeController);
 
-        Ship entityShip = entity.getShip();
-        Location returnLocation;
 
-        if (trip.getFuelCost() <=  entityShip.getItemQuantity(Item.FUEL)) {
-            returnLocation = definiteTravel(entity, trip);
-        } else {
-            // don't travel because not enough fuel
-            returnLocation = currentLocation;
-        }
-        Log.d("TRAVEL",returnLocation.toString());
-        return returnLocation;
-    }
-
-    /**
-     * Assumes the entity that is travelling has enough fuel. WILL definitely go to the input
-     * location. PERFORMS necessary FUEL REMOVAL and TIME JUMP
-     * @param entity - the entity travelling
-     * @param trip - the trip
-     *
-     * @return the new location AKA the one stored in the trip param
-     */
-    private Location definiteTravel(TravelEntity entity, Trip trip) {
-        TripLog tripLog = trip.getTripLog();
-        Ship entityShip = entity.getShip();
-
-        // remove the fuel
-        Map<Item, Integer> removeMap = new HashMap<>();
-        removeMap.put(Item.FUEL, tripLog.getFuelCost());
-        entityShip.minusAssign(removeMap);
-
-        // time jump by the amount of time the trip takes
-        timeController.timeJump(tripLog.getTime());
-
-        // travel to the location
-        Location endingLocation = trip.getEndingLocation();
-        entity.setLocation(endingLocation);
-
-        return endingLocation;
-    }
 }
-
-

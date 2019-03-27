@@ -8,7 +8,7 @@ import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Order;
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech;
-import com.cs2340.interstellarmerchant.utilities.Inventory;
+import com.cs2340.interstellarmerchant.model.utilities.inventory.StandardInventory;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -76,7 +76,7 @@ public class MarketTest {
         addItemsToInventory(focusMarket);
 
         assertThat(focusMarket.getUsedSpace(), is(5));
-        assertThat(focusMarket.getAvailableSpace(), is(Inventory.DEFAULT_MAX - 5));
+        assertThat(focusMarket.getAvailableSpace(), is(StandardInventory.DEFAULT_MAX - 5));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class MarketTest {
         marketIsEmpty();
         playerIsEmpty();
 
-        Inventory playerInventory = player.getShip();
+        StandardInventory playerInventory = player.getShip();
         // add 5 items to player's
         addItemsToInventory(playerInventory);
 
@@ -162,14 +162,14 @@ public class MarketTest {
      */
     public void marketIsEmpty() {
         assertThat(focusMarket.getUsedSpace(), is(0));
-        assertThat(focusMarket.getAvailableSpace(), is(Inventory.DEFAULT_MAX));
+        assertThat(focusMarket.getAvailableSpace(), is(StandardInventory.DEFAULT_MAX));
     }
 
     /**
      * Ensures player's inventory is empty
      */
     public void playerIsEmpty() {
-        Inventory playerInventory = player.getShip();
+        StandardInventory playerInventory = player.getShip();
         assertThat(playerInventory.getUsedSpace(), is(0));
         assertThat(playerInventory.getAvailableSpace(), is(player.getShip().getMaxSize()));
     }
@@ -178,7 +178,7 @@ public class MarketTest {
      * Adds five food to the inventory
      * @param market - the market to add food to
      */
-    public static void addItemsToInventory(Inventory market) {
+    public static void addItemsToInventory(StandardInventory market) {
         // add 5 food to the market
         Map<Item, Integer> marketAddition = new HashMap<>();
         marketAddition.put(Item.FOOD, 5);
