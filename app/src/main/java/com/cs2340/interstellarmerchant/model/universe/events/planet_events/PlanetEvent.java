@@ -16,7 +16,7 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     private static final int MAX_LIFE = 150;
 
     private boolean eventAlive;
-    private int lifeSpan;
+    private int lifeRemaining;
     private int mostRecentDay = -1;
     private final PlanetEventType type;
 
@@ -26,7 +26,7 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
      * @param lifeSpan - the life span in universe days for the event
      */
     public PlanetEvent(PlanetEventType type, int lifeSpan) {
-        this.lifeSpan = lifeSpan;
+        this.lifeRemaining = lifeSpan;
         this.type = type;
         eventAlive = true;
     }
@@ -62,11 +62,11 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     public boolean dayUpdated(int day, @NotNull TimeController controller) {
         if (mostRecentDay != -1) {
             // get time jump since last updated
-            lifeSpan -= day - mostRecentDay;
+            lifeRemaining -= day - mostRecentDay;
         }
         mostRecentDay = day;
 
-        if (lifeSpan <= 0) {
+        if (lifeRemaining <= 0) {
             eventAlive = false;
         }
 
@@ -80,7 +80,7 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
 
     @Override
     public void onUnsubscribe(int day, @NotNull TimeController controller) {
-        lifeSpan = 0;
+        lifeRemaining = 0;
     }
 
     @NotNull
