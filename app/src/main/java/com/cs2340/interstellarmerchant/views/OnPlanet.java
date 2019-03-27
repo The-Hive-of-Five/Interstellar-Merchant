@@ -64,6 +64,8 @@ public class OnPlanet extends AppCompatActivity{
         }
         visitMarketBtn = (Button) findViewById(R.id.to_market);
         travelBtn = (Button) findViewById(R.id.travel);
+        loadButton = (Button) findViewById(R.id.to_load);
+
         visitMarketBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +77,13 @@ public class OnPlanet extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(OnPlanet.this, Travel.class));
+            }
+        });
+
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OnPlanet.this, Loadgame.class));
             }
         });
 

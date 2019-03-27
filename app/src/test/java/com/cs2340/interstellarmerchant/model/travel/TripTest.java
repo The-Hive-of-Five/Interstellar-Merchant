@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@SuppressWarnings("ALL")
 public class TripTest {
     private static Universe universe;
     private static Player player;
@@ -27,7 +28,11 @@ public class TripTest {
     @BeforeClass
     public static void getPlanets() throws IOException {
         universe = generateUniverse();
+        if (GameController.gameControllerAlreadyInitialized()) {
+            GameController.clearGameController();
+        }
         GameController controller = GameController.getInstance();
+
         controller.init(new MockDatabase(), generatePlayer(), universe,
                new TimeController(),"SAVE NAME");
     }

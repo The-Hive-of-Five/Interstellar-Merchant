@@ -4,7 +4,7 @@ package com.cs2340.interstellarmerchant.model.universe;
 import android.support.v4.util.Pair;
 
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
-import com.cs2340.interstellarmerchant.utilities.AfterDeserialized;
+import com.cs2340.interstellarmerchant.model.utilities.AfterDeserialized;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -66,10 +66,12 @@ public final class Universe implements Serializable, AfterDeserialized {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format(Locale.ENGLISH,"Universe of size %d x %d \n", Universe.MAX_X,
+        builder.append(String.format(Locale.ENGLISH,"Universe of size %d x %d \n",
+                Universe.MAX_X,
                 Universe.MAX_Y));
         for (SolarSystem system: systems) {
-            builder.append(system.toString() + "\n");
+            builder.append(system.toString());
+            builder.append("\n");
         }
 
         return builder.toString();
@@ -80,6 +82,7 @@ public final class Universe implements Serializable, AfterDeserialized {
      * @param systems - the list of SolarSystems being modified
      */
     private void setLocations(SolarSystem[] systems) {
+        //noinspection TypeMayBeWeakened because all pairs are supposed to be unique
         Set<Pair<Integer, Integer>> locations = new HashSet<>();
         Random random = new Random();
         for (SolarSystem system: systems) {

@@ -2,6 +2,7 @@ package com.cs2340.interstellarmerchant.model.universe.market.items
 
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
 import java.io.Serializable
+import java.lang.IllegalArgumentException
 
 /**
  * Order wrapper
@@ -11,13 +12,23 @@ data class Order(val order: Map<Item, Int>): Serializable {
     var quantity = 0
     // the minimum technology an entity needs to be able to sell all the items in the order
     var minSellTech: Tech? = null
+    var highestSellTechItem: Item? = null
+
     init {
         for ((item: Item, quantity: Int) in order) {
             if (minSellTech == null || minSellTech!! < item.sellTechLevel) {
                 minSellTech = item.sellTechLevel
+                highestSellTechItem = item
             }
             this.quantity += quantity
         }
+    }
+
+    fun getItemQuantity(item: Item): Int {
+        if (!order.containsKey(item)) {
+            throw IllegalArgumentException("The $item could not be found in the order")
+        }
+        return order.getValue(item)
     }
 
     /**
@@ -36,7 +47,7 @@ data class Order(val order: Map<Item, Int>): Serializable {
     fun getTotalCost(): Int {
         if (totalCost == null) {
             throw IllegalStateException("No market has been passed to the order, so the order's" +
-                    "actual value hasn't been calculated");
+                    "actual value hasn't been calculated")
         } else {
             return totalCost!!
         }
