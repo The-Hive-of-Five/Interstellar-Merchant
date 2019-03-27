@@ -5,6 +5,9 @@ import com.cs2340.interstellarmerchant.model.repository.save_state.SaveState;
 
 import java.util.Collection;
 
+/**
+ * A MockDatabase for the game. Used for testing purposes.
+ */
 public class MockDatabase implements Database {
     @Override
     public boolean deleteSave(String saveName) {

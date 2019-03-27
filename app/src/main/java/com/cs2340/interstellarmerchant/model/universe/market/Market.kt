@@ -59,7 +59,7 @@ class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDes
      * @param item - the item
      * @return the marketItem
      */
-    fun addItemToPriceRef(item: Item): MarketItem {
+    private fun addItemToPriceRef(item: Item): MarketItem {
         if (priceLog[item] == null) {
             priceLog[item] = MarketItem(item, hostEconomy)
         }
@@ -105,7 +105,7 @@ class Market(@Transient private var hostEconomy: Economy): Inventory(), AfterDes
      * @param order - the order
      */
     fun calculateOrderPrice(order: Order, buying: Boolean) {
-        var totalCost: Int = 0
+        var totalCost = 0
         for ((item: Item, quantity: Int) in order.order) {
             val cost = if (buying) priceLog[item]!!.price!! else priceLog[item]!!.sellPrice!!
             totalCost +=  cost * quantity

@@ -66,10 +66,12 @@ public final class Universe implements Serializable, AfterDeserialized {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format(Locale.ENGLISH,"Universe of size %d x %d \n", Universe.MAX_X,
+        builder.append(String.format(Locale.ENGLISH,"Universe of size %d x %d \n",
+                Universe.MAX_X,
                 Universe.MAX_Y));
         for (SolarSystem system: systems) {
-            builder.append(system.toString() + "\n");
+            builder.append(system.toString());
+            builder.append("\n");
         }
 
         return builder.toString();

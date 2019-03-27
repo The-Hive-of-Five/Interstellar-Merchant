@@ -28,7 +28,7 @@ public class TravelViewModel extends AndroidViewModel {
         super(application);
         gc = GameController.getInstance();
         universe = gc.getUniverse();
-        tc = TravelController.getInstance();
+        tc = gc.getTravelController();
         String[] ssList = new String[universe.getSystems().length];
         for (int i = 0; i < ssList.length; i++) {
             ssList[i] = universe.getSystems()[i].getName();

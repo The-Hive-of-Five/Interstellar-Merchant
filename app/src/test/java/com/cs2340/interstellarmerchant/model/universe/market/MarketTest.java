@@ -25,7 +25,7 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@SuppressWarnings("LawOfDemeter")
+@SuppressWarnings("ALL")
 public class MarketTest {
     private static Planet focusPlanet;
     private static Player player;
@@ -180,7 +180,7 @@ public class MarketTest {
      */
     public static void addItemsToInventory(Inventory market) {
         // add 5 food to the market
-        HashMap<Item, Integer> marketAddition = new HashMap<>();
+        Map<Item, Integer> marketAddition = new HashMap<>();
         marketAddition.put(Item.FOOD, 5);
 
         market.plusAssign(marketAddition);

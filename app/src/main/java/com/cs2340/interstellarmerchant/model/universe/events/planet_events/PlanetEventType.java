@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -46,15 +45,12 @@ public enum PlanetEventType {
      * @param planet - the input planet
      * @return the random event
      */
+    @SuppressWarnings("ChainedMethodCall")
     public static PlanetEventType getRandomPlanetEvent(final Planet planet) {
         List<PlanetEventType> possibleEvents = Arrays.stream(PlanetEventType.values())
-                .filter(new Predicate<PlanetEventType>() {
-                    @Override
-                    public boolean test(PlanetEventType planetEvent) {
-                        return !planetEvent.conflictingResources.contains(planet.getResource());
-                    }
-                })
-                .collect(Collectors.<PlanetEventType>toList());
+                .filter(planetEvent ->
+                        !planetEvent.conflictingResources.contains(planet.getResource()))
+                .collect(Collectors.toList());
         return possibleEvents.isEmpty() ?
                 null
                 : possibleEvents.get(new Random().nextInt(possibleEvents.size()));

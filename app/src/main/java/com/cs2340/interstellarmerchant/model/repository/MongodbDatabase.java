@@ -1,7 +1,5 @@
 package com.cs2340.interstellarmerchant.model.repository;
 
-import android.util.Log;
-
 import javax.inject.Singleton;
 
 import com.cs2340.interstellarmerchant.model.repository.save_state.SaveOverview;
@@ -23,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 
 /**
  * Used to interface with whatever backend storage the app uses for saves
@@ -34,15 +33,13 @@ public class MongodbDatabase implements Database {
     private static final String DATABASE_NAME = "interstellar-merchant";
     private static final String SAVE_COLLECTION = "saves";
 
-    // Create the default Stitch Client
-    private final StitchAppClient client;
-    // Create a Client for MongoDB Mobile (initializing MongoDB Mobile)
-    private final MongoClient mobileClient;
-    // Get database
-    private final MongoDatabase database;
     // Saves collection
     private final MongoCollection<Document> savesCollection;
 
+    /**
+     * An implementation of the Database that uses a local Mongo database for storing the
+     * saves
+     */
     public MongodbDatabase() {
         // Create the stitch client. Initialize one if it doesn't already exist
         StitchAppClient tempClient;
@@ -51,12 +48,15 @@ public class MongodbDatabase implements Database {
         } catch (IllegalStateException exception) {
             tempClient = Stitch.initializeDefaultAppClient(APP_ID);
         }
-        client = tempClient;
+        // Create the default Stitch Client
+        StitchAppClient client = tempClient;
 
         // Create a Client for MongoDB Mobile (initializing MongoDB Mobile)
-        mobileClient = client.getServiceClient(LocalMongoDbService.clientFactory);
+        // Create a Client for MongoDB Mobile (initializing MongoDB Mobile)
+        MongoClient mobileClient = client.getServiceClient(LocalMongoDbService.clientFactory);
         // Get database
-        database = mobileClient.getDatabase(DATABASE_NAME);
+        // Get database
+        MongoDatabase database = mobileClient.getDatabase(DATABASE_NAME);
         // Saves collection
         savesCollection = database.getCollection(SAVE_COLLECTION);
 
@@ -72,7 +72,7 @@ public class MongodbDatabase implements Database {
     public Collection<SaveOverview> getAvailableSaves() {
         Collection<SaveOverview> saveOverviews = new LinkedList<>();
 
-        DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        DateFormat formatter = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
         for (Document saveDoc: savesCollection.find()) {
             String name = saveDoc.getString("name");
@@ -81,7 +81,8 @@ public class MongodbDatabase implements Database {
                 date = formatter.parse(saveDoc.getString("lastModified"));
             } catch (ParseException exception) {
 
-                throw new IllegalStateException("The lastModified could not be parsed from the save" +
+                throw new IllegalStateException("The lastModified could not be" +
+                        " parsed from the save" +
                         "document. This is in an indication that the device database is broken. " +
                         "Date: " + saveDoc.getString("lastModified"));
             }
@@ -91,6 +92,7 @@ public class MongodbDatabase implements Database {
         return saveOverviews;
     }
 
+    @SuppressWarnings("ChainedMethodCall")
     @Override
     public SaveState getSave(String name) {
         Document output = savesCollection.find(Filters.eq("name", name)).first();

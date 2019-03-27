@@ -8,14 +8,26 @@ import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
-import com.google.gson.Gson;
+
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Singleton;
 
+/**
+ * The GameController for the entire game. Keeps track of player, universe, time controller,
+ * database...
+ *
+ * A Singleton
+ */
 @Singleton
 public class GameController {
+    @Nullable
     private static GameController controller;
 
+    /**
+     * Has the GameController already been initialized
+     * @return if the game controller has already been initialized
+     */
     public static boolean gameControllerAlreadyInitialized() {
         return GameController.getInstance().initialized;
     }
@@ -24,6 +36,7 @@ public class GameController {
      * Gets the instance of travel controller
      * @return the travel controller
      */
+    @SuppressWarnings("NonThreadSafeLazyInitialization")
     public static GameController getInstance() {
         if (controller == null) {
             controller = new GameController();
@@ -38,6 +51,7 @@ public class GameController {
         controller = null;
     }
 
+    @SuppressWarnings("RedundantFieldInitialization")
     private boolean initialized = false;
     private Database database;
     private Player player;
@@ -48,7 +62,11 @@ public class GameController {
 
     /**
      * Inits the GameController
+     * @param database - the database for the game
+     * @param player - the player for the game
      * @param universe - the universe for the game
+     * @param timeController - the time controller for the game
+     * @param gameName - the name of the game
      */
     public void init (Database database, Player player, Universe universe,
                       TimeController timeController, String gameName) {
@@ -61,8 +79,7 @@ public class GameController {
         this.player = player;
         this.universe = universe;
         this.timeController = timeController;
-        this.travelController = TravelController.getInstance();
-        this.travelController.init(timeController);
+        this.travelController = new TravelController(this.timeController);
         this.gameName = gameName;
         this.initialized = true;
 
@@ -71,6 +88,7 @@ public class GameController {
 
     /**
      * Inits the game through the game serialization in the form of a save state
+     * @param database - the database for the game
      * @param state - the state of the game
      */
     public void init (Database database, SaveState state) {

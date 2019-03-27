@@ -13,8 +13,6 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 
-import javax.inject.Singleton;
-
 import static android.content.ContentValues.TAG;
 
 /**
@@ -34,11 +32,12 @@ public class Player extends TravelEntity implements Serializable  {
     // player singleton instance
     private static Player player;
 
-    private GameConfig config;
+    private final GameConfig config;
     private int credits;
+    @SuppressWarnings("FieldMayBeFinal")
     private Ship ship;
-    private String name;
-    private int[] skillPoints; // each index represents a skill
+    private final String name;
+    private final int[] skillPoints; // each index represents a skill
 
     /**
      * the constructor for the Player
@@ -78,16 +77,14 @@ public class Player extends TravelEntity implements Serializable  {
 
     /**
      * the constructor for the player. gives the player a default ship
-     * @param pilot - the pilot skill
-     * @param fighter - the fighter skill
-     * @param trader - the trader skill
-     * @param engineer - the engineer skill
+     * @param skillBean - holds skill info
      * @param name - the name skill
      * @param config - the game config
      */
-    public Player(int pilot, int fighter, int trader, int engineer, String name,
+    public Player(SkillBean skillBean, String name,
                   GameConfig config) {
-        this(new int[] {pilot, fighter, trader, engineer}, new Ship(ShipType.GNAT), name, config);
+        this(new int[] {skillBean.getPilot(), skillBean.getFighter(), skillBean.getTrader(),
+                skillBean.getEngineer()}, new Ship(ShipType.GNAT), name, config);
     }
 
     /**
@@ -95,16 +92,18 @@ public class Player extends TravelEntity implements Serializable  {
      * @param config - the game config
      */
     public Player(GameConfig config) {
-        this(0, 0, 0, 0,
-                "Default name", config);
+        this(
+                new SkillBean(0, 0, 0, 0), "Default name",
+                config);
     }
 
     /**
      * the constructor for the player. gives players defaults for all values
      */
     public Player() {
-        this(0, 0, 0, 0,
-                "Default name", new GameConfig(Difficulty.Hard));
+        this(
+                new SkillBean(0, 0, 0, 0), "Default name",
+                new GameConfig(Difficulty.Hard));
     }
 
     /**
@@ -131,7 +130,7 @@ public class Player extends TravelEntity implements Serializable  {
      *
      * @return if the player does not have more than the max skill points
      */
-    private final boolean appropriateNumberOfSkillPoints() {
+    private boolean appropriateNumberOfSkillPoints() {
         return getTotalSkillPoints() <= Player.MAXIMUM_POINTS;
     }
 
@@ -195,10 +194,7 @@ public class Player extends TravelEntity implements Serializable  {
         return name;
     }
 
-    /**
-     * gets the player's ship
-     * @return the player's ship
-     */
+    @Override
     public Ship getShip() {
         return ship;
     }
@@ -226,5 +222,57 @@ public class Player extends TravelEntity implements Serializable  {
     public String serialize() {
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public static class SkillBean {
+        private final int pilot;
+        private final int fighter;
+        private final int trader;
+        private final int engineer;
+
+        /**
+         * @param pilot - the pilot skill
+         * @param fighter - the fighter skill
+         * @param trader - the trader skill
+         * @param engineer - the engineer skill
+         */
+        public SkillBean(int pilot, int fighter, int trader, int engineer) {
+            this.pilot = pilot;
+            this.fighter = fighter;
+            this.trader = trader;
+            this.engineer = engineer;
+        }
+
+        /**
+         * Gets pilot skill
+         * @return - the pilot skill
+         */
+        public int getPilot() {
+            return pilot;
+        }
+
+        /**
+         * Gets the figher skill
+         * @return - the fighter skill
+         */
+        public int getFighter() {
+            return fighter;
+        }
+
+        /**
+         * Gets the trader skill
+         * @return - the trader skill
+         */
+        public int getTrader() {
+            return trader;
+        }
+
+        /**
+         * Gets the engineer skill
+         * @return - the engineer skill
+         */
+        public int getEngineer() {
+            return engineer;
+        }
     }
 }

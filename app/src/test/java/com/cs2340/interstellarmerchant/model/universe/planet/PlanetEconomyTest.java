@@ -17,6 +17,7 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@SuppressWarnings("ALL")
 public class PlanetEconomyTest {
     private static List<Economy> economies;
 

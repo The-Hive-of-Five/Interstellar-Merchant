@@ -3,11 +3,9 @@ package com.cs2340.interstellarmerchant.model.universe.planet
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
 import com.cs2340.interstellarmerchant.model.universe.market.Economy
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item
-import com.cs2340.interstellarmerchant.model.universe.market.items.Order
 import com.cs2340.interstellarmerchant.model.universe.market.items.OrderStatus
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Resource
 import com.cs2340.interstellarmerchant.model.universe.planet_attributes.Tech
-import com.cs2340.interstellarmerchant.utilities.logd
 import java.io.Serializable
 import java.util.*
 import java.util.stream.Collectors
@@ -15,17 +13,16 @@ import kotlin.math.roundToInt
 
 /**
  * Used to determine various values for the planet's market based on attributes of the planet
- * @param planet - the host planet
  */
 class PlanetEconomy(private val tech: Tech, private val resource: Resource,
                     private val currentEvents: Set<PlanetEvent>): Economy, Serializable {
     override fun canBuyItem(item: Item, quantity: Int): OrderStatus {
-        var output: OrderStatus
-        if (item.sellTechLevel > this.tech) {
-            output = OrderStatus.NOT_ENOUGH_TECH
-        } else {
-            output = OrderStatus.SUCCESS
-        }
+        var output =
+                if (item.sellTechLevel > this.tech) {
+                    OrderStatus.NOT_ENOUGH_TECH
+                } else {
+                    OrderStatus.SUCCESS
+                }
         return output
     }
 
