@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.R;
@@ -59,8 +60,14 @@ public class Travel extends AppCompatActivity{
             public void onClick(View v) {
                 Log.d("click", "Traveling to Solar System " + spinner.getSelectedItem().toString());
                 Log.d("click", "Traveling to planet " + spinner2.getSelectedItem().toString());
-                tvm.travel(spinner.getSelectedItem().toString(), spinner2.getSelectedItem().toString());
-                startActivity(new Intent(Travel.this, OnPlanet.class));
+                try {
+                    tvm.travel(spinner.getSelectedItem().toString(), spinner2.getSelectedItem().toString());
+                    startActivity(new Intent(Travel.this, OnPlanet.class));
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
