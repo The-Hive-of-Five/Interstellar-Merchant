@@ -17,27 +17,14 @@ import kotlin.jvm.Transient;
  * Controls travel for all travel entities
  * A Singleton
  */
-@Singleton
 public class TravelController {
-
-    private static final TravelController controller = new TravelController();
-
-    /**
-     * Gets the instance of travel controller
-     * @return the travel controller
-     */
-    public static TravelController getInstance() {
-        return controller;
-    }
-
-    @Transient
     private TimeController timeController;
 
     /**
      * Inits the Travel Controller class with the correct Time Controller
      * @param timeController - the tie controller
      */
-    public void init (TimeController timeController) {
+    public TravelController(TimeController timeController) {
         this.timeController = timeController;
     }
 
@@ -64,18 +51,12 @@ public class TravelController {
     public Location Travel(TravelEntity entity, Location newLocation) {
         Location currentLocation = entity.getCurrentLocation();
         Trip trip = new Trip(currentLocation, newLocation);
-        trip.getFuelCost();
+
         Ship entityShip = entity.getShip();
         Location returnLocation;
-        if (trip.getFuelCost() <=  entityShip.getItemQuantity(Item.FUEL)) {
-            // remove
-            Map<Item, Integer> removeMap = new HashMap<>();
-            removeMap.put(Item.FUEL, trip.getFuelCost());
-            entityShip.minusAssign(removeMap);
 
-            // travel to the location
-            entity.setLocation(newLocation);
-            returnLocation = newLocation;
+        if (trip.getFuelCost() <=  entityShip.getItemQuantity(Item.FUEL)) {
+            returnLocation = definiteTravel(entity, trip);
         } else {
             // don't travel because not enough fuel
             returnLocation = currentLocation;
@@ -93,15 +74,16 @@ public class TravelController {
      * @return the new location AKA the one stored in the trip param
      */
     private Location definiteTravel(TravelEntity entity, Trip trip) {
+        TripLog tripLog = trip.getTripLog();
         Ship entityShip = entity.getShip();
 
         // remove the fuel
         Map<Item, Integer> removeMap = new HashMap<>();
-        removeMap.put(Item.FUEL, trip.getFuelCost());
+        removeMap.put(Item.FUEL, tripLog.getFuelCost());
         entityShip.minusAssign(removeMap);
 
         // time jump by the amount of time the trip takes
-        timeController.timeJump(trip.getTime());
+        timeController.timeJump(tripLog.getTime());
 
         // travel to the location
         Location endingLocation = trip.getEndingLocation();

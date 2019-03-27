@@ -1,6 +1,7 @@
 package com.cs2340.interstellarmerchant.model.universe.time
 
 import java.lang.IllegalArgumentException
+import java.sql.Time
 
 class TimeController {
     companion object {
@@ -15,8 +16,12 @@ class TimeController {
     @Transient
     private val subscribers: MutableSet<TimeSubscriberI>
 
+    @Transient
+    private val subscribeToTimeQueue: MutableSet<TimeSubscriberI>
+
     init {
         this.subscribers = LinkedHashSet()
+        this.subscribeToTimeQueue = LinkedHashSet()
     }
 
     /**
@@ -27,7 +32,7 @@ class TimeController {
     }
 
     fun isSubscribed(item: TimeSubscriberI): Boolean {
-        return subscribers.contains(item)
+        return subscribers.contains(item) || subscribeToTimeQueue.contains(item)
     }
 
     /**
@@ -35,22 +40,24 @@ class TimeController {
      * @param subscriber - the subscriber to the event
      */
     fun subscribeToTime(subscriber: TimeSubscriberI) {
-        if (this.subscribers.add(subscriber)) subscriber.onSubscribe(currentDay, this)
+        if (this.subscribers.contains(subscriber) ||
+                this.subscribeToTimeQueue.contains(subscriber)) {
+            throw IllegalArgumentException("The subscriber is already subscribed to time;")
+        }
+        subscribeToTimeQueue.add(subscriber)
+        subscriber.onSubscribe(currentDay, this)
     }
 
     /**
      * unsubscribes the subscriber from time changes
      * @param subscriber - should be current subscribes
      */
-    fun unsubscribeToTime(subscriber: TimeSubscriberI) {
+    private fun unsubscribeFlag(subscriber: TimeSubscriberI) {
         if (!subscribers.contains(subscriber)) {
             throw IllegalArgumentException("The subscriber is not subscribed to to time changes")
         }
-        subscribers.remove(subscriber)
-
         // call the onUnsubscribe function on the subscriber
         subscriber.onUnsubscribe(currentDay, this)
-
     }
 
     fun timeJump(timeJump: Int) {
@@ -61,13 +68,29 @@ class TimeController {
     }
 
     private fun timeUpdated() {
+        // subscribe all the subscribers who have been queued to subscribe
+        subscribeQueuedSubscribers()
+
         // the time has been updated. tell the subscribers
-        for (subscriber: TimeSubscriberI in subscribers) {
+        val iterator = subscribers.iterator()
+        while (iterator.hasNext()) {
+            val subscriber = iterator.next()
             // call the day updated method. if it returns false, onUnsubscribe the subscriber
             if (!subscriber.dayUpdated(currentDay, this)) {
-                unsubscribeToTime(subscriber)
+                unsubscribeFlag(subscriber)
+                iterator.remove()
             }
         }
+    }
+
+    private fun subscribeQueuedSubscribers() {
+        val iterator = subscribeToTimeQueue.iterator()
+        while (iterator.hasNext()) {
+            val subscriber = iterator.next()
+            subscribers.add(subscriber)
+            iterator.remove()
+        }
+
     }
 
     override fun toString(): String {

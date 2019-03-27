@@ -79,8 +79,7 @@ public class GameController {
         this.player = player;
         this.universe = universe;
         this.timeController = timeController;
-        this.travelController = TravelController.getInstance();
-        this.travelController.init(timeController);
+        this.travelController = new TravelController(this.timeController);
         this.gameName = gameName;
         this.initialized = true;
 

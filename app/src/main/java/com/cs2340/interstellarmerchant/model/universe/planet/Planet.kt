@@ -128,11 +128,13 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
      */
     private fun eventLifeCyle() {
         var eventDeleted = false
-        for (event: PlanetEvent in currentEvents) {
+        val eventIterator = currentEvents.iterator()
+        while (eventIterator.hasNext()) {
+            val event = eventIterator.next()
             // remove expired events
             if (event.eventExpired()) {
                 eventDeleted = true
-                currentEvents.remove(event)
+                eventIterator.remove()
             }
         }
 
