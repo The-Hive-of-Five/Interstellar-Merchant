@@ -11,7 +11,7 @@ import java.util.Map;
  * Class that represents ships
  */
 public class Ship extends StandardInventory implements Serializable {
-    private static final int STARTING_FUEL_AMOUNT = 10000;
+    private static final int STARTING_FUEL_AMOUNT = 500;
 
     private ShipType type;
 

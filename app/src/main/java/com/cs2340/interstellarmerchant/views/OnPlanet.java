@@ -56,7 +56,7 @@ public class OnPlanet extends AppCompatActivity{
         } else {
             String eventNames = "";
             for (PlanetEvent pe : events) {
-                eventNames += pe.toString() + ", ";
+                eventNames += pe.toString() + "\n";
             }
             Log.d("events", eventNames);
 

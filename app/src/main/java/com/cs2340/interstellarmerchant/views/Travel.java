@@ -16,7 +16,10 @@ import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.model.travel.Location;
+import com.cs2340.interstellarmerchant.model.travel.Trip;
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
+import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.utilities.LogUtility;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 import com.cs2340.interstellarmerchant.viewmodels.TravelViewModel;
@@ -31,6 +34,11 @@ public class Travel extends AppCompatActivity{
     private TravelViewModel tvm;
     private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter2;
+
+    private TextView travelTime;
+    private TextView travelCost;
+    private TextView currentTime;
+    private TextView currentCost;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,16 @@ public class Travel extends AppCompatActivity{
         spinner.setAdapter(adapter);
         spinner2.setAdapter(adapter2);
 
+        travelTime = findViewById(R.id.travel_time);
+        travelCost = findViewById(R.id.fuel_cost);
+        currentTime = findViewById(R.id.currentTime);
+        currentCost = findViewById(R.id.fuel);
+
+        Trip trip = new Trip((Location) tvm.gc.getPlayer().getCurrentLocation(), (Location) tvm.gc.getUniverse().getSystems()[0].getPlanets().get(0));
+        travelTime.setText(trip.getTime() + " days");
+        travelCost.setText(trip.getFuelCost() + "");
+        currentTime.setText("Day " + tvm.gc.getTimeController().getCurrentDay());
+        currentCost.setText(tvm.gc.getPlayer().getShip().getInventoryClone().get(Item.FUEL) + "");
 
         Warp = (Button) findViewById(R.id.warp);
         Warp.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +85,6 @@ public class Travel extends AppCompatActivity{
                     Toast.makeText(getApplicationContext(), e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
@@ -79,6 +96,33 @@ public class Travel extends AppCompatActivity{
                 ArrayList<String> planets = tvm.getPlanets(index);
                 ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, planets);
                 spinner2.setAdapter(adap);
+                spinnerValue = spinner2.getSelectedItem().toString();
+                int pindex = tvm.planetList.indexOf(spinnerValue);
+                int ssindex = tvm.solarSystemList().indexOf(spinner.getSelectedItem().toString());
+                Trip trip = new Trip((Location) tvm.gc.getPlayer().getCurrentLocation(), tvm.gc.getUniverse().getSystems()[ssindex].getPlanets().get(pindex));
+                travelTime.setText(trip.getTime() + " days");
+                travelCost.setText(trip.getFuelCost() + "");
+                currentTime.setText("Day " + tvm.gc.getTimeController().getCurrentDay());
+                currentCost.setText(tvm.gc.getPlayer().getShip().getInventoryClone().get(Item.FUEL) + "");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String spinnerValue = spinner2.getSelectedItem().toString();
+                int pindex = tvm.planetList.indexOf(spinnerValue);
+                int ssindex = tvm.solarSystemList().indexOf(spinner.getSelectedItem().toString());
+                Trip trip = new Trip((Location) tvm.gc.getPlayer().getCurrentLocation(), tvm.gc.getUniverse().getSystems()[ssindex].getPlanets().get(pindex));
+                travelTime.setText(trip.getTime() + " days");
+                travelCost.setText(trip.getFuelCost() + "");
+                currentTime.setText("Day " + tvm.gc.getTimeController().getCurrentDay() + "");
+                currentCost.setText(tvm.gc.getPlayer().getShip().getInventoryClone().get(Item.FUEL) + "");
             }
 
             @Override
@@ -88,9 +132,9 @@ public class Travel extends AppCompatActivity{
         });
 
 
+
+
+
+
     }
-
-
-
-
 }
