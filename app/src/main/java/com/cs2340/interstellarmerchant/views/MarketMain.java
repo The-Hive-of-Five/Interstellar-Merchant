@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.GameController;
 import com.cs2340.interstellarmerchant.model.repository.save_state.SaveOverview;
+import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
 import com.cs2340.interstellarmerchant.utilities.LogUtility;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.universe.market.Market;

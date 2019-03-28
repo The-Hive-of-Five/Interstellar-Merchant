@@ -14,11 +14,11 @@ import java.util.Arrays;
 
 public class TravelViewModel extends AndroidViewModel {
 
-    private GameController gc;
+    public GameController gc;
     private Universe universe;
     private ArrayList<String> solarSystemList;
     public ArrayList<String> planetList;
-    private TravelController tc;
+    public TravelController tc;
 
     public TravelViewModel(@NonNull Application application) {
         super(application);
@@ -33,7 +33,6 @@ public class TravelViewModel extends AndroidViewModel {
         solarSystemList = arrayList;
         planetList = getPlanets(0);
     }
-
 
     public ArrayList<String> solarSystemList() {
         return solarSystemList;
@@ -61,8 +60,6 @@ public class TravelViewModel extends AndroidViewModel {
         tc.travel(universe.getSystems()[ssIndex].getPlanets().get(planetIndex),
                 gc.getTimeController());
     }
-
-
 }
 
 
