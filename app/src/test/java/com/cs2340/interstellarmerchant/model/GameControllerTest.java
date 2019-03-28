@@ -3,6 +3,7 @@ package com.cs2340.interstellarmerchant.model;
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
+import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
 import com.cs2340.interstellarmerchant.model.repository.MockDatabase;
 import com.cs2340.interstellarmerchant.model.repository.save_state.SaveState;
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @SuppressWarnings("ALL")
@@ -58,6 +60,9 @@ public class GameControllerTest {
 
         controller = GameController.getInstance();
         controller.init(new MockDatabase(), SaveState.saveJSONFactory(serialization));
+        assertThat("Player has name",
+                controller.getPlayer().getName().length() > 0);
+        assertThat(controller.getPlayer().getShipType(), is(ShipType.GNAT));
     }
 
     @Test

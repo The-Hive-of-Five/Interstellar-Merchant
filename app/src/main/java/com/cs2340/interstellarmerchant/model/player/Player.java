@@ -35,7 +35,6 @@ public class Player extends TravelEntity implements Serializable  {
     private final GameConfig config;
     private int credits;
     @SuppressWarnings("FieldMayBeFinal")
-    private Ship ship;
     private final String name;
     private final int[] skillPoints; // each index represents a skill
 
@@ -146,7 +145,7 @@ public class Player extends TravelEntity implements Serializable  {
      * Sums all of the skill points invested by a player
      * @return all the skill points invested by a player
      */
-    public int getTotalSkillPoints() {
+    private int getTotalSkillPoints() {
         int sum = 0;
         for (int skill: skillPoints) {
             sum += skill;
@@ -247,7 +246,7 @@ public class Player extends TravelEntity implements Serializable  {
          * Gets pilot skill
          * @return - the pilot skill
          */
-        public int getPilot() {
+        int getPilot() {
             return pilot;
         }
 
@@ -255,7 +254,7 @@ public class Player extends TravelEntity implements Serializable  {
          * Gets the figher skill
          * @return - the fighter skill
          */
-        public int getFighter() {
+        int getFighter() {
             return fighter;
         }
 
@@ -263,7 +262,7 @@ public class Player extends TravelEntity implements Serializable  {
          * Gets the trader skill
          * @return - the trader skill
          */
-        public int getTrader() {
+        int getTrader() {
             return trader;
         }
 
@@ -271,7 +270,7 @@ public class Player extends TravelEntity implements Serializable  {
          * Gets the engineer skill
          * @return - the engineer skill
          */
-        public int getEngineer() {
+        int getEngineer() {
             return engineer;
         }
     }

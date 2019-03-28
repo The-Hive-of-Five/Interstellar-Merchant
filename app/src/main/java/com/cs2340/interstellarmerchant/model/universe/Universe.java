@@ -53,7 +53,7 @@ public final class Universe implements Serializable, AfterDeserialized {
      * @return the solar systems
      */
     public SolarSystem[] getSystems() {
-        return systems;
+        return systems.clone();
     }
 
     @Override

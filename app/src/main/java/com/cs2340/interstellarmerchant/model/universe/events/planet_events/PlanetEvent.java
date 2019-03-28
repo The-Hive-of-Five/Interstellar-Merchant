@@ -7,6 +7,7 @@ import com.cs2340.interstellarmerchant.model.universe.events.Event;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Represents events on planets
@@ -25,7 +26,7 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
      * @param type - the type of event
      * @param lifeSpan - the life span in universe days for the event
      */
-    public PlanetEvent(PlanetEventType type, int lifeSpan) {
+    private PlanetEvent(PlanetEventType type, int lifeSpan) {
         this.lifeRemaining = lifeSpan;
         this.type = type;
         eventAlive = true;
@@ -51,6 +52,12 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
         PlanetEvent otherEvent = (PlanetEvent) other;
         return this.type == otherEvent.type;
 
+    }
+
+    @Override
+    public int hashCode() {
+        Random random = new Random(); // do nothing with this.
+        return super.hashCode();
     }
 
     @Override

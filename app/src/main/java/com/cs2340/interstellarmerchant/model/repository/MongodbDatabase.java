@@ -105,7 +105,7 @@ public class MongodbDatabase implements Database {
 
     @Override
     public void storeSave(SaveState save) {
-        deleteSave(save.name);
+        deleteSave(save.getName());
         Document saveDocument = Document.parse(save.getSerialization());
         savesCollection.insertOne(saveDocument);
     }

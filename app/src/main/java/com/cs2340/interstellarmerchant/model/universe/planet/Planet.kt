@@ -171,7 +171,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
      */
     @Throws(NoEventException::class)
     private fun getRandomEvent(): PlanetEvent {
-        var planetEventType: PlanetEventType? = PlanetEventType.getRandomPlanetEvent(this)
+        val planetEventType: PlanetEventType? = PlanetEventType.getRandomPlanetEvent(this)
         planetEventType ?: throw NoEventException("There are no possible events")
 
         // subscribe the event to the time controller
