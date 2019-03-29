@@ -117,14 +117,14 @@
         android:layout_marginBottom="8dp"
         android:text="@string/load_game"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/to_save"
         app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/to_market"
         app:layout_constraintVertical_bias="0.233" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/to_save"
         android:layout_width="108dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
@@ -146,7 +146,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/travel"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/to_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.626"
         app:layout_constraintStart_toEndOf="@+id/to_market"
