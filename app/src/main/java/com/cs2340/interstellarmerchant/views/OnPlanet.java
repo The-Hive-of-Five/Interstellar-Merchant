@@ -14,7 +14,6 @@ import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent;
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
-import com.cs2340.interstellarmerchant.utilities.LogUtility;
 
 import java.util.HashSet;
 

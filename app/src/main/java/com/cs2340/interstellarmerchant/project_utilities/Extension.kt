@@ -1,6 +1,5 @@
-package com.cs2340.interstellarmerchant.utilities
+package com.cs2340.interstellarmerchant.project_utilities
 
-import android.app.Activity
 import android.util.Log
 import com.cs2340.interstellarmerchant.BuildConfig
 import com.cs2340.interstellarmerchant.model.universe.market.Market

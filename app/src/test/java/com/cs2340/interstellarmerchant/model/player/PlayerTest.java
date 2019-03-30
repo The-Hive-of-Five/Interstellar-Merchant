@@ -3,6 +3,7 @@ package com.cs2340.interstellarmerchant.model.player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,6 +21,11 @@ public class PlayerTest {
         player = generatePlayer();
     }
 
+    @Before
+    public void testSetup() {
+        player.clearInventory();
+    }
+
 
     @Test
     public void serializeTest() {
@@ -33,6 +39,7 @@ public class PlayerTest {
         assertThat("Serialization has length", !serialization.isEmpty());
 
     }
+
     public static Player generatePlayer() {
         // instatiate the player
         return new Player(new GameConfig(Difficulty.Hard));

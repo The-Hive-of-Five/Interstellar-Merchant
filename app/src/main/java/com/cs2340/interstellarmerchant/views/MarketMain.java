@@ -1,9 +1,7 @@
 package com.cs2340.interstellarmerchant.views;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,17 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.GameController;
-import com.cs2340.interstellarmerchant.model.repository.save_state.SaveOverview;
-import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
-import com.cs2340.interstellarmerchant.utilities.LogUtility;
 import com.cs2340.interstellarmerchant.model.player.Player;
-import com.cs2340.interstellarmerchant.model.universe.market.Market;
-import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;

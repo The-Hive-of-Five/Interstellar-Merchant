@@ -1,4 +1,4 @@
-package com.cs2340.interstellarmerchant.utilities;
+package com.cs2340.interstellarmerchant.project_utilities;
 
 import android.util.Log;
 
