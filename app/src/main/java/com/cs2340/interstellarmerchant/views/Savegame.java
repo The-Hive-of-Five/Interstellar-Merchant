@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.R;
-import com.cs2340.interstellarmerchant.utilities.LogUtility;
 
 import java.util.ArrayList;
 

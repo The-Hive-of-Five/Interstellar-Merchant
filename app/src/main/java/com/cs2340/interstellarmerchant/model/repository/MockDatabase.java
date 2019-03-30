@@ -25,7 +25,7 @@ public class MockDatabase implements Database {
     }
 
     @Override
-    public Collection<SaveOverview> getAvailableSaves() {
+    public Collection<SaveOverview> getSaveOverviews() {
         return null;
     }
 }

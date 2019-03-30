@@ -69,7 +69,7 @@ public class MongodbDatabase implements Database {
     }
 
     @Override
-    public Collection<SaveOverview> getAvailableSaves() {
+    public Collection<SaveOverview> getSaveOverviews() {
         Collection<SaveOverview> saveOverviews = new LinkedList<>();
 
         DateFormat formatter = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
