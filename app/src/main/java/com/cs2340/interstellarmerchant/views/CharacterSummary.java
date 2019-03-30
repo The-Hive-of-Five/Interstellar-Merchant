@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.R;
-import com.cs2340.interstellarmerchant.utilities.LogUtility;
+import com.cs2340.interstellarmerchant.project_utilities.LogUtility;
 
 /**
  * controls the character summary

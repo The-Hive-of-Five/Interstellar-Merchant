@@ -34,7 +34,9 @@ abstract class StandardInventory(val maxSize: Int = DEFAULT_MAX) : Inventory {
 
     override fun contains(item: Item, quantity: Int): Boolean {
         var contains = true
-        if (inventory[item] == null || inventory[item]!! < quantity) {
+        if (inventory[item] == null) {
+            contains = false
+        } else if (inventory[item]!! < quantity) {
             contains = false
         }
         return contains

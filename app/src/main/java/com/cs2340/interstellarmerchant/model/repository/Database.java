@@ -18,10 +18,10 @@ public interface Database {
     boolean deleteSave(String saveName);
 
     /**
-     * Get the available saves
+     * Get the available save overviews (name and last date modified)
      * @return the save
      */
-    Collection<SaveOverview> getAvailableSaves();
+    Collection<SaveOverview> getSaveOverviews();
 
     /**
      * Get the save with the save name.

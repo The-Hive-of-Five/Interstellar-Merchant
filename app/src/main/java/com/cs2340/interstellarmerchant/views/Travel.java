@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ScrollingTabContainerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,18 +13,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.travel.Location;
 import com.cs2340.interstellarmerchant.model.travel.Trip;
-import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
-import com.cs2340.interstellarmerchant.utilities.LogUtility;
-import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 import com.cs2340.interstellarmerchant.viewmodels.TravelViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Travel extends AppCompatActivity{
