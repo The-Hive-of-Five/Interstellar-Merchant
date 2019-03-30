@@ -25,6 +25,8 @@
             android:name="com.cs2340.interstellarmerchant.views.Travel" />
         <activity android:name="com.cs2340.interstellarmerchant.views.MarketMain"/>
         <activity android:name="com.cs2340.interstellarmerchant.views.Loadgame"/>
+        <activity android:name="com.cs2340.interstellarmerchant.views.Savegame"/>
+        <activity android:name="com.cs2340.interstellarmerchant.views.SavePop"/>
     </application>
 
 </manifest>
