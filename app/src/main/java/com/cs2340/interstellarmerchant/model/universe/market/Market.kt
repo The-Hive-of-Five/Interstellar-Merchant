@@ -80,7 +80,7 @@ class Market(@Transient private var hostEconomy: Economy): StandardInventory(), 
         } else {
             calculateOrderPrice(order, true) // sets the price attribute of order
 
-            var output: OrderStatus = player.canBuyItems(order)
+            val output: OrderStatus = player.canBuyItems(order)
             if (output == OrderStatus.SUCCESS) {
                 // if the player can actually buy the items, proceed with the transaction
                 logd("THE BUY ORDER WENT THRUUUUU")
@@ -104,7 +104,7 @@ class Market(@Transient private var hostEconomy: Economy): StandardInventory(), 
      *
      * @param order - the order
      */
-    fun calculateOrderPrice(order: Order, buying: Boolean) {
+    private fun calculateOrderPrice(order: Order, buying: Boolean) {
         var totalCost = 0
         for ((item: Item, quantity: Int) in order.order) {
             val cost = if (buying) priceLog[item]!!.price!! else priceLog[item]!!.sellPrice!!
@@ -146,7 +146,7 @@ class Market(@Transient private var hostEconomy: Economy): StandardInventory(), 
         if(!playerInventory.contains(order.order)) { // make sure the player actually has the items
             throw IllegalArgumentException("The order you gave was not valid")
         } else {
-            var output: OrderStatus = hostEconomy.canBuyItems(order)
+            val output: OrderStatus = hostEconomy.canBuyItems(order)
             if (output == OrderStatus.SUCCESS) {
                 logd("THE SELL ORDER WENT THRUUUUU")
 

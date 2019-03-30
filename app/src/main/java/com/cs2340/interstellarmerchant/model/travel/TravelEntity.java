@@ -9,6 +9,8 @@ import com.cs2340.interstellarmerchant.model.utilities.inventory.Inventory;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +19,8 @@ import java.util.Map;
 /**
  * Represents an entity that can travel the entity
  */
-public abstract class TravelEntity implements Inventory, TravelController {
+public abstract class TravelEntity implements Inventory, Serializable, TravelController {
+    protected Ship ship;
     private Location currentLocation;
     private final List<Location> locationHistory;
 
@@ -41,14 +44,16 @@ public abstract class TravelEntity implements Inventory, TravelController {
      * @return the entity's location history
      */
     public List<Location> getLocationHistory() {
-        return locationHistory;
+        return Collections.unmodifiableList(locationHistory);
     }
 
     /**
      * Get's the entities ship
      * @return the ship
      */
-    public abstract Ship getShip();
+    public Ship getShip() {
+        return ship;
+    }
 
     /**
      * Sets the location
@@ -66,56 +71,48 @@ public abstract class TravelEntity implements Inventory, TravelController {
 
     @Override
     public boolean contains(@NotNull Map<Item, Integer> subset) {
-        Ship ship = getShip();
         return ship.contains(subset);
     }
 
     @Override
     public boolean contains(@NotNull Item item, int quantity) {
-        Ship ship = getShip();
         return ship.contains(item, quantity);
     }
 
     @Override
     public void plusAssign(@NotNull Map<Item, Integer> subset) {
-        Ship ship = getShip();
         ship.plusAssign(subset);
     }
 
+    @SuppressWarnings("WeakerAccess")
     @Override
     public void minusAssign(@NotNull Map<Item, Integer> subset) {
-        Ship ship = getShip();
         ship.minusAssign(subset);
     }
 
     @Override
     public int getAvailableSpace() {
-        Ship ship = getShip();
         return ship.getAvailableSpace();
     }
 
     @Override
     public int getItemQuantity(@NotNull Item item) {
-        Ship ship = getShip();
         return ship.getItemQuantity(item);
     }
 
     @Override
     public int getUsedSpace() {
-        Ship ship = getShip();
         return ship.getUsedSpace();
     }
 
     @Override
     public void clearInventory() {
-        Ship ship = getShip();
         ship.clearInventory();
     }
 
     @NotNull
     @Override
     public HashMap<Item, Integer> getInventoryClone() {
-        Ship ship = getShip();
         return ship.getInventoryClone();
     }
 
@@ -129,12 +126,12 @@ public abstract class TravelEntity implements Inventory, TravelController {
         Location currentLocation = this.getCurrentLocation();
         Trip trip = new Trip(currentLocation, newLocation);
 
-        Ship entityShip = this.getShip();
-        Location returnLocation;
+        int fuelCost = trip.getFuelCost();
 
-        TripLog tripLog = trip.getTripLog();
-        if (entityShip.contains(Item.FUEL, tripLog.getFuelCost())) {
-            returnLocation = definiteTravel(tripLog, trip.getEndingLocation(), timeController);
+        Location returnLocation;
+        if (ship.contains(Item.FUEL, fuelCost)) {
+            returnLocation = definiteTravel(trip.getTripLog(), fuelCost,
+                    timeController);
         } else {
             // don't travel because not enough fuel
             returnLocation = currentLocation;
@@ -147,21 +144,20 @@ public abstract class TravelEntity implements Inventory, TravelController {
      * Assumes the entity that is travelling has enough fuel. WILL definitely go to the input
      * location. PERFORMS necessary FUEL REMOVAL and TIME JUMP
      * @param tripLog - the trip log
-     * @param endingLocation - the ending location of the trip
      *
      * @return the new location AKA the one stored in the trip param
      */
-    private Location definiteTravel(TripLog tripLog, Location endingLocation, TimeController
+    private Location definiteTravel(TripLog tripLog, int fuelCost, TimeController
                                     timeController) {
-        Ship entityShip = this.getShip();
-
         // remove the fuel
         Map<Item, Integer> removeMap = new HashMap<>();
-        removeMap.put(Item.FUEL, tripLog.getFuelCost());
+        removeMap.put(Item.FUEL, fuelCost);
         this.minusAssign(removeMap);
 
         // time jump by the amount of time the trip takes
         timeController.timeJump(tripLog.getTime());
+
+        Location endingLocation = tripLog.getEndingLocation();
 
         // travel to the location
         this.setLocation(endingLocation);

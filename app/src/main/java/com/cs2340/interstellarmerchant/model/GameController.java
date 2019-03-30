@@ -91,14 +91,18 @@ public class GameController {
      * @param database - the database for the game
      * @param state - the state of the game
      */
+    @SuppressWarnings("FeatureEnvy")
     public void init (Database database, SaveState state) {
         if (initialized) {
             throw new IllegalStateException("Trying to reininitialize the game controller" +
                     "after it has been initiailized. Call clearGameController");
         }
         // load the details from the save state
-        state.universe.afterDeserialized();
-        init(database, state.player, state.universe, state.timeController, state.name);
+        state.callAfterDeserialized();
+        Universe universe = state.getUniverse();
+
+        init(database, state.getPlayer(), state.getUniverse(), state.getTimeController(),
+                state.getName());
 
     }
 

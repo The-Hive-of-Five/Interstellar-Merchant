@@ -51,10 +51,10 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
      */
     override fun calculateQuantity(item: Item): Int {
         val random = Random()
-        var factor: Int
-        var signFactor: Int
-        var minVariance: Int
-        var maxVariance: Int
+        val factor: Int
+        val signFactor: Int
+        val minVariance: Int
+        val maxVariance: Int
         if (item.idealTechLevel == this.tech) { // increase quantity if ideal tech level
             minVariance = 50
             maxVariance = 150
@@ -83,7 +83,7 @@ class PlanetEconomy(private val tech: Tech, private val resource: Resource,
             price += (this.tech.ordinal - item.sellTechLevel.ordinal) * item.priceIncreasePerTech
 
             val random = Random()
-            var factor: Int
+            val factor: Int
             when {
                 item.decreaseResource == this.resource -> {
                     // decrease the price of the item based on predefined allowed amount of variance

@@ -4,7 +4,10 @@ import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
 
 /**
  * Abstract class that represents a location that can be travelled to
+ *
+ * SUPRRESSED because they are used in Kotlin, which the checkstyle does not account for (in trip)
  */
+@SuppressWarnings("UnusedReturnValue")
 public abstract class Location {
     /**
      * gets the x value of the location

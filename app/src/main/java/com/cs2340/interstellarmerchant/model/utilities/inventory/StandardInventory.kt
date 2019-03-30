@@ -8,7 +8,7 @@ import java.lang.IllegalArgumentException
  */
 abstract class StandardInventory(val maxSize: Int = DEFAULT_MAX) : Inventory {
     var size: Int = 0 // accounts for the size of the item (AKA fuel has 0 size)
-    var numberOfItems: Int = 0
+    private var numberOfItems: Int = 0
 
     companion object {
         const val DEFAULT_MAX = 100000

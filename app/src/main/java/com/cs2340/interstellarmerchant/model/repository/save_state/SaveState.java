@@ -37,11 +37,11 @@ public class SaveState {
         return gson.fromJson(json, SaveState.class);
     }
 
-    public Date lastModified;
-    public final Player player;
-    public final String name;
-    public final TimeController timeController;
-    public final Universe universe;
+    private Date lastModified;
+    private final Player player;
+    private final String name;
+    private final TimeController timeController;
+    private final Universe universe;
 
     /**
      * Generates a SaveState
@@ -58,6 +58,52 @@ public class SaveState {
         this.updateLastModified();
     }
 
+    /**
+     * getter for last modfied
+     * @return the date it was last modified
+     */
+    public Date getLastModified() {
+        return (Date) lastModified.clone();
+    }
+
+    /**
+     * getter for player
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * getter for name
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * getter for time controller
+     * @return the time controller
+     */
+    public TimeController getTimeController() {
+        return timeController;
+    }
+
+    /**
+     * Calls after deserialized on the deserialized interface objects
+     */
+    public void callAfterDeserialized() {
+        universe.afterDeserialized();
+    }
+
+    /**
+     * getter for the universe
+     * @return the universe
+     */
+    public Universe getUniverse() {
+        return universe;
+    }
 
     /**
      * Gets the save state as a json string
@@ -71,8 +117,10 @@ public class SaveState {
     /**
      * Updates the last modified lastModified with the current lastModified
      */
-    public final void updateLastModified() {
+    private void updateLastModified() {
         this.lastModified = new Date();
     }
+
+
 
 }

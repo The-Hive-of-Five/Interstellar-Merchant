@@ -32,7 +32,7 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
         }
     }
 
-    var fuelCost: Int? = null
+    var fuelCost: Int = -1
     var time: Int? = null
 
     init {
@@ -45,7 +45,7 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
             throw IllegalStateException("Can't output fuel cost and time if they have not" +
                     "already been calculated")
         }
-        return TripLog(fuelCost!!, time!!)
+        return TripLog(fuelCost!!, time!!, endingLocation)
     }
 
     /**
@@ -54,11 +54,11 @@ data class Trip(val startingLocation: Location, val endingLocation: Location) {
      * @return the trip cost
      */
     private fun determineCost(): Int {
-        var xOne: Int
-        var yOne: Int
-        var xTwo: Int
-        var yTwo: Int
-        var multiplier: Double
+        val xOne: Int
+        val yOne: Int
+        val xTwo: Int
+        val yTwo: Int
+        val multiplier: Double
         if (startingLocation.solarSystem == endingLocation.solarSystem) {
             // if in the same solar system, use the actual distance between the locations
             xOne = startingLocation.x
