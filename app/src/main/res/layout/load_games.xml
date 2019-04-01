@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/load_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15sp"
     android:background="#808080"
-    android:id="@+id/cargo_parent_layout">
+    android:padding="15sp">
 
 
     <TextView
-        android:id="@+id/cargo_item_name"
+        android:id="@+id/name_prompt"
         android:layout_width="59dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -17,39 +17,39 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <TextView
-        android:id="@+id/cargo_item_price"
+        android:id="@+id/names"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="33dp"
-        android:layout_toRightOf="@+id/cargo_item_name"
+        android:layout_toRightOf="@+id/name_prompt"
         android:text="INSERT"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <TextView
-        android:id="@+id/total_available_cargo"
+        android:id="@+id/time_prompt"
         android:layout_width="54dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/cargo_item_name"
+        android:layout_alignTop="@+id/name_prompt"
         android:layout_marginStart="43dp"
         android:layout_marginLeft="310dp"
         android:layout_marginTop="0dp"
         android:layout_marginRight="5sp"
-        android:layout_toEndOf="@+id/cargo_item_price"
+        android:layout_toEndOf="@+id/names"
         android:layout_toRightOf="@+id/slash"
         android:text="Time:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <TextView
-        android:id="@+id/total_available_cargo2"
+        android:id="@+id/times"
         android:layout_width="57dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/cargo_item_name"
+        android:layout_alignTop="@+id/name_prompt"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="310dp"
         android:layout_marginTop="1dp"
         android:layout_marginRight="5sp"
-        android:layout_toEndOf="@+id/total_available_cargo"
+        android:layout_toEndOf="@+id/time_prompt"
         android:layout_toRightOf="@+id/slash"
         android:text="Total"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
