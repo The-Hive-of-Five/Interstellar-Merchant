@@ -9,6 +9,9 @@ import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
  */
 @SuppressWarnings("UnusedReturnValue")
 public abstract class Location {
+    public Location() {
+
+    }
     /**
      * gets the x value of the location
      * @return the x value

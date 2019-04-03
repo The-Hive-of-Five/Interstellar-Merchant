@@ -1,5 +1,7 @@
 package com.cs2340.interstellarmerchant.model.repository.save_state;
 
+import android.util.Log;
+
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
@@ -33,8 +35,11 @@ public class SaveState {
      * @return - the save within the json string
      */
     public static SaveState saveJSONFactory(String json) {
+        SaveState output = null;
         Gson gson = new Gson();
-        return gson.fromJson(json, SaveState.class);
+        output = gson.fromJson(json, SaveState.class);
+
+        return output;
     }
 
     private Date lastModified;
@@ -95,6 +100,8 @@ public class SaveState {
      */
     public void callAfterDeserialized() {
         universe.afterDeserialized();
+        player.afterDeserializedSpecialized(universe);
+        player.afterDeserialized();
     }
 
     /**
