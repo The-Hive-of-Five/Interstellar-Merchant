@@ -23,6 +23,17 @@ data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.g
         setPlanetLocation(planets)
     }
 
+    fun getPlanet(planetName: String): Planet {
+        var output: Planet? = null
+        for (planet: Planet in planets) {
+            if (planet.name == planetName) {
+                output = planet
+                break
+            }
+        }
+        return output!!
+    }
+
 
     companion object {
         private const val MAX_SOLAR_SIZE: Int = 6

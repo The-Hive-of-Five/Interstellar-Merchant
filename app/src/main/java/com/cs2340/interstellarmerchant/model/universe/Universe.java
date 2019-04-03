@@ -78,6 +78,33 @@ public final class Universe implements Serializable, AfterDeserialized {
     }
 
     /**
+     * Gets the solar system with the name
+     * @param solarSystemName - the solar system name
+     * @return - the solar system
+     */
+    public SolarSystem getSolarSystem(String solarSystemName) {
+        SolarSystem output = null;
+        for (SolarSystem system: systems) {
+            if (system.getName().equals(solarSystemName)) {
+                output = system;
+                break;
+            }
+        }
+        return output;
+    }
+
+    /**
+     * Gets the planet from the solar system
+     * @param planetName - the planet name
+     * @param solarSystemName - the solar system name
+     * @return the Planet
+     */
+    public Planet getPlanetFromSolarSystem(String planetName, String solarSystemName) {
+      SolarSystem system = getSolarSystem(solarSystemName);
+      return system.getPlanet(planetName);
+    }
+
+    /**
      * Modifies the locations of each solar system and gives each a unique location
      * @param systems - the list of SolarSystems being modified
      */

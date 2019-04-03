@@ -48,7 +48,8 @@ public class SavesViewModel extends AndroidViewModel {
 
     public void loadGame(String name) {
         SaveState saveState = db.getSave(name);
-        gc.clearGameController();
+        GameController.clearGameController();
+        gc = GameController.getInstance();
         gc.init(db, saveState);
         gc = GameController.getInstance();
         db = gc.getDatabase();
