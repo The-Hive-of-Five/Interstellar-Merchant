@@ -6,7 +6,7 @@ import com.cs2340.interstellarmerchant.model.repository.save_state.SaveState;
 import java.util.Collection;
 
 /**
- * Reperesents a database for saves
+ * Represents a database for saves
  */
 public interface Database {
 

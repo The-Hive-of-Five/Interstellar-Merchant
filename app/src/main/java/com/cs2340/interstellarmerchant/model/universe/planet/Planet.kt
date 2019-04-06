@@ -21,14 +21,14 @@ import javax.xml.parsers.DocumentBuilderFactory
 /**
  * planet data class
  *
- * @param climate - the cliamte of the planet
+ * @param climate - the climate of the planet
  * @param diameter - the diameter of the planet. can be null
  * @param gravity - the gravity of the planet as a string
  * @param name - the name of the planet
  * @param population - the population of the planet. can be null
  * @param rotationPeriod - the rotation period of the planet; can be null
  * @param resource - the resource of the planet. will be randomly selected if not explicitly given
- * @pparam tech - the tech of the planet. will be randomly selected if not explicitly given
+ * @param tech - the tech of the planet. will be randomly selected if not explicitly given
  */
 data class Planet (val climate: String, val diameter: Long?, val gravity: String, val name: String,
                    val population: Long?, val rotationPeriod: Int?,
@@ -58,7 +58,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
 
     override fun dayUpdated(day: Int, controller: TimeController): Boolean {
         // run the event life cycle
-        eventLifeCyle()
+        eventLifeCycle()
 
         // try to add a new event
         eventRoll(controller)
@@ -126,7 +126,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     /**
      * Removes events' with ended life cycles
      */
-    private fun eventLifeCyle() {
+    private fun eventLifeCycle() {
         var eventDeleted = false
         val eventIterator = currentEvents.iterator()
         while (eventIterator.hasNext()) {
