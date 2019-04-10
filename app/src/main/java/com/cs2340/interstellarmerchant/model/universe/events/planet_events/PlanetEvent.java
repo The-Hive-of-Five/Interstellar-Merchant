@@ -41,6 +41,7 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     }
 
 
+
     @Override
     public boolean equals(Object other) {
         if (other == null) {
@@ -94,5 +95,15 @@ public class PlanetEvent implements Event, Serializable, TimeSubscriberI {
     @Override
     public String toString() {
         return type.name();
+    }
+
+    public int getLifeRem() {
+        return lifeRemaining;
+    }
+    public int getMostRecentDay() {
+        return mostRecentDay;
+    }
+    public void setLifeRemaining(int lifeRemaining) {
+        this.lifeRemaining = lifeRemaining;
     }
 }
