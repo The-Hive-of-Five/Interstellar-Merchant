@@ -6,7 +6,7 @@ import java.lang.IllegalArgumentException
 /**
  * An inventory class. Objects that extend this are given an inventory
  */
-abstract class StandardInventory(val maxSize: Int = DEFAULT_MAX) : Inventory {
+open class StandardInventory(val maxSize: Int = DEFAULT_MAX) : Inventory {
     var size: Int = 0 // accounts for the size of the item (AKA fuel has 0 size)
     private var numberOfItems: Int = 0
 
