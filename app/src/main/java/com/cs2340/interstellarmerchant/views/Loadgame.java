@@ -1,6 +1,7 @@
 package com.cs2340.interstellarmerchant.views;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.repository.save_state.SaveOverview;
@@ -37,10 +39,14 @@ public class Loadgame extends AppCompatActivity{
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    Log.d("click", input.getText().toString());
+                    svm.loadGame(input.getText().toString());
+                    startActivity(new Intent(Loadgame.this, OnPlanet.class));
 
-                Log.d("click", input.getText().toString());
-
-                svm.loadGame(input.getText().toString());
+                } catch (Exception e) {
+                    Toast.makeText(Loadgame.this, "Game did not load", Toast.LENGTH_SHORT).show();
+                }
 
 
 

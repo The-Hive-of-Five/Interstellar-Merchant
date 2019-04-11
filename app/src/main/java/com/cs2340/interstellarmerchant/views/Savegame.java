@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.R;
 import com.cs2340.interstellarmerchant.model.repository.save_state.SaveOverview;
@@ -39,12 +40,14 @@ public class Savegame extends AppCompatActivity{
             public void onClick(View v) {
 
                     Log.d("click", input.getText().toString());
+                    try {
+                        svm.saveGame(input.getText().toString());
+                        svm.updateSaves();
+                        startActivity(new Intent(Savegame.this, OnPlanet.class));
+                    } catch (Exception e) {
+                        Toast.makeText(Savegame.this, "Game did not save", Toast.LENGTH_SHORT).show();
 
-                    svm.saveGame(input.getText().toString());
-                    svm.updateSaves();
-
-
-
+                    }
             }
         });
     }
