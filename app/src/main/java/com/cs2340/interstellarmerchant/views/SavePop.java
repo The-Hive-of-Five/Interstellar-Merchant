@@ -10,6 +10,9 @@ import android.widget.Button;
 
 import com.cs2340.interstellarmerchant.R;
 
+/**
+ * pop up for save screen
+ */
 public class SavePop extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

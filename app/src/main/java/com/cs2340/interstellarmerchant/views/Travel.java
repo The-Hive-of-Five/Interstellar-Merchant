@@ -22,6 +22,9 @@ import com.cs2340.interstellarmerchant.viewmodels.TravelViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class the handles the travel view
+ */
 public class Travel extends AppCompatActivity{
 
     private Button Warp;
@@ -34,7 +37,10 @@ public class Travel extends AppCompatActivity{
     private TextView currentTime;
     private TextView currentCost;
 
-
+    /**
+     * for starting
+     * @param savedInstanceState saved instance
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.travel);
@@ -82,7 +88,15 @@ public class Travel extends AppCompatActivity{
             }
         });
 
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * for when item is selected
+             * @param adapterView the current adapter for the view
+             * @param view the view
+             * @param i the index for i
+             * @param l the index for l
+             */
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String spinnerValue = spinner.getSelectedItem().toString();
@@ -107,6 +121,13 @@ public class Travel extends AppCompatActivity{
         });
 
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * on selecting item
+             * @param adapterView the current adapter for the view
+             * @param view the view
+             * @param i the index for i
+             * @param l the index for l
+             */
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String spinnerValue = spinner2.getSelectedItem().toString();
@@ -119,6 +140,10 @@ public class Travel extends AppCompatActivity{
                 currentCost.setText(tvm.gc.getPlayer().getShip().getInventoryClone().get(Item.FUEL) + "");
             }
 
+            /**
+             * when nothing is selected
+             * @param adapterView the adapter view
+             */
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 

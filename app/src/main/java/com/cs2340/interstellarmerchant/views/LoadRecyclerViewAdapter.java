@@ -19,6 +19,9 @@ import com.cs2340.interstellarmerchant.R;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * class for handling recycler view in load view
+ */
 public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "LoadRecyclerViewAd";
 
@@ -26,6 +29,12 @@ public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerVi
     private ArrayList<String> times = new ArrayList<>();
     private Context itemContext;
 
+    /**
+     * constructor
+     * @param names name
+     * @param times times
+     * @param itemContext contexts
+     */
     public LoadRecyclerViewAdapter(ArrayList<String> names, ArrayList<String> times, Context itemContext) {
         this.names = names;
         this.times = times;
@@ -52,6 +61,9 @@ public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerVi
         return names.size();
     }
 
+    /**
+     * holder for view
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView name;
@@ -59,6 +71,11 @@ public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerVi
         TextView name_prompt;
         TextView time_prompt;
         RelativeLayout loadLayout;
+
+        /**
+         * constructor
+         * @param itemView item view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.names);

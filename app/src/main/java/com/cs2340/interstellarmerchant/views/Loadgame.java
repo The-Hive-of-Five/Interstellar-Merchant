@@ -10,6 +10,9 @@ import com.cs2340.interstellarmerchant.R;
 
 import java.util.ArrayList;
 
+/**
+ * handles load view
+ */
 public class Loadgame extends AppCompatActivity{
 
     private ArrayList<String> names = new ArrayList<>();
@@ -23,6 +26,9 @@ public class Loadgame extends AppCompatActivity{
         initLoadGames();
     }
 
+    /**
+     * initialized games
+     */
     private void initLoadGames() {
         names.add("Alice");
         times.add("15:20");
@@ -36,7 +42,9 @@ public class Loadgame extends AppCompatActivity{
         initRecyclerView();
     }
 
-
+    /**
+     * recycler view with games
+     */
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_load);
         LoadRecyclerViewAdapter adapter =

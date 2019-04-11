@@ -119,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
         return output;
     }
 
+    /**
+     * create universe
+     * @return universe
+     */
     private Universe createUniverse() {
         Universe universe = null;
         try {
@@ -130,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
         return universe;
     }
 
+    /**
+     * game controller
+     * @param player player
+     * @return game
+     */
     private GameController initGameController(Player player) {
 
         if (GameController.gameControllerAlreadyInitialized()) {
