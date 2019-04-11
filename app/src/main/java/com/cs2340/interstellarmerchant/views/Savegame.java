@@ -10,6 +10,9 @@ import com.cs2340.interstellarmerchant.R;
 
 import java.util.ArrayList;
 
+/**
+ * class that handles save screen
+ */
 public class Savegame extends AppCompatActivity{
 
     private ArrayList<String> names = new ArrayList<>();
@@ -36,7 +39,9 @@ public class Savegame extends AppCompatActivity{
         initRecyclerView();
     }
 
-
+    /**
+     * for the recycler view
+     */
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_load);
         LoadRecyclerViewAdapter adapter =
