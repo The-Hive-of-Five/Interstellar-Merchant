@@ -115,10 +115,10 @@ public class Player extends TravelEntity implements Serializable  {
         OrderStatus output;
         if (order.getQuantity() > ship.getAvailableSpace()) {
             output = OrderStatus.NOT_ENOUGH_SPACE;
-            Log.d(TAG, "not enough space on ship to buy");
+//            Log.d(TAG, "not enough space on ship to buy");
         } else if (order.getTotalCost() > credits) {
             output = OrderStatus.NOT_ENOUGH_CREDITS;
-            Log.d(TAG, "not enough credits to buy");
+//            Log.d(TAG, "not enough credits to buy");
         } else {
             output = OrderStatus.SUCCESS;
         }
