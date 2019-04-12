@@ -27,6 +27,7 @@
         <activity android:name="com.cs2340.interstellarmerchant.views.Loadgame"/>
         <activity android:name="com.cs2340.interstellarmerchant.views.Savegame"/>
         <activity android:name="com.cs2340.interstellarmerchant.views.SavePop"/>
+        "service android:name="MusicService"android:enabled="true"
     </application>
 
 </manifest>
