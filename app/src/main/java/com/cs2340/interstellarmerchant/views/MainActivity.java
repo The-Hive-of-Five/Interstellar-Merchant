@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         GameController controller = GameController.getInstance();
-        controller.init(new MongodbDatabase(), player,
+        controller.init(player,
                 createUniverse(), new TimeController(), player.getName());
         return controller;
     }

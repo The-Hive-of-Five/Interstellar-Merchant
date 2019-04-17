@@ -2,6 +2,7 @@ package com.cs2340.interstellarmerchant.model;
 
 import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.repository.Database;
+import com.cs2340.interstellarmerchant.model.repository.MockDatabaseProvider;
 import com.cs2340.interstellarmerchant.model.repository.save_state.SaveState;
 import com.cs2340.interstellarmerchant.model.travel.TravelController;
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
@@ -11,7 +12,7 @@ import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 
 import org.jetbrains.annotations.Nullable;
 
-import javax.inject.Singleton;
+import javax.inject.Inject;
 
 /**
  * The GameController for the entire game. Keeps track of player, universe, time controller,
@@ -19,8 +20,9 @@ import javax.inject.Singleton;
  *
  * A Singleton
  */
-@Singleton
 public class GameController {
+
+
     @Nullable
     private static GameController controller;
 
@@ -29,7 +31,7 @@ public class GameController {
      * @return if the game controller has already been initialized
      */
     public static boolean gameControllerAlreadyInitialized() {
-        return GameController.getInstance().initialized;
+        return controller != null && GameController.getInstance().initialized;
     }
 
     /**
@@ -39,10 +41,18 @@ public class GameController {
     @SuppressWarnings("NonThreadSafeLazyInitialization")
     public static GameController getInstance() {
         if (controller == null) {
-            controller = new GameController();
+            controller = DaggerGameControllerMaker.builder().build().get();
         }
         return controller;
     }
+    public static GameController getTestInstance() {
+        if (controller == null) {
+            controller = DaggerGameControllerMaker.builder()
+                    .databaseProvider(new MockDatabaseProvider()).build().get();
+        }
+        return controller;
+    }
+
 
     /**
      * Uninitializes the existing game controller
@@ -53,7 +63,9 @@ public class GameController {
 
     @SuppressWarnings("RedundantFieldInitialization")
     private boolean initialized = false;
+
     private Database database;
+
     private Player player;
     private TimeController timeController;
     private TravelController travelController;
@@ -62,20 +74,18 @@ public class GameController {
 
     /**
      * Inits the GameController
-     * @param database - the database for the game
      * @param player - the player for the game
      * @param universe - the universe for the game
      * @param timeController - the time controller for the game
      * @param gameName - the name of the game
      */
-    public void init (Database database, Player player, Universe universe,
+    public void init (Player player, Universe universe,
                       TimeController timeController, String gameName) {
         if (initialized) {
             throw new IllegalStateException("Trying to reininitialize the game controller" +
                     " after it has been initiailized");
         }
 
-        this.database = database;
         this.player = player;
         this.universe = universe;
         this.timeController = timeController;
@@ -88,11 +98,10 @@ public class GameController {
 
     /**
      * Inits the game through the game serialization in the form of a save state
-     * @param database - the database for the game
      * @param state - the state of the game
      */
     @SuppressWarnings("FeatureEnvy")
-    public void init (Database database, SaveState state) {
+    public void init (SaveState state) {
         if (initialized) {
             throw new IllegalStateException("Trying to reininitialize the game controller" +
                     "after it has been initiailized. Call clearGameController");
@@ -101,9 +110,14 @@ public class GameController {
         state.callAfterDeserialized();
         Universe universe = state.getUniverse();
 
-        init(database, state.getPlayer(), state.getUniverse(), state.getTimeController(),
+        init(state.getPlayer(), state.getUniverse(), state.getTimeController(),
                 state.getName());
 
+    }
+
+    @Inject
+    public GameController(Database database) {
+        this.database = database;
     }
 
     /**
@@ -112,6 +126,9 @@ public class GameController {
      */
     public Database getDatabase() {
         checkInitialized();
+        if (database == null) {
+            throw new IllegalStateException("Database can't be null");
+        }
         return database; }
 
     /**

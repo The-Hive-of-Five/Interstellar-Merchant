@@ -5,6 +5,10 @@ import com.cs2340.interstellarmerchant.model.repository.save_state.SaveState;
 
 import java.util.Collection;
 
+import javax.inject.Singleton;
+
+import dagger.Component;
+
 /**
  * Represents a database for saves
  */
