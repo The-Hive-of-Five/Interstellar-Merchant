@@ -47,7 +47,7 @@ public class MarketMain extends AppCompatActivity{
         initShopItems();
         initCargoItems();
 
-        Button buyButton = findViewById(R.id.buy_button);
+        Button buyButton = findViewById(R.id.load_button);
         buyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 buyListener(v);

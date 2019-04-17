@@ -35,6 +35,8 @@ public class GameControllerTest {
         GameController controller = GameController.getInstance();
         controller.init(new MockDatabase(), generatePlayer(), universe,
                 new TimeController(),"SAVE NAME");
+        Player player = controller.getPlayer();
+        player.setLocation(universe.getSystems()[0].getPlanets().get(0));
     }
 
     @Test
@@ -54,8 +56,9 @@ public class GameControllerTest {
     @Test
     public void loadSerialization() {
         GameController controller = GameController.getInstance();
-        String serialization = controller.getSaveState().getSerialization();
 
+        String serialization = controller.getSaveState().getSerialization();
+        System.out.println(serialization);
         GameController.clearGameController();
 
         controller = GameController.getInstance();

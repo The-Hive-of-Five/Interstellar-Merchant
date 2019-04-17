@@ -3,8 +3,11 @@ package com.cs2340.interstellarmerchant.model.travel;
 import android.util.Log;
 
 import com.cs2340.interstellarmerchant.model.player.ship.Ship;
+import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.model.universe.market.items.Item;
+import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
+import com.cs2340.interstellarmerchant.model.utilities.AfterDeserialized;
 import com.cs2340.interstellarmerchant.model.utilities.inventory.Inventory;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,13 +19,35 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * Represents an entity that can travel the entity
  */
-public abstract class TravelEntity implements Inventory, Serializable, TravelController {
+public abstract class TravelEntity implements AfterDeserialized, Inventory, Serializable,
+        TravelController {
     protected Ship ship;
-    private Location currentLocation;
-    private final List<Location> locationHistory;
+
+    private transient Location currentLocation;
+
+    private LocationOverview locationOverview;
+
+    /**
+     * Should be called BEFORE after deserialized
+     * @param universe - the universe of the location entity
+     */
+    public void afterDeserializedSpecialized(Universe universe) {
+        currentLocation = universe.getPlanetFromSolarSystem(locationOverview.getPlanetName(),
+                locationOverview.getSolarSystem());
+    }
+
+    @Override
+    public void afterDeserialized() {
+        if (currentLocation == null) {
+            throw new IllegalStateException("The current location wasn't correctly deserialized");
+        }
+    }
+
+    private final List<LocationOverview> locationHistory;
 
     /**
      * Constructor for the TravelEntity
@@ -43,7 +68,7 @@ public abstract class TravelEntity implements Inventory, Serializable, TravelCon
      * Gets the location history
      * @return the entity's location history
      */
-    public List<Location> getLocationHistory() {
+    public List<LocationOverview> getLocationHistory() {
         return Collections.unmodifiableList(locationHistory);
     }
 
@@ -63,10 +88,14 @@ public abstract class TravelEntity implements Inventory, Serializable, TravelCon
         if (location == null) {
             throw new IllegalArgumentException("The new location can't be null");
         }
+
+        locationOverview = ((Planet) location).getLocationOverview();
+
         if (currentLocation != null) {
-            locationHistory.add(currentLocation);
+            locationHistory.add(locationOverview);
         }
         currentLocation = location;
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.cs2340.interstellarmerchant.model.universe.planet
 
 import com.cs2340.interstellarmerchant.model.GameController
 import com.cs2340.interstellarmerchant.model.travel.Location
+import com.cs2340.interstellarmerchant.model.travel.LocationOverview
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEvent
 import com.cs2340.interstellarmerchant.model.universe.events.planet_events.PlanetEventType
@@ -25,13 +26,12 @@ import javax.xml.parsers.DocumentBuilderFactory
  * @param diameter - the diameter of the planet. can be null
  * @param gravity - the gravity of the planet as a string
  * @param name - the name of the planet
- * @param population - the population of the planet. can be null
  * @param rotationPeriod - the rotation period of the planet; can be null
  * @param resource - the resource of the planet. will be randomly selected if not explicitly given
  * @param tech - the tech of the planet. will be randomly selected if not explicitly given
  */
-data class Planet (val climate: String, val diameter: Long?, val gravity: String, val name: String,
-                   val population: Long?, val rotationPeriod: Int?,
+data class Planet (val climate: String, val diameter: Long?, val gravity: String,
+                   val name: String, val rotationPeriod: Int?,
                    val resource: Resource = Resource.getRandomResource(),
                    var tech: Tech = Tech.getRandomTech(), var x: Int? = null, var y: Int? = null)
     : Location(), AfterDeserialized, Serializable, TimeSubscriberI {
@@ -49,6 +49,10 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
     private var solarSystem: SolarSystem? = null
 
     init {
+    }
+
+    fun getLocationOverview(): LocationOverview {
+        return LocationOverview(name, solarSystem!!.name);
     }
 
     override fun afterDeserialized() {
@@ -116,7 +120,6 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
             builder.appendln("Climate: $climate")
             builder.appendln("Diameter: $diameter")
             builder.appendln("Gravity: $gravity")
-            builder.appendln("Population: $population")
             builder.appendln("Rotation Period: $rotationPeriod")
             builder.appendln(market)
         }
@@ -226,7 +229,7 @@ data class Planet (val climate: String, val diameter: Long?, val gravity: String
                 rotationPeriod = null
             }
 
-            return Planet(climate, diameter, gravity, name, population,
+            return Planet(climate, diameter, gravity, name,
                     rotationPeriod)
         }
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cs2340.interstellarmerchant.R;
+import com.cs2340.interstellarmerchant.viewmodels.ItemClickListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -25,8 +26,8 @@ import java.util.ArrayList;
 public class SaveRecyclerViewAdapter extends RecyclerView.Adapter<SaveRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "SaveBuyRecyclerViewAd";
 
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<String> times = new ArrayList<>();
+    public ArrayList<String> names = new ArrayList<>();
+    public ArrayList<String> times = new ArrayList<>();
     private Context itemContext;
 
     /**
@@ -60,6 +61,13 @@ public class SaveRecyclerViewAdapter extends RecyclerView.Adapter<SaveRecyclerVi
         Log.d(TAG, "onBindViewHolder: called");
         viewHolder.name.setText(names.get(i));
         viewHolder.time.setText(times.get(i));
+
+        viewHolder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int i, boolean isLongClick) {
+                ((Savegame) itemContext).changeInput(names.get(i));
+            }
+        });
     }
 
     @Override
@@ -72,7 +80,8 @@ public class SaveRecyclerViewAdapter extends RecyclerView.Adapter<SaveRecyclerVi
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name;
+        private ItemClickListener itemClickListener;
+        public TextView name;
         TextView time;
         TextView name_prompt;
         TextView time_prompt;
@@ -84,6 +93,14 @@ public class SaveRecyclerViewAdapter extends RecyclerView.Adapter<SaveRecyclerVi
             time = itemView.findViewById(R.id.times);
             time_prompt = itemView.findViewById(R.id.time_prompt);
             loadLayout = itemView.findViewById(R.id.load_parent_layout);
+        }
+
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
+
+        public void onClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), false);
         }
     }
 

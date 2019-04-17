@@ -47,7 +47,6 @@ public class OnPlanet extends AppCompatActivity{
         planetText = findViewById(R.id.planet);
         timeText = findViewById(R.id.textView2);
         eventText = findViewById(R.id.textView5);
-
         gc = GameController.getInstance();
         player = gc.getPlayer();
         planet  = (Planet) player.getCurrentLocation();

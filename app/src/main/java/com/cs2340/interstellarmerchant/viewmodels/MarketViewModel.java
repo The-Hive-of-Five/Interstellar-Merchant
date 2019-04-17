@@ -54,10 +54,6 @@ public class MarketViewModel extends AndroidViewModel {
     public MarketSellRecyclerViewAdapter adapter1;
 
 
-    public void upudatu(){
-        adapter.notifyDataSetChanged();
-        adapter1.notifyDataSetChanged();
-    }
 
 
     public MarketViewModel(@NonNull Application application) {
