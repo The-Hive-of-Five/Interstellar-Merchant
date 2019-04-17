@@ -31,9 +31,9 @@ public class TripTest {
         if (GameController.gameControllerAlreadyInitialized()) {
             GameController.clearGameController();
         }
-        GameController controller = GameController.getInstance();
+        GameController controller = GameController.getTestInstance();
 
-        controller.init(new MockDatabase(), generatePlayer(), universe,
+        controller.init(generatePlayer(), universe,
                new TimeController(),"SAVE NAME");
     }
 

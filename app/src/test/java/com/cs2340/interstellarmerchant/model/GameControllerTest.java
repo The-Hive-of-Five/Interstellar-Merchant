@@ -4,7 +4,6 @@ import com.cs2340.interstellarmerchant.model.player.Player;
 import com.cs2340.interstellarmerchant.model.player.game_config.Difficulty;
 import com.cs2340.interstellarmerchant.model.player.game_config.GameConfig;
 import com.cs2340.interstellarmerchant.model.player.ship.ShipType;
-import com.cs2340.interstellarmerchant.model.repository.MockDatabase;
 import com.cs2340.interstellarmerchant.model.repository.save_state.SaveState;
 import com.cs2340.interstellarmerchant.model.universe.SolarSystem;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
@@ -32,8 +31,8 @@ public class GameControllerTest {
     public void instantiatePlayerUniverse() throws IOException {
         Universe universe = generateUniverse();
         GameController.clearGameController();
-        GameController controller = GameController.getInstance();
-        controller.init(new MockDatabase(), generatePlayer(), universe,
+        GameController controller = GameController.getTestInstance();
+        controller.init(generatePlayer(), universe,
                 new TimeController(),"SAVE NAME");
         Player player = controller.getPlayer();
         player.setLocation(universe.getSystems()[0].getPlanets().get(0));
@@ -43,7 +42,7 @@ public class GameControllerTest {
     public void serializeTest() {
         String serialization = null;
         try {
-            serialization = GameController.getInstance().getSaveState().getSerialization();
+            serialization = GameController.getTestInstance().getSaveState().getSerialization();
             System.out.println(serialization);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -55,14 +54,14 @@ public class GameControllerTest {
 
     @Test
     public void loadSerialization() {
-        GameController controller = GameController.getInstance();
+        GameController controller = GameController.getTestInstance();
 
         String serialization = controller.getSaveState().getSerialization();
         System.out.println(serialization);
         GameController.clearGameController();
 
-        controller = GameController.getInstance();
-        controller.init(new MockDatabase(), SaveState.saveJSONFactory(serialization));
+        controller = GameController.getTestInstance();
+        controller.init(SaveState.saveJSONFactory(serialization));
         assertThat("Player has name",
                 controller.getPlayer().getName().length() > 0);
         assertThat(controller.getPlayer().getShipType(), is(ShipType.GNAT));
@@ -70,7 +69,7 @@ public class GameControllerTest {
 
     @Test
     public void loadSerializationTimeResubscribed() {
-        GameController controller = GameController.getInstance();
+        GameController controller = GameController.getTestInstance();
 
         TimeController timeController = controller.getTimeController();
         Universe universe = controller.getUniverse();

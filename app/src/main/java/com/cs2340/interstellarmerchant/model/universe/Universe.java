@@ -1,7 +1,7 @@
 package com.cs2340.interstellarmerchant.model.universe;
 
 
-import android.support.v4.util.Pair;
+
 
 import com.cs2340.interstellarmerchant.model.universe.planet.Planet;
 import com.cs2340.interstellarmerchant.model.utilities.AfterDeserialized;
@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
+
+import kotlin.Pair;
 
 
 /**
@@ -123,8 +125,8 @@ public final class Universe implements Serializable, AfterDeserialized {
             } while (locations.contains(pair));
 
             // modify the solar system
-            system.setX(pair.first);
-            system.setY(pair.second);
+            system.setX(pair.component1());
+            system.setY(pair.component2());
 
             // ensures the location is not reused
             locations.add(pair);

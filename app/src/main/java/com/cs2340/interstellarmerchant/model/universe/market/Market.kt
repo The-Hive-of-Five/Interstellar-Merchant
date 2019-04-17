@@ -83,13 +83,11 @@ class Market(@Transient private var hostEconomy: Economy): StandardInventory(), 
             val output: OrderStatus = player.canBuyItems(order)
             if (output == OrderStatus.SUCCESS) {
                 // if the player can actually buy the items, proceed with the transaction
-                logd("THE BUY ORDER WENT THRUUUUU")
                 // remove the items from the current inventory
                 this -= order.order
 
                 // remove credits from player
                 player.credits = player.credits - order.getTotalCost()
-                logd("credits: " + player.credits)
 
                 // add them to the player's ship
                 player.ship += order.order
@@ -141,14 +139,12 @@ class Market(@Transient private var hostEconomy: Economy): StandardInventory(), 
      * @return whether the order was successful
      */
     fun sellItems(order: Order, player: Player): OrderStatus {
-        logd(order.toString())
         val playerInventory: StandardInventory = player.ship
         if(!playerInventory.contains(order.order)) { // make sure the player actually has the items
             throw IllegalArgumentException("The order you gave was not valid")
         } else {
             val output: OrderStatus = hostEconomy.canBuyItems(order)
             if (output == OrderStatus.SUCCESS) {
-                logd("THE SELL ORDER WENT THRUUUUU")
 
 
                 /* if the market can actually buy the items from the player,
@@ -165,7 +161,6 @@ class Market(@Transient private var hostEconomy: Economy): StandardInventory(), 
 
                 // add credits to player
                 player.credits = player.credits + order.getTotalCost()
-                logd("credits: " + player.credits)
             }
             return output
         }
