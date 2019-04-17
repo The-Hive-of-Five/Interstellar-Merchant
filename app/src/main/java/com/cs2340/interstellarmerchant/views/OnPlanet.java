@@ -17,6 +17,9 @@ import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 
 import java.util.HashSet;
 
+/**
+ * Class that handles on planet screen
+ */
 public class OnPlanet extends AppCompatActivity{
 
     private Button visitMarketBtn;
@@ -34,6 +37,10 @@ public class OnPlanet extends AppCompatActivity{
     private int day;
     private Planet planet;
 
+    /**
+     * on creating the object
+     * @param savedInstanceState a saved instance
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.onplanet);

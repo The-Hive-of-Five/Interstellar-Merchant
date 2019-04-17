@@ -19,6 +19,9 @@ import com.cs2340.interstellarmerchant.viewmodels.SavesViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * class that handles save screen
+ */
 public class Savegame extends AppCompatActivity{
 
     public TextInputEditText input;
@@ -61,10 +64,9 @@ public class Savegame extends AppCompatActivity{
 
         initRecyclerView();
     }
-
-
-
-
+    /**
+     * for the recycler view
+     */
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_load);
         SaveRecyclerViewAdapter adapter =

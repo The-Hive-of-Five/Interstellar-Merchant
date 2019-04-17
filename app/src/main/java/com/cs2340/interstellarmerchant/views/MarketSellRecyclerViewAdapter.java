@@ -21,6 +21,9 @@ import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class that handles the selling market view
+ */
 public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSellRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketSellRecyclerViewAd";
 
@@ -34,6 +37,14 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
     public MarketViewModel mv;
 
 
+    /**
+     * adds sell recycler view
+     * @param itemNames names
+     * @param itemPrices prices
+     * @param itemContext contexts
+     * @param itemTotals totals
+     * @param mv mvs
+     */
     public MarketSellRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, ArrayList<String> itemTotals, MarketViewModel mv) {
         this.itemNames = itemNames;
         this.itemPrices = itemPrices;
@@ -69,6 +80,9 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         return itemNames.size();
     }
 
+    /**
+     * holder for view
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView itemName;
@@ -78,6 +92,10 @@ public class MarketSellRecyclerViewAdapter extends RecyclerView.Adapter<MarketSe
         Button sellButton;
         private EditText mEditText;
 
+        /**
+         * constructor
+         * @param itemView view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.name_prompt);

@@ -13,7 +13,7 @@ import java.util.*
  * @param planets - the planets in the solar system
  * @param tech - the tech level of the solar system (random if not set)
  * @param x - the x location of the solar system; null by default
- * @param y - the y locatino of the solar system; null by default
+ * @param y - the y location of the solar system; null by default
  */
 data class SolarSystem(val planets: MutableList<Planet>, val tech: Tech = Tech.getRandomTech(),
                        var x: Int? = null, var y: Int? = null): AfterDeserialized, Serializable {

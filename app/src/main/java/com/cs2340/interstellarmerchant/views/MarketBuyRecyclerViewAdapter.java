@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * class for handling buy recycler view adapter
+ */
 public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuyRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "MarketBuyRecyclerViewAd";
 
@@ -38,6 +41,14 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
     private Context itemContext;
     public MarketViewModel mv;
 
+    /**
+     * constructor
+     * @param itemNames names
+     * @param itemPrices prices
+     * @param itemContext context
+     * @param itemTotals totals
+     * @param mv mvs
+     */
     public MarketBuyRecyclerViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemPrices, Context itemContext, ArrayList<String> itemTotals, MarketViewModel mv) {
 
         this.itemNames = itemNames;
@@ -75,6 +86,9 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
         return itemNames.size();
     }
 
+    /**
+     * holder for view
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView itemName;
@@ -84,6 +98,10 @@ public class MarketBuyRecyclerViewAdapter extends RecyclerView.Adapter<MarketBuy
         Button buyButton;
         private EditText mEditText;
 
+        /**
+         * constructor
+         * @param itemView item view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);

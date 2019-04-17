@@ -20,6 +20,9 @@ import com.cs2340.interstellarmerchant.viewmodels.ItemClickListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * class that handles the view for saving
+ */
 public class SaveRecyclerViewAdapter extends RecyclerView.Adapter<SaveRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "SaveBuyRecyclerViewAd";
 
@@ -27,12 +30,24 @@ public class SaveRecyclerViewAdapter extends RecyclerView.Adapter<SaveRecyclerVi
     public ArrayList<String> times = new ArrayList<>();
     private Context itemContext;
 
+    /**
+     * constructor
+     * @param names names
+     * @param times times
+     * @param itemContext contexts
+     */
     public SaveRecyclerViewAdapter(ArrayList<String> names, ArrayList<String> times, Context itemContext) {
         this.names = names;
         this.times = times;
         this.itemContext = itemContext;
     }
 
+    /**
+     * on creating
+     * @param viewGroup view group
+     * @param i integer
+     * @return view holder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -60,6 +75,9 @@ public class SaveRecyclerViewAdapter extends RecyclerView.Adapter<SaveRecyclerVi
         return names.size();
     }
 
+    /**
+     * for holding the view
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private ItemClickListener itemClickListener;

@@ -20,6 +20,9 @@ import com.cs2340.interstellarmerchant.viewmodels.ItemClickListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * class for handling recycler view in load view
+ */
 public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "LoadRecyclerViewAd";
 
@@ -28,6 +31,12 @@ public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerVi
     private Context itemContext;
 
 
+    /**
+     * constructor
+     * @param names name
+     * @param times times
+     * @param itemContext contexts
+     */
     public LoadRecyclerViewAdapter(ArrayList<String> names, ArrayList<String> times, Context itemContext) {
         this.names = names;
         this.times = times;
@@ -64,12 +73,18 @@ public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+
         private ItemClickListener itemClickListener;
         public TextView name;
         TextView time;
         TextView name_prompt;
         TextView time_prompt;
         RelativeLayout loadLayout;
+
+        /**
+         * constructor
+         * @param itemView item view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.names);

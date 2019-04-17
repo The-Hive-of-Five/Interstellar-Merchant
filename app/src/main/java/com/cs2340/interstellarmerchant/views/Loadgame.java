@@ -19,6 +19,9 @@ import com.cs2340.interstellarmerchant.viewmodels.SavesViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * handles load view
+ */
 public class Loadgame extends AppCompatActivity{
 
     public TextInputEditText input;
@@ -49,7 +52,6 @@ public class Loadgame extends AppCompatActivity{
                 }
 
 
-
             }
         });
     }
@@ -63,7 +65,9 @@ public class Loadgame extends AppCompatActivity{
         initRecyclerView();
     }
 
-
+    /**
+     * recycler view with games
+     */
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_load);
         LoadRecyclerViewAdapter adapter =

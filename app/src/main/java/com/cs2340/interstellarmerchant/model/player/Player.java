@@ -29,9 +29,6 @@ public class Player extends TravelEntity implements Serializable  {
     public static final int TRADER = 2;
     public static final int ENGINEER = 3;
 
-    // player singleton instance
-    private static Player player;
-
     private final GameConfig config;
     private int credits;
     @SuppressWarnings("FieldMayBeFinal")

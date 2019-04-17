@@ -20,6 +20,12 @@ import com.cs2340.interstellarmerchant.model.repository.MongodbDatabase;
 import com.cs2340.interstellarmerchant.model.universe.Universe;
 import com.cs2340.interstellarmerchant.model.universe.time.TimeController;
 import com.cs2340.interstellarmerchant.viewmodels.CreateCharacterViewModel;
+import com.cs2340.interstellarmerchant.model.utilities.MusicService;
+import android.content.ServiceConnection;
+import 	android.content.ComponentName;
+import android.os.IBinder;
+import android.content.Context;
+import android.media.MediaPlayer;
 
 import java.io.IOException;
 
@@ -30,6 +36,35 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner difficultySpinner;
     private CreateCharacterViewModel charViewModel;
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    public MediaPlayer mPlayer;
+    private ServiceConnection Scon =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon,Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
+    }
 
 
     @Override
@@ -37,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mPlayer= MediaPlayer.create(getApplicationContext(), R.raw.tanmoy_score);
+        mPlayer.start();
+
+        setContentView(R.layout.activity_main);
+
+
 
 
         difficultySpinner = findViewById(R.id.difficulty_spinner);
@@ -119,6 +161,10 @@ public class MainActivity extends AppCompatActivity {
         return output;
     }
 
+    /**
+     * create universe
+     * @return universe
+     */
     private Universe createUniverse() {
         Universe universe = null;
         try {
@@ -130,6 +176,11 @@ public class MainActivity extends AppCompatActivity {
         return universe;
     }
 
+    /**
+     * game controller
+     * @param player player
+     * @return game
+     */
     private GameController initGameController(Player player) {
 
         if (GameController.gameControllerAlreadyInitialized()) {

@@ -18,6 +18,9 @@ import com.cs2340.interstellarmerchant.viewmodels.MarketViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * handles the main market view
+ */
 public class MarketMain extends AppCompatActivity{
 
     private ArrayList<String> itemNames = new ArrayList<>();
@@ -67,6 +70,9 @@ public class MarketMain extends AppCompatActivity{
 
     }
 
+    /**
+     * initialize shop items
+     */
     private void initShopItems() {
         for (int i = 0; i < marketViewModel.buyItemArray.size(); i++) {
             itemNames.add(marketViewModel.getMarketItem(i));
@@ -75,7 +81,9 @@ public class MarketMain extends AppCompatActivity{
         }
         initRecyclerView();
     }
-
+    /**
+     * initialize cargo items
+     */
     private void initCargoItems() {
         for (int i = 0; i < marketViewModel.sellItemArray.size(); i++) {
             cargoNames.add(marketViewModel.getShipItem(i));
@@ -85,6 +93,10 @@ public class MarketMain extends AppCompatActivity{
         initRecyclerView1();
     }
 
+    /**
+     * listener for buy
+     * @param view passed view
+     */
     private void buyListener(View view) {
         try {
             marketViewModel.buyOrder();
@@ -96,6 +108,10 @@ public class MarketMain extends AppCompatActivity{
         cargo.setText(player.getShip().getAvailableSpace() + "");
     }
 
+    /**
+     * listener for sell
+     * @param view passed view
+     */
     private void sellListener(View view) {
         try {
             marketViewModel.sellOrder();
@@ -107,6 +123,9 @@ public class MarketMain extends AppCompatActivity{
         cargo.setText(player.getShip().getAvailableSpace() + "");
     }
 
+    /**
+     * initialize recycler view for buy
+     */
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_market);
         MarketBuyRecyclerViewAdapter adapter =
@@ -116,7 +135,9 @@ public class MarketMain extends AppCompatActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         marketViewModel.adapter = adapter;
     }
-
+    /**
+     * initialize recycler view for sell
+     */
     private void initRecyclerView1() {
         RecyclerView recyclerView1 = findViewById(R.id.recycler_market_cargo);
         MarketSellRecyclerViewAdapter adapter1 =
